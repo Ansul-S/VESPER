@@ -1,0 +1,50 @@
+# ── OS / editor ──────────────────────────────────────────────
+.DS_Store
+*.swp
+.idea/
+.vscode/
+
+# ── Claude Code personal / local (per the project-setup convention) ──
+CLAUDE.local.md
+*.local.md
+.claude/settings.local.json
+settings.local.json
+
+# ── Secrets ──────────────────────────────────────────────────
+.env
+*.env
+.env.*
+!.env.example
+
+# ── Python ───────────────────────────────────────────────────
+__pycache__/
+*.py[cod]
+.ipynb_checkpoints/
+.venv/
+venv/
+env/
+*.egg-info/
+
+# ── Large scientific data & artifacts (keep the repo light) ──
+# Track manifests, code, and small frozen results — NOT bulk data.
+data/raw/**
+data/processed/**
+data/injections/**
+data/benchmark/**
+!data/**/.gitkeep
+!data/**/*manifest*.json
+*.fits
+*.fits.gz
+*.npz
+*.h5
+*.hdf5
+*.pkl
+*.pt
+*.ckpt
+lk_cache/
+mastDownload/
+
+# Large result media (commit small summary figures deliberately)
+results/**/*.png
+results/**/*.pdf
+!results/**/summary*.png
