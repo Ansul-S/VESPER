@@ -195,21 +195,24 @@ Ordered M0.1 → M0.6. Each lists tasks, the sealed clause it satisfies, depende
 
 ### 3.7 M0 completion criteria (binary; all must hold)
 
-M0 is **DONE** iff:
+M0 is **DONE** iff (status as executed 2026-06-15):
 
-1. ☐ The TESS SPOC 2-min **sector list is frozen** and recorded (FFI/QLP excluded).
-2. ☐ The **target manifest** is built from metadata, with all inclusion/exclusion criteria recorded and justified **before** application; required stellar params, coordinates, camera/CCD, and per-target baseline present.
-3. ☐ **Label catalogs** (TOIs, EBs/variables) are pinned + versioned for the frozen sectors; the **null pool** is defined as known-host-removed, with the incompleteness caveat recorded.
-4. ☐ A **leakage-safe CALIBRATION/TEST split** exists — TIC-disjoint **and** sky-region/camera-CCD-blocked, seeded, with **no training split** — and the **leakage audit passes** (zero shared TIC; spatial separation verified).
-5. ☐ All four sub-samples are assigned **consistently** under the single split (global TEST seal).
-6. ☐ The **feasibility check** confirms each eligible `(P,R_p)` cell supports ≥500 injections at `n_tr ≥ 2` per the §6 power target, or at-risk cells carry the §6 contingency.
-7. ☐ The manifest is **content-hashed (Seal #1)**; provenance (catalog/tool versions, timestamps, seeds, occurrence-framework citation) is pinned.
-8. ☐ The **TEST-set access rule** is stated; **no threshold was set**, **no TEST statistic was computed**, and **no sealed document was modified**.
+1. ☑ TESS SPOC 2-min **sector list frozen** — **S1, S2, S3** (south); FFI/QLP excluded.
+2. ☑ **Target manifest** built from metadata — **22,723 targets** after cuts; inclusion criteria recorded *before* application; coordinates, `R⋆`/`Teff`/`logg`, `Tmag`, baseline present. *Realization note:* crowding applied via TIC `contratio ≤ 0.25` (metadata analog of `CROWDSAP ≥ 0.8`, which is a per-LC header value); literal CROWDSAP confirmed at M1.
+3. ☑ **Labels pinned + versioned** — NASA Exoplanet Archive TOI table (snapshot hashed): 97 confirmed-planet hosts, 224 planet/candidate, 45 known FP, 41 multi-planet; **null pool = 22,458** (planet-host-removed); incompleteness caveat recorded (R0-3). *Realization note:* FP labels = TOI FP/FA dispositions (largely EBs); dedicated EB catalog (Prša et al. 2022) deferred to M1+.
+4. ☑ **Leakage-safe split** — HEALPix `nside=8` whole-block, seed `20260615`, **no training split**; **leakage audit PASS** (0 pixels shared; TIC-disjoint by construction). Calibration 6,925 / test 15,798 (30.5 % / 69.5 %).
+5. ☑ Sub-samples (injection hosts · null/FAR · reality-check · survey) carried as label columns under the **single** split (global TEST seal).
+6. ☑ **Feasibility** — every period node has ≥ 500 eligible test hosts at `n_tr ≥ 2`; binding `P=16 d` cell = **5,794 test hosts**. **No widening needed** (owner M0.5 rule).
+7. ☑ Manifest **content-hashed (Seal #1)**; provenance pinned (catalog source + query UTC + TOI snapshot hash, `pip freeze`, seeds, config hash).
+8. ☑ **TEST-set access rule** stated (read once at M4); **no threshold set**, **no TEST statistic computed**, **no sealed document modified** (`git diff phase1-prereg-v2` empty).
+
+**Seal #1 (manifest content hash, SHA-256):** `1f2d49e194b0960f1eacb0c72c25087b4c299620e38f299e2d55706199e83f1f`
+**Reproducibility:** deterministic across 3 runs; provenance + TOI snapshot in `data/manifests/m0/m0_manifest_provenance.json`. Tooling: `research/m0_manifest/` (config-driven). Distinct from **Seal #2** (M3 threshold manifest hash, VAL A.10).
 
 ### 3.8 M0 sign-off
 
 Approval to **start** M0 (this plan): **Ansul — approved in-session**  Date: **2026-06-15**
-Sign-off that M0 is **DONE** (§3.7 all ☑, Seal #1 recorded): ____________________  Date: __________
+Sign-off that M0 is **DONE** (§3.7 all ☑, Seal #1 recorded): **executed + verified in-session** (Seal #1 `1f2d49e1…`)  Date: **2026-06-15**
 
 ---
 

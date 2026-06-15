@@ -1,0 +1,52 @@
+# M0 frozen-choices config — SIGNED OFF 2026-06-15 (see PHASE1_M0_CHOICES.md).
+# Outcome-INDEPENDENT manifest choices only. No detection threshold appears here
+# (z*, theta, T, ... are M3 / Seal #2). These values are hashed at M0.6 (Seal #1).
+
+# --- M0.1 sectors (Decision 1) ---
+sectors:
+  list: [1, 2, 3]
+  hemisphere: "south"
+  rationale: >
+    Contiguous primary-mission SPOC 2-min triplet including the southern
+    continuous-viewing-zone overlap, giving ~3-sector baseline for n_transits>=2
+    across the injection grid incl. P=16d. M0.5 validates per-cell coverage;
+    widen only if a headline cell underpowers (owner-directed).
+
+# --- M0.2 target inclusion/exclusion (Decision 2) ---
+inclusion:
+  require_2min_spoc: true
+  require_tic_stellar_params: true   # R_star, Teff, logg (for limb darkening)
+  tmag_min: 7.0
+  tmag_max: 15.0
+  crowdsap_min: 0.8
+  min_good_cadences: null            # v1: no cut beyond SPOC PDCSAP availability; revisit at M0.2 if quality flags warrant
+  tag_multiplanet_ttv: true          # tag (not drop) known multi-planet / TTV systems
+
+# --- M0.3 labels / null pool (Decision 4 provenance) ---
+labels:
+  toi_catalog: "ExoFOP-TESS TOI table"   # version + retrieval timestamp set at execution
+  eb_catalog: "TESS eclipsing-binary / variable catalog"  # exact source + version confirmed at execution
+  query_timestamp: ""                # ISO-8601, set at execution
+
+# --- M0.4 leakage-safe split (Decision 3) ---
+split:
+  scheme: "healpix"
+  healpix_nside: 8        # ~7.3 deg blocks; M0.4 may coarsen to keep whole camera/CCDs intact, audit-gated
+  calibration_fraction: 0.30
+  test_fraction: 0.70
+  rng_seed: 20260615      # fixed; recorded into provenance
+  training_split: false   # MUST stay false (untrained detector)
+
+# --- Frozen reference (read-only echo of the sealed injection grid; do NOT edit) ---
+# Source of truth = TRINETRA_X_PHASE1_VALIDATION.md §3. Mirrored only for M0.5 feasibility.
+injection_grid_reference:
+  period_days: [0.5, 1, 2, 4, 8, 16]
+  radius_rearth: [1, 2, 4, 8, 12]
+  impact_b: [0.0, 0.3, 0.6]
+  min_injections_per_cell: 500
+  headline_requires_n_transits_ge: 2
+
+# --- Output ---
+output:
+  manifest_dir: "data/manifests/m0"        # frozen manifest (parquet) + provenance + hash
+  seal_record: "PHASE1_EXECUTION_PLAN.md"  # where Seal #1 hash is recorded

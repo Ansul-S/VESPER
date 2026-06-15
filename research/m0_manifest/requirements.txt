@@ -1,0 +1,14 @@
+# M0 manifest tooling — archive-query stack (metadata-only).
+# Requires Python >= 3.11.
+# Version floors below; the EXACT resolved versions are captured via
+# `pip freeze > config/pip-freeze.lock` and pinned into the manifest
+# provenance at M0.6 (Seal #1) for reproducibility (plan G5).
+
+astroquery>=0.4.7     # MAST product availability, TIC, ExoFOP/TOI queries
+astropy>=6.0          # coordinates, units, tables, time
+lightkurve>=2.4       # SPOC 2-min product discovery (convenience over astroquery.mast)
+numpy>=1.26
+pandas>=2.2
+pyarrow>=15.0         # parquet manifest output
+healpy>=1.16          # HEALPix sky-region blocking for the leakage-safe split
+pyyaml>=6.0           # config + provenance serialization

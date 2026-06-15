@@ -1,0 +1,49 @@
+# M0 frozen-choices config (TEMPLATE).
+# Fill from the SIGNED PHASE1_M0_CHOICES.md, save as `m0_config.yaml`, then run m0_pipeline.py.
+# Every value here is an outcome-INDEPENDENT manifest choice; none is a detection threshold.
+# Thresholds (z*, theta, T, ...) are M3 / Seal #2 and MUST NOT appear in this file.
+
+# --- M0.1 sectors (Decision 1) ---
+sectors:
+  list: []            # e.g. [1, 2, 3]  — exact TESS SPOC 2-min sectors (primary mission)
+  hemisphere: ""      # "south" | "north"
+  rationale: ""       # baseline/power justification (echoed into provenance)
+
+# --- M0.2 target inclusion/exclusion (Decision 2) ---
+inclusion:
+  require_2min_spoc: true
+  require_tic_stellar_params: true   # R_star, Teff, logg (for limb darkening)
+  tmag_min: null      # e.g. 7.0
+  tmag_max: null      # e.g. 15.0
+  crowdsap_min: null  # e.g. 0.8
+  min_good_cadences: null
+  tag_multiplanet_ttv: true          # tag (not drop) known multi-planet / TTV systems
+
+# --- M0.3 labels / null pool (Decision 4 provenance) ---
+labels:
+  toi_catalog: ""     # name + version (ExoFOP/TOI)
+  eb_catalog: ""      # name + version (eclipsing-binary/variable)
+  query_timestamp: "" # ISO-8601, set at execution
+
+# --- M0.4 leakage-safe split (Decision 3) ---
+split:
+  scheme: "healpix"   # "healpix" | "camera_ccd"
+  healpix_nside: null # if scheme == healpix
+  calibration_fraction: 0.30
+  test_fraction: 0.70
+  rng_seed: null      # fixed integer, recorded
+  training_split: false  # MUST stay false (untrained detector)
+
+# --- Frozen reference (read-only echo of the sealed injection grid; do NOT edit) ---
+# Source of truth = TRINETRA_X_PHASE1_VALIDATION.md §3. Mirrored only for M0.5 feasibility.
+injection_grid_reference:
+  period_days: [0.5, 1, 2, 4, 8, 16]
+  radius_rearth: [1, 2, 4, 8, 12]
+  impact_b: [0.0, 0.3, 0.6]
+  min_injections_per_cell: 500
+  headline_requires_n_transits_ge: 2
+
+# --- Output ---
+output:
+  manifest_dir: "data/manifests/m0"   # frozen manifest (parquet) + provenance + hash
+  seal_record: "PHASE1_EXECUTION_PLAN.md"  # where Seal #1 hash is recorded
