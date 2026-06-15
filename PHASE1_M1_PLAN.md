@@ -5,7 +5,7 @@
 | **Document** | M1 execution plan + conditioning frozen-choices proposal |
 | **Increment** | **v0.1 — M1 only** (Stage-0 Conditioning) |
 | **Created** | 2026-06-15 |
-| **Status** | **DRAFT — awaiting owner sign-off on the conditioning choices (§4)**; no flux downloaded; no config frozen |
+| **Status** | **SIGNED OFF** (owner, 2026-06-15) — biweight detrend + celerite2 noise model, η-sample first; config frozen in `m1_config.yaml`; executing M1 |
 | **Builds on** | M0 (Seal #1 `1f2d49e1…`; manifest = release asset `m0-manifest-v1`) |
 | **Authority** | Subordinate to the sealed pre-registration (`phase1-prereg-v2`). Executes VAL A.9 / §4.2; changes nothing in the sealed docs. |
 
@@ -95,13 +95,13 @@ All choices are outcome-independent (set before detection); the window is η-fin
 7. ☐ (Hands off to M2) η inputs ready; window finalization deferred to the M2 η ≥ 0.90 check.
 
 ## 8. Sign-off
-| Decision | Owner choice |
-|----------|--------------|
-| A — Detrend method | __________________ |
-| B — Window · masks | __________________ |
-| C — Noise model | __________________ |
-| D — M1 data scope | __________________ |
+| Decision | Owner choice (2026-06-15) |
+|----------|---------------------------|
+| A — Detrend method | **wotan biweight time-windowed slider** |
+| B — Window · masks | window **0.5 d** start (η-finalized at M2); momentum-dump (~2.5 d) + SPOC default quality bitmask + scattered-light masks |
+| C — Noise model | **celerite2 GP** (SHOTerm) → σ, CDPP(T₁₄), τ_GP |
+| D — M1 data scope | **η-validation sample first** (200 calibration targets, seed 20260615), then scale to the full calibration pool |
 
-Approved to freeze the M1 conditioning config: ____________________  Date: __________
+Approved to freeze the M1 conditioning config: **Ansul — approved in-session**  Date: **2026-06-15**
 
 *On sign-off: write `research/m1_conditioning/config/m1_config.yaml`, scaffold the pipeline, condition the η-sample, then scale. The window is η-finalized at M2 before any M3 threshold.*

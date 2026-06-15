@@ -1,0 +1,43 @@
+# M1 Stage-0 conditioning config — SIGNED OFF 2026-06-15 (see PHASE1_M1_PLAN.md §8).
+# Outcome-independent conditioning choices. No detection threshold here (those are M3 / Seal #2).
+# The detrend window is a STARTING value; it is η-finalized at M2 (>=0.90) before any M3 threshold.
+
+# --- Decision A/B: detrend (wotan biweight time-windowed slider) ---
+detrend:
+  method: "biweight"
+  window_length_days: 0.5     # start; widened per (P,R_p) cell at M2 if median eta < 0.90
+  cval: 5                     # wotan biweight tuning constant (default)
+  break_tolerance_days: 0.5   # do not bridge gaps larger than this
+  edge_cutoff_days: 0.5
+
+# --- Decision B: masking ---
+masking:
+  spoc_quality_bitmask: "default"   # lightkurve hard quality bitmask
+  momentum_dump: true
+  momentum_dump_cadence_days: 2.5   # TESS S1-S3 downlink/momentum cadence
+  scattered_light: true
+
+# --- Decision C: noise model (celerite2 GP) -> sigma, CDPP(T14), tau_GP ---
+noise_model:
+  method: "celerite2"
+  kernel: "SHOTerm"           # stellar variability + granulation
+  cdpp_reference_durations_hours: [1.0, 2.0, 4.0]  # CDPP averaged on transit-duration timescales
+  transit_mask_for_fit: true  # mask flagged/known transits before fitting noise (avoid absorbing signal)
+
+# --- Decision D: data scope (eta-validation sample first) ---
+data_scope:
+  split: "calibration"        # M1 reads CALIBRATION rows ONLY; TEST sealed until M4
+  eta_sample_size: 200
+  eta_sample_seed: 20260615
+
+# --- Input (M0 manifest) ---
+input:
+  manifest_release: "m0-manifest-v1"
+  manifest_asset: "m0_manifest.parquet"
+  manifest_seal1_sha256: "1f2d49e194b0960f1eacb0c72c25087b4c299620e38f299e2d55706199e83f1f"
+
+# --- Output (all gitignored; small summaries tracked separately) ---
+output:
+  lc_cache_dir: "data/raw/lc_cache"        # downloaded SPOC 2-min LCs (gitignored)
+  conditioned_dir: "data/processed/m1"     # conditioned residuals r(t) (gitignored)
+  summary_dir: "data/manifests/m1"         # per-target noise/QA summary + provenance (small; tracked)
