@@ -35,6 +35,7 @@ input:
   manifest_release: "m0-manifest-v1"
   manifest_asset: "m0_manifest.parquet"
   manifest_seal1_sha256: "1f2d49e194b0960f1eacb0c72c25087b4c299620e38f299e2d55706199e83f1f"
+  sectors: [1, 2, 3]    # frozen M0 sectors; restrict LC retrieval to these (exclude extended mission)
 
 # --- Output (all gitignored; small summaries tracked separately) ---
 output:
