@@ -44,6 +44,8 @@ If a meaningful fraction of exoplanet transits generate locally detectable trans
 
 Demonstrate that evidence-first routing can reduce computational cost without significantly reducing exoplanet detection recall.
 
+> **Phase I scope note (2026-06-15, per [DR-001](./decisions/F1_DECISION_RECORD.md)).** In Phase I the compute claim is scoped to the *fast-path-eligible population* (stars whose detector evidence meets the routing threshold); survey-representative (prevalence-weighted) compute is a pre-registered *secondary* endpoint, and survey-scale saving via clean-skip routing is deferred to Phase II.
+
 ### Secondary Objectives
 
 Develop a robust AI pipeline capable of:

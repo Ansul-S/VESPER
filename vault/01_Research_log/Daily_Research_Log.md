@@ -57,6 +57,29 @@ Next Action:
 
 ---
 
+## 2026-06-15 (cont.) — M0 execution plan authored and approved
+
+Worked On:
+- Authored `PHASE1_EXECUTION_PLAN.md` (v0.1, **M0 increment only**) from the sealed protocol and got in-session owner approval to start M0.
+
+Discoveries / Decisions:
+- **Tooling note:** the `/gsd-plan-phase` skill is built for a GSD `.planning/` software project (hard-errors without ROADMAP.md; spawns research/planner agents emitting GSD `PLAN.md` files). TRINETRA-X has no `.planning/` and treats documents as deliverables, so running GSD would have meant unrequested scaffolding + web-searching agents. Decision: apply GSD's *discipline* (milestones → tasks → deps → risks → deliverables → completion criteria) in the project's native research-doc form; no agents spawned. Recorded here so the choice isn't lost to chat.
+- **M0 scope clarified:** M0 operates on **catalog metadata only** (TIC, SPOC 2-min availability, coordinates, stellar params, baselines, TOI/EB labels). Bulk light-curve retrieval + conditioning is **M1**. The leakage-safe split needs only TIC IDs + sky coordinates — no photometry — so M0 honors "no data download" cleanly while still being the first archive-touching step.
+- **Two seals kept distinct:** **Seal #1** = M0 manifest content-hash (who/what data). **Seal #2** = M3 threshold manifest hash (VAL A.10) — numeric thresholds (z⋆, θ, z_mono, T, α, α_FAP, ε, τ_GP) stay deferred to calibration. M0 sets **no** thresholds.
+- M0 decomposed into M0.1 sectors → M0.2 metadata target manifest → M0.3 labels/null pool → M0.4 leakage-safe split (TIC-disjoint **and** sky-region/camera-CCD-blocked, no training split) → M0.5 feasibility/power check (≥500 injections/cell at n_tr≥2 vs §6) → M0.6 manifest assembly + Seal #1. Includes a 7-row risk register, deliverables table, 8 binary completion criteria, and a traceability matrix to the sealed clauses.
+
+Artifacts created/updated:
+- Created: `PHASE1_EXECUTION_PLAN.md` (status **APPROVED**, M0 not started, no data read; sealed docs verified byte-identical to `phase1-prereg-v2`).
+- Vault synchronized: Current_Mission, Dashboard, this log.
+
+Problems / Risks carried forward:
+- Same Phase I risk register (readiness report §6). M0-specific risks now tracked in the plan: systematic leakage surviving a TIC-only split (→ sky-region/camera-CCD blocking + audit), selection bias (outcome-independent cuts), null-pool contamination (catalog incompleteness bounds H4), reproducibility (pin versions/seeds + hash), power shortfall (M0.5 gate), premature TEST inspection (Seal #1 + access rule).
+
+Next Action:
+- Execute **M0** per `PHASE1_EXECUTION_PLAN.md` §3. Non-blocking: create `references.bib` (Kunimoto & Matthews 2020), add the charter scoping note (F7).
+
+---
+
 ## Template for future entries
 
 Date:

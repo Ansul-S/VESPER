@@ -16,12 +16,14 @@ Determine whether evidence-first routing can reduce computational cost while pre
 - Pre-registration (v2) — ✅ Complete
 - Seal (`phase1-prereg-v2`) — ✅ Complete
 - GitHub (push + tag) — ✅ Complete
-- **Current milestone — M0 Planning** ▶
+- PHASE1_EXECUTION_PLAN.md (M0 increment) — ✅ Authored + APPROVED (2026-06-15)
+- **Current milestone — M0 (ready to execute)** ▶
 
 ## Milestone Ladder
 
 - Pre-registration completion + seal — ✅ DONE (2026-06-15)
-- **M0 — Freeze sector/target manifest + leakage-safe split** — ▶ NEXT (not started)
+- M0 execution plan authored + approved — ✅ DONE (2026-06-15)
+- **M0 — Freeze sector/target manifest + leakage-safe split** — ▶ READY TO EXECUTE (not started) → Seal #1 (manifest hash)
 - M1 — Detectability census (SNR₁ distribution; tests A1)
 - M2 — Conditioning + injection campaign
 - M3 — Threshold calibration (calibration set only) → seal calibration manifest hash
@@ -41,6 +43,7 @@ Determine whether evidence-first routing can reduce computational cost while pre
 - REPOSITORY_GAP_ANALYSIS.md (F1–F12) · PHASE1_REMEDIATION.md
 - PHASE1_READINESS_REPORT.md · decisions/F1_DECISION_RECORD.md (DR-001)
 - PAPER_NOTES.md · SESSION_HANDOFF_2026-06-15.md
+- **PHASE1_EXECUTION_PLAN.md** (v0.1, M0 increment — execution artifact, subordinate to the seal)
 
 ## Findings Status
 
@@ -50,7 +53,7 @@ Determine whether evidence-first routing can reduce computational cost while pre
 
 ## Next Action
 
-Author PHASE1_EXECUTION_PLAN.md, then begin M0.
+Begin M0 per PHASE1_EXECUTION_PLAN.md §3 (M0.1–M0.6): freeze sectors → build metadata manifest → pin labels/null pool → leakage-safe split → feasibility/power check → hash manifest (Seal #1). Catalog metadata only; no light-curve download until M1; TEST sealed until M4; no thresholds until M3.
 
 ## Notes
 

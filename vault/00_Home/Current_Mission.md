@@ -16,13 +16,16 @@ Current Status:
 - No data read. Implementation has not started.
 
 Current Milestone:
-Pre-registration completion + seal — DONE.
+**M0 — Freeze sector/target manifest + leakage-safe split.** Execution plan authored and **APPROVED** (in-session 2026-06-15); M0 not started; no data read.
 
 Next Milestone:
-**M0** — Freeze the TESS sector/target manifest and the leakage-safe calibration/test split. (Not started; unblocked.)
+M0 execution → then M1 (conditioning).
 
 Next Action:
-Author **PHASE1_EXECUTION_PLAN.md**, then begin M0.
+Begin **M0** per `PHASE1_EXECUTION_PLAN.md` §3 (sub-milestones M0.1–M0.6). M0 operates on **catalog metadata only**; bulk light-curve retrieval/conditioning is M1. The TEST set is sealed at M0 (read once at M4). No thresholds set in M0 (those are M3 → Seal #2). Manifest is content-hashed = **Seal #1**.
+
+Execution Plan:
+`PHASE1_EXECUTION_PLAN.md` (v0.1, M0 increment) — subordinate to the sealed pre-registration; does not modify it.
 
 Sealed Documents (do not edit without a new re-registration):
 - SCIENTIFIC_HYPOTHESIS.md — v2.0
