@@ -3,7 +3,7 @@
 | Field | Value |
 |-------|-------|
 | **Document** | M0 frozen-parameter proposal (decision-support) |
-| **Status** | **PROPOSAL — awaiting owner sign-off** (gates M0.6 / Seal #1) |
+| **Status** | **SIGNED OFF** (owner, in-session 2026-06-15) — values frozen into `m0_config.yaml`; M0.6 will hash them (Seal #1) |
 | **Created** | 2026-06-15 |
 | **Governs** | The values frozen by milestone **M0** of [`PHASE1_EXECUTION_PLAN.md`](./PHASE1_EXECUTION_PLAN.md) |
 | **Authority** | Subordinate to the sealed pre-registration (`phase1-prereg-v2`). Proposes *manifest* choices left open by the seal; changes **nothing** in the sealed documents. |
@@ -79,13 +79,15 @@ Frozen into the manifest provenance at Seal #1 (plan G5): catalog **names + vers
 
 ## Sign-off
 
-| Decision | Owner choice (fill in) |
-|----------|------------------------|
-| 1 — Sector list | __________________________ |
-| 2 — `Tmag` bound · crowding bound | __________________________ |
-| 3 — Blocking scheme · split ratio · seed | __________________________ |
-| 4 — Catalog sources to pin | __________________________ |
+| Decision | Owner choice (2026-06-15) |
+|----------|---------------------------|
+| 1 — Sector list | **S1–S3, southern hemisphere** (primary-mission triplet incl. southern CVZ overlap for the P=8/16 d cells) |
+| 2 — `Tmag` bound · crowding bound | **Accepted as recommended** — require TIC stellar params; `Tmag ∈ [7, 15]`; `CROWDSAP ≥ 0.8` |
+| 3 — Blocking scheme · split ratio · seed | **Accepted as recommended** — HEALPix whole-block; **30 % cal / 70 % test**; fixed seed; no training split |
+| 4 — Catalog sources to pin | TIC (stellar params), ExoFOP-TESS TOI table (planet labels), TESS EB/variable catalog (FP labels) — versions + timestamps pinned at execution |
 
-Approved to freeze these into the M0 manifest: ____________________  Date: __________
+**M0.5 widen rule (owner-directed):** run M0 with S1–S3, validate per-cell coverage at M0.5, and **widen the sector block only if coverage metrics demand it** (a headline `(P,R_p)` cell cannot reach ≥ 500 injections at `n_tr ≥ 2`). Grid and margins remain frozen.
 
-*On sign-off, the values are written into `research/m0_manifest/config/m0_config.yaml`, M0.1–M0.6 run (metadata-only), and the manifest is hashed (Seal #1).*
+Approved to freeze these into the M0 manifest: **Ansul — approved in-session**  Date: **2026-06-15**
+
+*Values are written into `research/m0_manifest/config/m0_config.yaml`; M0.1–M0.6 run (metadata-only); the manifest is hashed (Seal #1).*
