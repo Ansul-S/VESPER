@@ -1,0 +1,6 @@
+# M1 conditioning stack (in addition to the M0 stack in research/m0_manifest/requirements.txt).
+# Requires Python >= 3.11. Exact resolved versions are captured into the M1 provenance.
+
+lightkurve>=2.4     # SPOC 2-min light-curve search + download + PDCSAP/quality handling
+wotan>=1.10         # biweight time-windowed detrending
+celerite2>=0.3      # Gaussian-process noise model (sigma, CDPP, tau_GP)

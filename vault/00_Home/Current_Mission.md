@@ -16,13 +16,13 @@ Current Status:
 - **M0 EXECUTED (2026-06-15).** Seal #1 (manifest hash) `1f2d49e1…` cut; 22,723 SPOC 2-min targets (S1–S3 south); leakage-safe 30/70 split; TEST set sealed (read once at M4). M0.5 feasibility passed — no sector widening needed.
 
 Current Milestone:
-**M0 — DONE (2026-06-15).** Manifest frozen + leakage-safe split sealed (Seal #1 `1f2d49e1…`). 22,723 SPOC 2-min targets (S1–S3 south); calibration 6,925 / test 15,798; feasibility passed (P=16 d test hosts = 5,794 ≥ 500). Metadata-only; no flux read.
+**M1 — Stage-0 conditioning — η-sample done (2026-06-15).** 188/200 calibration targets conditioned (wotan biweight 0.5 d + quality/momentum masks → r(t)); σ med 1067 ppm, CDPP(1h) med 222 ppm, τ_GP med ~8 min; **99 % stationary / 88 % white** (12 % active-star tail flagged). Config frozen (`m1_config.yaml`); calibration-only; TEST untouched. (M0 — DONE; Seal #1 `1f2d49e1…`.)
 
 Next Milestone:
-**M1 — Stage-0 conditioning** (per-sector detrend + masking over the M0 pool; VAL A.9). Not started.
+**M2 — injection harness + η ≥ 0.90 transit-preservation check** (finalizes the detrend window; VAL §4.2). Not started.
 
 Next Action:
-Land the M0 work (PR) and/or begin **M1** (light-curve retrieval + conditioning on the calibration pool). TEST set stays sealed until M4. Next seal is **Seal #2** (thresholds) at M3.
+Owner steer needed: (a) proceed to **M2** (inject Mandel–Agol transits → condition → measure η = δ_post/δ_true per (P,R_p) cell; window widened where η < 0.90 before any M3 threshold), and/or (b) scale conditioning to the full 6,925 calibration pool (otherwise done on demand at detection M3/M4). TEST sealed until M4; Seal #2 (thresholds) at M3.
 
 Execution Plan:
 `PHASE1_EXECUTION_PLAN.md` (v0.1, M0 increment — M0 executed). Tooling: `research/m0_manifest/`. Manifest + provenance: `data/manifests/m0/`.

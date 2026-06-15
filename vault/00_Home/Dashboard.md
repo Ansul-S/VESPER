@@ -18,16 +18,17 @@ Determine whether evidence-first routing can reduce computational cost while pre
 - GitHub (push + tag) — ✅ Complete
 - PHASE1_EXECUTION_PLAN.md (M0 increment) — ✅ Authored + APPROVED (2026-06-15)
 - M0 — Manifest freeze + leakage-safe split — ✅ DONE (Seal #1 `1f2d49e1…`, 2026-06-15)
-- **Current milestone — M1 (Stage-0 conditioning)** ▶
+- M1 — Stage-0 conditioning (η-sample) — ✅ DONE (188/200; 99% stationary / 88% white, 2026-06-15)
+- **Current milestone — M2 (injection harness + η check)** ▶
 
 ## Milestone Ladder
 
 - Pre-registration completion + seal — ✅ DONE (2026-06-15)
 - M0 execution plan authored + approved — ✅ DONE (2026-06-15)
 - **M0 — Freeze sector/target manifest + leakage-safe split** — ✅ DONE — Seal #1 `1f2d49e1…`; 22,723 targets (S1–S3); cal 6,925 / test 15,798 (2026-06-15)
-- M1 — Detectability census (SNR₁ distribution; tests A1)
-- M2 — Conditioning + injection campaign
-- M3 — Threshold calibration (calibration set only) → seal calibration manifest hash
+- **M1 — Stage-0 conditioning** (per-sector biweight detrend + masking → r(t); noise model σ/CDPP/τ_GP) — ✅ DONE (η-sample 188/200, 2026-06-15)
+- **M2 — Injection harness + η ≥ 0.90 transit-preservation check** (finalizes detrend window; VAL §4.2) — ▶ NEXT
+- M3 — Threshold calibration (calibration set only) → seal calibration manifest hash (Seal #2)
 - M4 — Sealed-test evaluation (single run)
 - M5/M6 — Parameter coverage, reality check, ablation
 - M7 — Write-up
@@ -54,7 +55,7 @@ Determine whether evidence-first routing can reduce computational cost while pre
 
 ## Next Action
 
-M0 done — Seal #1 `1f2d49e1…` (22,723 targets, cal 6,925 / test 15,798, feasibility passed). Next: land M0 (PR) and/or begin M1 (Stage-0 conditioning on the calibration pool). TEST sealed until M4; Seal #2 (thresholds) at M3.
+M1 η-sample conditioned (188/200; σ med 1067 ppm, CDPP(1h) 222 ppm; 99 % stationary / 88 % white; 12 % active-star tail flagged). Next: proceed to **M2** (injection harness + η ≥ 0.90 check, finalizes detrend window) and/or scale conditioning to the full calibration pool. TEST sealed until M4; Seal #2 (thresholds) at M3.
 
 ## Notes
 

@@ -1,0 +1,28 @@
+{
+  "milestone": "M1",
+  "stage": "Stage-0 conditioning (eta-sample)",
+  "config_path": "research/m1_conditioning/config/m1_config.yaml",
+  "config_sha256": "12141837994214cd9ae2717ed6a38b8a526f4078f5979ef346c50ff4e4c62a31",
+  "manifest_seal1_sha256": "1f2d49e194b0960f1eacb0c72c25087b4c299620e38f299e2d55706199e83f1f",
+  "frozen_sectors": [
+    1,
+    2,
+    3
+  ],
+  "split": "calibration",
+  "eta_sample_requested": 200,
+  "n_conditioned": 188,
+  "n_skipped": 12,
+  "ran_at_utc": "2026-06-15T16:39:29.199325+00:00",
+  "python": "3.11.9",
+  "note": "Window is eta-provisional; finalized at M2 (eta>=0.90). No thresholds set (M3/Seal #2). TEST untouched.",
+  "medians": {
+    "sigma_ppm": 1067.3914183656566,
+    "tau_gp_days": 0.005555580819077477,
+    "cdpp_1.0h_ppm": 222.14564052411038,
+    "cdpp_2.0h_ppm": 153.74649848351217,
+    "cdpp_4.0h_ppm": 98.06224449353306,
+    "scatter_ratio_halves": 1.006902479979504,
+    "acf_lag1": 0.0052730473577543135
+  }
+}

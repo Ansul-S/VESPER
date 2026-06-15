@@ -109,6 +109,32 @@ Next Action:
 
 ---
 
+## 2026-06-15 (cont.) — M1 Stage-0 conditioning executed (η-sample)
+
+Worked On:
+- Signed off + froze the M1 conditioning config; implemented `research/m1_conditioning/m1_pipeline.py`; conditioned the η-validation sample.
+
+Discoveries / Decisions:
+- **Conditioning config (signed):** wotan biweight slider, window 0.5 d (η-finalized at M2); momentum (~2.5 d) + SPOC default quality + scattered-light masks; celerite2 SHOTerm noise model; η-sample 200 (seed 20260615).
+- **Fidelity fix #1 — frozen-sector restriction:** lightkurve returns *all* sectors a TIC was ever observed (incl. extended mission 28/29/68); M1 **restricts to frozen M0 sectors {1,2,3}** so conditioning stays inside the seal.
+- **Fidelity fix #2 — τ_GP:** the celerite2 SHOTerm point-fit was unreliable (stuck near init). Switched operational **τ_GP to the residual ACF e-folding** (robust; A.8 explicitly permits GP/**robust**); celerite2 retained as a recorded cross-check. After the fix τ_GP tracks correlation (white stars ~8 min; active star ~88 min).
+- **η-sample result (188/200 conditioned, 12 skipped):** σ med 1067 ppm [480, 3849]; CDPP(1h) med 222 ppm, CDPP(2h) 154 ppm; τ_GP med ~8 min. **Stationary 187/188 (99 %); white 166/188 (88 %); flagged 12 %** (active-star tail → window-widening candidates at M2). Physically sensible TESS 2-min precision.
+- M1 stack installed (lightkurve 2.6.0, wotan 1.10, celerite2 0.3.2).
+
+Artifacts created/updated:
+- `research/m1_conditioning/` (pipeline, config, README, requirements).
+- `data/manifests/m1/`: noise summary (CSV tracked; parquet gitignored) + describe + provenance JSON + pip-freeze. Conditioned residuals (`data/processed/m1/*.npz`) and LC cache gitignored.
+- `PHASE1_M1_PLAN.md` §7 updated — criteria met on the η-sample; results table recorded.
+
+Problems / Risks carried forward:
+- 12 % active-star tail not fully whitened at 0.5 d window — expected; handled by the **M2 η ≥ 0.90 check** (per-cell window widening before any M3 threshold). 12 skips (no retrievable frozen-sector SPOC product).
+- Full-pool conditioning (6,925) deferred — runs on demand at detection (M3/M4) unless owner wants it pre-computed.
+
+Next Action:
+- **M2** — injection harness (Mandel–Agol) + η = δ_post/δ_true per (P,R_p) cell; finalize the detrend window (η ≥ 0.90) before M3. TEST sealed until M4; Seal #2 (thresholds) at M3.
+
+---
+
 ## Template for future entries
 
 Date:
