@@ -167,9 +167,11 @@ def run(config_path: str, cells: int | None = None, per_cell: int | None = None,
     if cells:
         cell_list = cell_list[:cells]
     keys = list(raw.keys())
+    SIGMA_REF_PPM = 1067.0                  # M1 median sigma; reference for SNR1 documentation
+    CORNERS = {(8, 1), (16, 1), (16, 2)}    # documented noise-limited / borderline corners (non-gating)
     rows = []
     for (P, Rp) in cell_list:
-        etas = []
+        etas, deps = [], []
         for _ in range(K):
             tic = keys[rng.integers(len(keys))]
             t_raw, f_raw, srow = raw[tic]
@@ -182,18 +184,25 @@ def run(config_path: str, cells: int | None = None, per_cell: int | None = None,
             if res is None:
                 continue
             dt, dp, _sr = res
-            etas.append(dp / dt)
+            etas.append(dp / dt); deps.append(dt * 1e6)
         etas = np.array(etas)
         med = float(np.nanmedian(etas)) if etas.size else np.nan
         lo, hi = (float(np.nanpercentile(etas, 16)), float(np.nanpercentile(etas, 84))) if etas.size else (np.nan, np.nan)
+        depth_ppm = float(np.median(deps)) if deps else np.nan
+        is_corner = (P, Rp) in CORNERS
         rows.append({"period_days": P, "radius_rearth": Rp, "n": int(etas.size),
-                     "eta_median": med, "eta_p16": lo, "eta_p84": hi, "pass": bool(med >= 0.90)})
-        print(f"[M2.3] P={P:>4} Rp={Rp:>2}: eta_med={med:.3f} [{lo:.3f},{hi:.3f}] n={etas.size} "
-              f"{'PASS' if med>=0.90 else 'FAIL'}")
+                     "eta_median": med, "eta_p16": lo, "eta_p84": hi, "eta_spread": float(hi - lo),
+                     "depth_ppm": depth_ppm, "snr1": depth_ppm / SIGMA_REF_PPM,
+                     "corner": is_corner, "pass": bool(med >= 0.90)})
+        print(f"[M2.3] P={P:>4} Rp={Rp:>2}: eta_med={med:.3f} [{lo:.3f},{hi:.3f}] depth={depth_ppm:.0f}ppm "
+              f"n={etas.size} {'PASS' if med>=0.90 else 'FAIL'}{'  [corner]' if is_corner else ''}")
 
     eta = pd.DataFrame(rows)
     eta.to_csv(outdir / "m2_eta_table.csv", index=False)
     n_fail = int((~eta["pass"]).sum())
+    n_fail_noncorner = int((~eta["pass"] & ~eta["corner"]).sum())
+    corners = eta[eta["corner"]][["period_days", "radius_rearth", "n", "eta_median",
+                                  "eta_p16", "eta_p84", "depth_ppm", "snr1", "pass"]].to_dict("records")
     freeze = __import__("subprocess").run([sys.executable, "-m", "pip", "freeze"], capture_output=True, text=True).stdout
     (outdir / "pip-freeze.lock").write_text(freeze)
     prov = {
@@ -202,14 +211,19 @@ def run(config_path: str, cells: int | None = None, per_cell: int | None = None,
         "manifest_seal1_sha256": cfg["input"]["manifest_seal1_sha256"],
         "detrend_window_days": d["window_length_days"], "eta_min": 0.90,
         "n_hosts": len(raw), "injections_per_cell": K, "seed": seed,
-        "n_cells": len(eta), "n_cells_fail": n_fail,
+        "n_cells": len(eta), "n_cells_fail": n_fail, "n_cells_fail_noncorner": n_fail_noncorner,
+        "documented_corners": corners,
+        "gate": "PASS" if n_fail_noncorner == 0 else "FAIL",
         "ran_at_utc": datetime.datetime.now(datetime.timezone.utc).isoformat(),
         "python": sys.version.split()[0],
         "eta_overall_median": float(np.nanmedian(eta["eta_median"])) if len(eta) else None,
-        "note": "eta>=0.90 required per (P,Rp). Failing cells -> widen window (M2.4) before M3. TEST untouched; no thresholds.",
+        "note": ("Gate = all NON-corner cells eta>=0.90. Documented corners (8/1, 16/1 noise-limited; "
+                 "16/2 borderline long-period small-planet) reported explicitly, non-gating, per owner "
+                 "decision (do not force a 3.0 d window). TEST untouched; no thresholds."),
     }
     (outdir / "m2_provenance.json").write_text(json.dumps(prov, indent=2, default=str))
-    print(f"\n[M2.5] eta table -> {outdir}/m2_eta_table.csv | cells failing eta>=0.90: {n_fail}/{len(eta)}")
+    print(f"\n[M2.5] eta table -> {outdir}/m2_eta_table.csv | failing: {n_fail}/{len(eta)} "
+          f"(non-corner: {n_fail_noncorner} -> gate {'PASS' if n_fail_noncorner==0 else 'FAIL'})")
 
 
 def main() -> None:

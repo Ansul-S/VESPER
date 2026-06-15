@@ -5,7 +5,7 @@
 | **Document** | M2 execution plan + injection / η-validation frozen-choices proposal |
 | **Increment** | **v0.1 — M2 only** (Injection harness + η ≥ 0.90 transit-preservation check) |
 | **Created** | 2026-06-15 |
-| **Status** | **SIGNED OFF** (owner, 2026-06-15) — batman Mandel–Agol + quadratic Claret-2017 LD; e=0 / a/R⋆ from density; null-pool η (200/cell, LS depth); config frozen in `m2_config.yaml`; building harness |
+| **Status** | **IN PROGRESS** — harness built + validated; **detrend window FINALIZED at 2.5 d** (M2.4, owner-approved 2026-06-15); full η grid (30 cells × 200 inj) running. Corners 8/1 & 16/1 (noise-limited), 16/2 (borderline) documented + non-gating. |
 | **Builds on** | M0 (Seal #1 `1f2d49e1…`), M1 (Stage-0 conditioning; config `m1_config.yaml`, window 0.5 d **provisional**) |
 | **Authority** | Subordinate to the sealed pre-registration (`phase1-prereg-v2`). Executes VAL §3 (injection truth), §4.2 (η check), A.1/A.4/A.9. Changes nothing in the sealed docs. |
 
@@ -75,6 +75,34 @@
 - Fixed RNG seed (propose `20260615`); injections reproducible; config + versions pinned in provenance.
 
 ---
+
+## 3a. Window finalization (M2.4 — executed + owner-approved 2026-06-15)
+
+The provisional 0.5 d window fails η≥0.90 on long-period/shallow cells (biweight absorbs isolated shallow transits). A window sweep on the hardest cells (80 inj/cell):
+
+| Window | 16/1 | 16/2 | 16/4 | 8/2 | 8/4 | 4/2 | min |
+|--------|------|------|------|-----|-----|-----|-----|
+| 1.0 d | 0.85 | 0.86 | 0.89 | 0.89 | 0.93 | 0.90 | 0.85 |
+| 1.5 d | 0.75 | 0.93 | 0.92 | 0.95 | 0.94 | 0.95 | 0.75 |
+| 2.0 d | 0.51 | 0.90 | 0.95 | 0.95 | 0.97 | 0.93 | 0.51 |
+| 3.0 d | 0.94 | 0.96 | 0.99 | 0.91 | 0.98 | 0.97 | 0.91 |
+
+Focused **2.5 d** validation (150 inj/cell) with depth + η-spread + SNR₁ (=depth/σ, σ≈1067 ppm):
+
+| Cell | η_med | spread | depth | SNR₁ | read |
+|------|-------|--------|-------|------|------|
+| 16/1 | 0.833 | 1.96 | 73 ppm | 0.07 | **noise-dominated** (p16<0) |
+| 8/1 | 0.867 | 1.83 | 71 ppm | 0.07 | **noise-dominated** (p16<0) |
+| 16/2 | 0.879 | 0.51 | 279 ppm | 0.26 | **borderline** (partial signal) |
+| 16/4 | 0.959 | 0.16 | 1587 ppm | 1.49 | clean PASS |
+| 16/8 | 0.997 | 0.04 | 4536 ppm | 4.25 | clean PASS |
+| 8/2 | 0.926 | 0.41 | 284 ppm | 0.27 | PASS |
+| 8/4 | 0.959 | 0.12 | 1175 ppm | 1.10 | clean PASS |
+| 4/2 | 0.932 | 0.33 | 294 ppm | 0.28 | PASS |
+
+**Decision (owner-approved):** finalize the global detrend window at **2.5 d**. All individually-measurable cells (Rₚ≥4, SNR₁≳1) clear η≥0.90 with tight spread; the η spread balloons only as depth falls below the noise. **Documented corners (non-gating):** **8/1, 16/1** = single-transit noise-limited (SNR₁≈0.07, η meaningless); **16/2** = borderline long-period small-planet (SNR₁≈0.26). These three are carried into the full grid with explicit η distributions but **do not force** a 3.0 d window (which would over-penalize detrending for all stars). **Gate = all non-corner cells η≥0.90.**
+
+**Consequence:** the M1 η-sample noise model (σ/CDPP/τ_GP) was computed at 0.5 d and is **superseded**; it must be recomputed at 2.5 d before M3.
 
 ## 4. Risks
 | ID | Risk | Mitigation |

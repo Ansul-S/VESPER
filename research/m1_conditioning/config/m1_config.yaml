@@ -3,12 +3,18 @@
 # The detrend window is a STARTING value; it is η-finalized at M2 (>=0.90) before any M3 threshold.
 
 # --- Decision A/B: detrend (wotan biweight time-windowed slider) ---
+# Detrend window FINALIZED at M2 (2026-06-15) via the eta>=0.90 transit-preservation check
+# (VAL §4.2): 0.5 d provisional -> 2.5 d. At 2.5 d all individually-measurable cells (Rp>=4,
+# SNR1>~1) clear eta>=0.90; the Rp=1 corners (8/1, 16/1) are noise-dominated and 16/2 is a
+# borderline long-period small-planet corner (documented, carried into the full grid; NOT
+# allowed to force a 3.0 d window). CONSEQUENCE: the M1 eta-sample noise model (sigma/CDPP/
+# tau_GP) was computed at 0.5 d and is SUPERSEDED; it must be recomputed at 2.5 d before M3.
 detrend:
   method: "biweight"
-  window_length_days: 0.5     # start; widened per (P,R_p) cell at M2 if median eta < 0.90
+  window_length_days: 2.5     # FINALIZED at M2 (was 0.5 provisional)
   cval: 5                     # wotan biweight tuning constant (default)
-  break_tolerance_days: 0.5   # do not bridge gaps larger than this
-  edge_cutoff_days: 0.5
+  break_tolerance_days: 2.5   # matched to the finalized window
+  edge_cutoff_days: 2.5
 
 # --- Decision B: masking ---
 masking:
