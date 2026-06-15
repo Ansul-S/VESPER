@@ -80,6 +80,35 @@ Next Action:
 
 ---
 
+## 2026-06-15 (cont.) — M0 executed and sealed (Seal #1)
+
+Worked On:
+- Implemented the M0 manifest pipeline (`research/m0_manifest/m0_pipeline.py`) and ran M0 end-to-end against live TESS archives. First data-touching milestone — **catalog metadata only, no flux**.
+
+Discoveries / Decisions:
+- **Sectors S1–S3 (south) are feasible — no widening needed.** 32,960 unique SPOC 2-min TICs → **22,723** after cuts. n_sectors: 15,450 (1) / 3,841 (2) / 3,432 (3, CVZ). M0.5: every period node ≥ 500 eligible test hosts at n_tr≥2; binding **P=16 d = 5,794 test hosts**. (Owner rule: widen only if metrics demand — they don't.)
+- **Leakage-safe split:** HEALPix nside=8 whole-block, seed 20260615, 30/70 → calibration 6,925 / test 15,798; **leakage audit PASS** (0 shared pixels; TIC-disjoint).
+- **Seal #1 (manifest SHA-256): `1f2d49e194b0960f1eacb0c72c25087b4c299620e38f299e2d55706199e83f1f`** — deterministic across 3 runs. Provenance + TOI snapshot in `data/manifests/m0/m0_manifest_provenance.json` (tracked); bulk manifest parquet gitignored (regenerable).
+- **Three faithful realizations (flagged, reversible pre-seal):**
+  1. `CROWDSAP` is a per-LC FITS-header value, not a catalog field → crowding applied via TIC `contratio ≤ 0.25` (CROWDSAP≈1/(1+contratio)); literal CROWDSAP confirmed at M1.
+  2. ExoFOP timed out → TOI labels from **NASA Exoplanet Archive TAP** (table `toi`): 97 confirmed-planet hosts, 224 planet/cand, 45 known-FP, 41 multi-planet, null 22,458.
+  3. FP labels = TOI FP/FA dispositions (largely EBs); dedicated EB catalog (Prša et al. 2022) deferred to M1+.
+- Tooling stack installed in `.venv` (astroquery 0.4.11 etc.); `pip freeze` pinned into provenance.
+
+Artifacts created/updated:
+- `research/m0_manifest/m0_pipeline.py` (M0.1–M0.6 implemented); `config/m0_config.yaml` (signed choices).
+- `data/manifests/m0/`: provenance JSON + TOI snapshot + pip-freeze lock (tracked); manifest/intermediate parquets (gitignored).
+- `PHASE1_EXECUTION_PLAN.md` §3.7–3.8 updated — all completion criteria ☑, Seal #1 recorded, M0 signed DONE.
+
+Problems / Risks carried forward:
+- R0-3 null-pool incompleteness (undetected planets in "null" stars) recorded — bounds H4 FAR calibration.
+- Manifest table not in git (data-gitignore policy) — seal anchored to hash + provenance + TOI snapshot + pinned versions; decide later whether to archive the frozen table (release asset/DVC).
+
+Next Action:
+- Land M0 (PR #2 from `phase1/m0-setup`) and/or begin **M1** (Stage-0 conditioning on the calibration pool). TEST sealed until M4; **Seal #2** (thresholds) at M3.
+
+---
+
 ## Template for future entries
 
 Date:

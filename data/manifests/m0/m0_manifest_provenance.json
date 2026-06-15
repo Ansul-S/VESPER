@@ -1,0 +1,109 @@
+{
+  "milestone": "M0",
+  "seal": "Seal #1 (manifest content hash)",
+  "manifest_sha256": "1f2d49e194b0960f1eacb0c72c25087b4c299620e38f299e2d55706199e83f1f",
+  "config_sha256": "4daf55aea9d75a149cea840163895513ad6f790200036113116b6e0e4751cd92",
+  "sealed_at_utc": "2026-06-15T08:30:12.291463+00:00",
+  "sectors": {
+    "sectors": [
+      1,
+      2,
+      3
+    ],
+    "hemisphere": "south",
+    "rationale": "Contiguous primary-mission SPOC 2-min triplet including the southern continuous-viewing-zone overlap, giving ~3-sector baseline for n_transits>=2 across the injection grid incl. P=16d. M0.5 validates per-cell coverage; widen only if a headline cell underpowers (owner-directed)."
+  },
+  "n_targets": 22723,
+  "split_counts": {
+    "calibration": 6925,
+    "test": 15798
+  },
+  "python": "3.11.9",
+  "feasibility": [
+    {
+      "period_days": 0.5,
+      "split": "calibration",
+      "eligible_hosts": 6925
+    },
+    {
+      "period_days": 0.5,
+      "split": "test",
+      "eligible_hosts": 15798
+    },
+    {
+      "period_days": 1.0,
+      "split": "calibration",
+      "eligible_hosts": 6925
+    },
+    {
+      "period_days": 1.0,
+      "split": "test",
+      "eligible_hosts": 15798
+    },
+    {
+      "period_days": 2.0,
+      "split": "calibration",
+      "eligible_hosts": 6925
+    },
+    {
+      "period_days": 2.0,
+      "split": "test",
+      "eligible_hosts": 15798
+    },
+    {
+      "period_days": 4.0,
+      "split": "calibration",
+      "eligible_hosts": 6925
+    },
+    {
+      "period_days": 4.0,
+      "split": "test",
+      "eligible_hosts": 15798
+    },
+    {
+      "period_days": 8.0,
+      "split": "calibration",
+      "eligible_hosts": 6925
+    },
+    {
+      "period_days": 8.0,
+      "split": "test",
+      "eligible_hosts": 15798
+    },
+    {
+      "period_days": 16.0,
+      "split": "calibration",
+      "eligible_hosts": 1479
+    },
+    {
+      "period_days": 16.0,
+      "split": "test",
+      "eligible_hosts": 5794
+    }
+  ],
+  "test_set_access_rule": "TEST rows are read for the first and only time at M4 (single sealed run). No detection statistic is computed on TEST before M4 (plan G1).",
+  "note": "Seal #1 = manifest_sha256 (who/what data). Calibration-derived THRESHOLDS are sealed separately at M3 (Seal #2; VAL A.10). No thresholds in M0.",
+  "toi_source": "NASA Exoplanet Archive TAP, table 'toi'",
+  "toi_snapshot_path": "data/manifests/m0/m0_toi_snapshot.csv",
+  "toi_snapshot_sha256": "20c2a2499fdb8962d4b8ac016ddc4020c62199d3bb56b94dff98eb2775cce137",
+  "toi_query_utc": "2026-06-15T08:30:11.481795+00:00",
+  "toi_total_rows": 7931,
+  "toi_in_sample": 328,
+  "n_known_planet_hosts": 97,
+  "n_planet_host_or_candidate": 224,
+  "n_known_fp": 45,
+  "n_multiplanet": 41,
+  "n_null": 22458,
+  "null_pool_caveat": "Null = no TOI of any disposition. Catalog incompleteness leaves some undetected planets in null stars; bounds H4 FAR calibration; reported (R0-3).",
+  "eb_catalog_note": "FP set = TOI FP/FA dispositions (largely EBs/variables). Dedicated TESS EB catalog (Prsa et al. 2022) can enrich the FP labels at M1+.",
+  "split_scheme": "healpix",
+  "healpix_nside": 8,
+  "rng_seed": 20260615,
+  "training_split": false,
+  "calibration_n": 6925,
+  "test_n": 15798,
+  "achieved_calibration_fraction": 0.3047572943713418,
+  "n_pixels_calibration": 36,
+  "n_pixels_test": 80,
+  "pixel_overlap": 0
+}

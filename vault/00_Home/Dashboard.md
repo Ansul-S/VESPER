@@ -17,13 +17,14 @@ Determine whether evidence-first routing can reduce computational cost while pre
 - Seal (`phase1-prereg-v2`) — ✅ Complete
 - GitHub (push + tag) — ✅ Complete
 - PHASE1_EXECUTION_PLAN.md (M0 increment) — ✅ Authored + APPROVED (2026-06-15)
-- **Current milestone — M0 (ready to execute)** ▶
+- M0 — Manifest freeze + leakage-safe split — ✅ DONE (Seal #1 `1f2d49e1…`, 2026-06-15)
+- **Current milestone — M1 (Stage-0 conditioning)** ▶
 
 ## Milestone Ladder
 
 - Pre-registration completion + seal — ✅ DONE (2026-06-15)
 - M0 execution plan authored + approved — ✅ DONE (2026-06-15)
-- **M0 — Freeze sector/target manifest + leakage-safe split** — ▶ READY TO EXECUTE (not started) → Seal #1 (manifest hash)
+- **M0 — Freeze sector/target manifest + leakage-safe split** — ✅ DONE — Seal #1 `1f2d49e1…`; 22,723 targets (S1–S3); cal 6,925 / test 15,798 (2026-06-15)
 - M1 — Detectability census (SNR₁ distribution; tests A1)
 - M2 — Conditioning + injection campaign
 - M3 — Threshold calibration (calibration set only) → seal calibration manifest hash
@@ -53,7 +54,7 @@ Determine whether evidence-first routing can reduce computational cost while pre
 
 ## Next Action
 
-Begin M0 per PHASE1_EXECUTION_PLAN.md §3 (M0.1–M0.6): freeze sectors → build metadata manifest → pin labels/null pool → leakage-safe split → feasibility/power check → hash manifest (Seal #1). Catalog metadata only; no light-curve download until M1; TEST sealed until M4; no thresholds until M3.
+M0 done — Seal #1 `1f2d49e1…` (22,723 targets, cal 6,925 / test 15,798, feasibility passed). Next: land M0 (PR) and/or begin M1 (Stage-0 conditioning on the calibration pool). TEST sealed until M4; Seal #2 (thresholds) at M3.
 
 ## Notes
 
