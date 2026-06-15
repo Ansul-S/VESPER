@@ -85,14 +85,26 @@ All choices are outcome-independent (set before detection); the window is η-fin
 - M1.5 diagnostics table (stationarity/whiteness).
 - `research/m1_conditioning/` tooling.
 
-## 7. Completion criteria (binary)
-1. ☐ Conditioning config **frozen** from signed §4 choices; recorded with provenance.
-2. ☐ Calibration LCs retrieved (η-sample ✓, then full pool); **no TEST target touched**.
-3. ☐ Stage-0 conditioning produces zero-centred `r(t)` with masks applied.
-4. ☐ Per-target noise model yields σ, CDPP(T₁₄), τ_GP.
-5. ☐ Stationarity/whiteness diagnostics recorded (A2/A4).
-6. ☐ **No threshold set; TEST untouched; sealed docs unmodified** (`git diff phase1-prereg-v2` empty).
-7. ☐ (Hands off to M2) η inputs ready; window finalization deferred to the M2 η ≥ 0.90 check.
+## 7. Completion criteria (status as executed 2026-06-15, η-sample)
+1. ☑ Conditioning config **frozen** from signed §4 choices (`m1_config.yaml`); provenance recorded.
+2. ◐ Calibration LCs retrieved — **η-sample done (188/200 conditioned, 12 skipped)**; **no TEST target touched** (asserted). Full-pool conditioning runs **on demand at detection (M3/M4)**, not as a blocking M1 step.
+3. ☑ Stage-0 conditioning produces zero-centred `r(t)` (per-sector biweight + quality/momentum masks).
+4. ☑ Per-target noise model yields σ, CDPP(ref durations), τ_GP (robust ACF; celerite2 cross-check).
+5. ☑ Stationarity/whiteness diagnostics recorded (A2/A4).
+6. ☑ **No threshold set; TEST untouched; sealed docs unmodified** (`git diff phase1-prereg-v2` empty).
+7. ☑ (Hands to M2) η inputs ready; window finalization deferred to the M2 η ≥ 0.90 check.
+
+**M1 η-sample results (188 calibration targets):**
+| Metric | Median | [p10, p90] |
+|--------|--------|------------|
+| σ (ppm) | 1,067 | [480, 3,849] |
+| CDPP 1 h (ppm) | 222 | [96, 1,137] |
+| CDPP 2 h (ppm) | 154 | [66, 818] |
+| τ_GP (d) | 0.0056 (~8 min) | [0.0042, 0.014] |
+| scatter-ratio (halves) | 1.007 | [0.97, 1.05] |
+| acf lag-1 | 0.005 | [−0.007, 0.26] |
+
+**Conditioning quality:** stationary (0.7 ≤ ratio ≤ 1.43) **187/188 (99 %)**; white (\|acf_lag1\| < 0.2) **166/188 (88 %)**; flagged (non-white **or** non-stationary) **22/188 (12 %)** — the expected active-star tail, candidates for per-cell window widening at M2. Noise/QA summary: `data/manifests/m1/m1_noise_summary.csv` (+ provenance JSON).
 
 ## 8. Sign-off
 | Decision | Owner choice (2026-06-15) |
