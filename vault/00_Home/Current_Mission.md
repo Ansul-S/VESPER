@@ -27,7 +27,7 @@ Next Milestone:
 **M4 — Single sealed-TEST evaluation** → primary endpoints E1 (recall non-inferiority) / E2 (scoped compute). Seal #2 now in place. **TEST stays sealed until this single run.**
 
 Next Action:
-**Begin M4 — the single sealed-TEST run** against Seal #2 (`6292c018…`): apply the frozen machinery + thresholds to the TEST split exactly once → E1/E2. Anti-tuning: TEST read for the first time at M4; no threshold/config change permitted. Branch `phase1/m3-calibration`; M3 work + Seal #2 to be committed.
+**Begin M4 — the single sealed-TEST run** against Seal #2 (`6292c018…`): draft `PHASE1_M4_PLAN.md` (execution-only; no new frozen parameters), then apply the frozen machinery + thresholds to the TEST split exactly once → E1/E2. Anti-tuning: TEST read for the first time at M4; no threshold/config change permitted. **M3 landed on `main`** (PR #6 + #7 merged; Seal #2 in remote history).
 
 Execution Plan:
 `PHASE1_EXECUTION_PLAN.md` (v0.1, M0). M3: `PHASE1_M3_PLAN.md` (signed). Tooling: `research/m3_calibration/`. Provisional artifacts: `data/manifests/m3/` (185 diagnostic under `diagnostic_185/`).

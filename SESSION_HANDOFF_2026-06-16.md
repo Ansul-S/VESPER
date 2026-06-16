@@ -61,6 +61,23 @@ Phase I has completed **M0 → M3**. The pre-registration is sealed (`phase1-pre
 3. Draft `PHASE1_M4_PLAN.md` first (execution-only; reuses Seal #2 — introduces no new frozen parameters) and confirm scope before touching TEST.
 4. Expect the headline to be driven by Rₚ≤2 (see §3 note); report the Rₚ=1 recall bound honestly.
 
+## 7a. Active blockers, open questions, risks
+
+**Active blockers:** none. M4 is unblocked; it needs an execution plan (`PHASE1_M4_PLAN.md`) and a (large) conditioning + dual-arm TLS run over the **TEST** split.
+
+**Open questions (carry forward):**
+- **M4 conditioning logistics** — TEST has 15,798 targets; conditioning + full-TLS over both arms is a large, network-heavy, multi-hour/overnight job. Plan batching/parallelism (the M3 `imap_unordered` + retry pattern) and the compute ledger (ρ_d, CPU-core-seconds) up front.
+- **31 retained high-SDE survivors** — kept in the null calibration (audited, no hand-pruning); reassess only if they distort downstream diagnostics. They do **not** touch TEST.
+- **Full 6,885 null pass** — owner deemed unnecessary (1000-star CIs tight); revisit only if M4 suggests T is mis-set.
+- **EB/variable enrichment for M6 reality-check** — M3 built Prša-2022+VSX cross-match for null cleaning; M6 FP labels (currently TOI dispositions) could reuse it.
+
+**Risks (full register in `PHASE1_READINESS_REPORT.md` §6):**
+- **R-1 compute external validity (top):** scoped compute claim holds only if detector overhead ρ_d is small (π·f_p > ρ_d) — first measured at M4.
+- **Small-planet recall (Seal #2 note):** E1 is occurrence-weighted toward Rₚ≤2 R⊕ (92.8% of w_c), and Rₚ=1 is single-transit noise-limited — recovered only via the TLS fallback (folding). The recall headline rides on this; report the Rₚ=1 bound honestly.
+- **Wide 2.5 d window → elevated noise floor:** T=10.74 (vs textbook ~7–9) reflects honest residual systematics; watch detection SNR for active stars at M4.
+- **R-3 seed-accuracy collapse under red noise** (the v3 failure mode): a real possible null, first testable at M4.
+- **Single-shot M4:** anti-tuning permits exactly one TEST evaluation — it must be right (frozen machinery + Seal #2, no peeking).
+
 ## 8. Files to review on resume
 
 - **Plans:** `PHASE1_M3_PLAN.md` (signed; §8 completion + §8b Seal #2 record), `PHASE1_M2_PLAN.md`, `PHASE1_EXECUTION_PLAN.md`.

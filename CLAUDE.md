@@ -82,6 +82,7 @@ The vault must never contradict the repository. The repository is authoritative;
 
 - **Do not build prematurely.** Phase I has **no learned models, no dashboards, no deployment**. Phase I uses a *simple, untrained* detector on purpose, so a pass/fail is attributable to the routing *principle*, not a model.
 - **Pre-registration discipline.** [`docs/TRINETRA_X_PHASE1_VALIDATION.md`](./docs/TRINETRA_X_PHASE1_VALIDATION.md) and [`docs/SCIENTIFIC_HYPOTHESIS.md`](./docs/SCIENTIFIC_HYPOTHESIS.md) freeze the experiment. **Changing a frozen parameter after data is touched is forbidden.** Amendments made *before* data is read are legitimate but must be **re-dated** as a new pre-registration version.
+- **Sign-off gates.** Frozen-parameter decisions, threshold calibrations, and seal creation require **explicit owner review/sign-off before execution** — present choices (and provisional results) for approval first; never derive or seal without it.
 - **Documents remain the authoritative deliverables.** Specs/decisions are Markdown with LaTeX math (`$…$`). Milestone **execution tooling now exists** under `research/m0_manifest/`, `research/m1_conditioning/`, `research/m2_injection/` (M0–M2); the sealed protocol still governs and "no premature Phase II machinery" still holds.
 - **Negative results are results.** A clean falsification of the hypothesis is a successful Phase I, to be reported with equal rigor.
 - **Ask before scope expansion.** If a task implies building Phase II machinery (learned detector, classifier, habitability), confirm first.
@@ -104,7 +105,8 @@ The vault must never contradict the repository. The repository is authoritative;
 | [`PHASE1_EXECUTION_PLAN.md`](./PHASE1_EXECUTION_PLAN.md) · [`PHASE1_M0_CHOICES.md`](./PHASE1_M0_CHOICES.md) | M0 execution plan + signed frozen choices (Seal #1) |
 | [`PHASE1_M1_PLAN.md`](./PHASE1_M1_PLAN.md) | M1 Stage-0 conditioning plan + signed choices |
 | [`PHASE1_M2_PLAN.md`](./PHASE1_M2_PLAN.md) | M2 injection + η transit-preservation; detrend-window finalization (2.5 d) |
-| [`SESSION_HANDOFF_2026-06-16.md`](./SESSION_HANDOFF_2026-06-16.md) | Latest session handoff (resume point) |
+| [`PHASE1_M3_PLAN.md`](./PHASE1_M3_PLAN.md) | M3 threshold calibration + signed choices; null-pool cleaning; **Seal #2** record |
+| [`SESSION_HANDOFF_2026-06-16.md`](./SESSION_HANDOFF_2026-06-16.md) · [`NEXT_SESSION_PROMPT.md`](./NEXT_SESSION_PROMPT.md) | Latest session handoff (resume point) + ready-to-paste next-session bootstrap |
 | [`archive/`](./archive/) | Historical (Revival-era audit & review) — context only, not current |
 
 ## Directory map
@@ -113,9 +115,9 @@ The vault must never contradict the repository. The repository is authoritative;
 docs/        canonical specifications and theory
 src/         pipeline-stage scaffold (Phase-I tooling lives in research/):
              conditioning, detector, period_recovery, confirmation, classifier, evaluation
-data/        manifests/{m0,m1,m2} = provenance + results (tracked);
+data/        manifests/{m0,m1,m2,m3} = provenance + results (tracked; m3 holds Seal #2);
              raw/processed/injections/benchmark = local caches (gitignored)
-research/    m0_manifest, m1_conditioning, m2_injection (M0–M2 tooling);
+research/    m0_manifest, m1_conditioning, m2_injection, m3_calibration (M0–M3 tooling);
              + experiments, benchmarks, validation, literature
 results/     outputs (empty)
 notebooks/   exploratory notebooks (empty)
@@ -130,13 +132,14 @@ archive/     prior-project audit & review (reference only)
 - **Pre-registration is SEALED (v2, 2026-06-15).** All Critical/Must-fix (F1, F2, F6, F8) + should-fix (R-4..R-7) resolved in the seal. Remaining gap items are Low hygiene only (F9 BLS wording).
 - **F1 decision (DR-001):** compute claim scoped to the fast-path-eligible population; survey-representative compute is a pre-registered *secondary* endpoint (ρ_d, π\*); clean-skip deferred to Phase II. [`docs/decisions/F1_DECISION_RECORD.md`](./docs/decisions/F1_DECISION_RECORD.md).
 - **Sealed documents (do not edit without a new re-registration):** `SCIENTIFIC_HYPOTHESIS.md` v2.0, `TRINETRA_X_PHASE1_VALIDATION.md` v2 (incl. Appendix A), `TRINETRA_MATHEMATICAL_FOUNDATIONS.md` v1.1. Seal = git tag **`phase1-prereg-v2`** (commit `723087e`), pushed (`origin` = github.com/Ansul-S/TRINETRA-X). Content hashes in DR-001.
-- **M0 / M1 / M2 EXECUTED (2026-06-15 → 16):**
+- **M0 / M1 / M2 / M3 EXECUTED (2026-06-15 → 16):**
   - **M0** — manifest + leakage-safe split. **Seal #1** (manifest SHA-256 `1f2d49e194b0960f1eacb0c72c25087b4c299620e38f299e2d55706199e83f1f`). Sectors **S1–S3**; **22,723** targets; calibration 6,925 / test 15,798. Manifest table = release asset `m0-manifest-v1` (hash + provenance in git).
-  - **M1** — Stage-0 conditioning (wotan biweight + noise model). η-sample 188/200; σ ~1067 ppm.
+  - **M1** — Stage-0 conditioning (wotan biweight + noise model). η-sample 188/200. **Noise model recomputed at the finalized 2.5 d window** (188/188; 0.5 d superseded → `data/manifests/m1/superseded_0.5d/`).
   - **M2** — injection + η transit-preservation. **Detrend window finalized at 2.5 d.** η gate PASS on Rₚ≥2; **Rₚ=1 row excluded as noise-limited** (detectability bimodality); 0.5/2 documented borderline.
-- **The TEST split is untouched (sealed until the single M4 run). No detection thresholds set yet** — those are **M3 → Seal #2** (calibration-derived, hash-sealed before M4; VAL A.10). Anti-tuning (non-negotiable #2) intact.
-- **Immediate next step: M3 — threshold calibration → Seal #2.** Prerequisite: **recompute the M1 noise model at the finalized 2.5 d window** (the 0.5 d model is superseded). Then draft `PHASE1_M3_PLAN.md` + a frozen-parameter choices proposal and get owner sign-off **before** deriving/sealing thresholds. First merge PR #4 (M2) and sync `main`.
-- **Latest handoff:** [`SESSION_HANDOFF_2026-06-16.md`](./SESSION_HANDOFF_2026-06-16.md). PR-based landing: PRs #1–3 merged, **PR #4 (M2) open**. GSD Core is globally installed but **not used** here (no local `.planning/`). Archive material is reference only; prefer repository documents over chat summaries.
+  - **M3** — threshold calibration on the cleaned null pool → **Seal #2** (threshold manifest SHA-256 `6292c018c6923d512ac9c90dd55289cc010724d9facc27dc087f7e3f20832692`). Sealed: **z⋆=3.4 · z_mono=5.3 · N_min=2 · T=10.74 · α_FAP=1% · ε=0.01**; **w_c** (A.5; 92.8% weight on Rₚ≤2 R⊕) · **π̂=3.17%** (A.6; Kunimoto & Matthews 2020). **Null-pool EB/variable contamination found + cleaned** (Prša 2022 + VSX + automated vetting; 854 of a 1000-star null draw; M0 null definition preserved). Verify: `shasum -a 256 data/manifests/m3/m3_threshold_manifest_SEALED_CORE.json`.
+- **The TEST split is untouched (sealed until the single M4 run). Thresholds are SET + hash-sealed (Seal #2, VAL A.10).** Anti-tuning (non-negotiable #2) intact: `git diff phase1-prereg-v2` empty; 0 TEST TICs in any M3 artifact.
+- **Immediate next step: M4 — the single sealed-TEST run** → primary endpoints E1 (recall non-inferiority) / E2 (scoped compute) against the frozen Seal #2 thresholds. Draft `PHASE1_M4_PLAN.md` (execution-only; no new frozen parameters) and confirm scope **before** reading TEST. **No threshold/weight/conditioning/detector/bootstrap change is permitted under Seal #2.**
+- **Latest handoff:** [`SESSION_HANDOFF_2026-06-16.md`](./SESSION_HANDOFF_2026-06-16.md) (+ [`NEXT_SESSION_PROMPT.md`](./NEXT_SESSION_PROMPT.md)). PR-based landing: **PRs #1–#7 merged** (M0–M3 + handoff on `main`). GSD Core is globally installed but **not used** here (no local `.planning/`). Archive material is reference only; prefer repository documents over chat summaries.
 
 ## Conventions
 
