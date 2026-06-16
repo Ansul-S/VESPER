@@ -164,4 +164,18 @@ Paper IV (Phase IV)  "TRINETRA-X: A Scalable Evidence-First Pipeline & Candidate
 
 ---
 
+## 12. Empirical Findings Log (as milestones complete)
+
+> Results recorded as milestones run, to feed the manuscript. **Each entry is a dataset-scoped *validation* result, not a final scientific conclusion.** Keep figure/table indices stable (§5–§6).
+
+### EF-1 — Detectability bimodality (M2 injection-recovery; 2026-06-16)
+
+**Finding.** Injection-recovery validation demonstrates a detectability bimodality in TESS 2-minute data: conditioning preserves transit depth (η ≥ 0.90) across the individually measurable population (Rₚ ≥ 2 R⊕ under the finalized 2.5 d detrending window), while the Earth-radius regime is dominated by single-transit noise limitations and is not recoverable through conditioning alone. Recovery of that regime is expected to depend on phase-folding and population-level signal accumulation rather than single-transit preservation.
+
+**Scope / caveats (do not overstate).** This is an **M2 transit-preservation validation result on the S1–S3 southern calibration sample at the finalized 2.5 d biweight window** — *not* a universal statement about all TESS Earth-sized planets. The Rₚ=1 η medians are noise-dominated (depth ~70–85 ppm, single-transit SNR₁ ~0.07–0.08; broad, non-physical η with negative lower quartiles); the boundary depends on stellar noise (σ), sector baseline, and the detrending configuration. The 0.5/2 cell is a documented low-SNR borderline (η = 0.892).
+
+**Connects to.** F1 (single-transit SNR bimodality), the §1 rationale / HYP A1, and the fallback's role (small planets recovered by folding, not single-transit conditioning). Source: `data/manifests/m2/m2_eta_table.csv`; `PHASE1_M2_PLAN.md` §3b. Candidate figure: η map over $(P, R_p)$ as a supplement to F1.
+
+---
+
 *Living document v1.0. Update as milestones complete; keep figure/table indices stable so drafts can reference them early.*

@@ -45,14 +45,17 @@ Determine whether evidence-first routing can reduce computational cost while pre
 - TRINETRA-X.md (charter) · TRINETRA_X_ARCHITECTURE.md · TRINETRA_CONCEPT_RECONSTRUCTION.md
 - REPOSITORY_GAP_ANALYSIS.md (F1–F12) · PHASE1_REMEDIATION.md
 - PHASE1_READINESS_REPORT.md · decisions/F1_DECISION_RECORD.md (DR-001)
-- PAPER_NOTES.md · SESSION_HANDOFF_2026-06-15.md
-- **PHASE1_EXECUTION_PLAN.md** (v0.1, M0 increment — execution artifact, subordinate to the seal)
+- PAPER_NOTES.md · references.bib · **SESSION_HANDOFF_2026-06-16.md** (latest)
+- **Execution plans / choices:** PHASE1_EXECUTION_PLAN.md (M0) · PHASE1_M0_CHOICES.md · PHASE1_M1_PLAN.md · PHASE1_M2_PLAN.md
+- **Tooling:** research/m0_manifest/ · research/m1_conditioning/ · research/m2_injection/
+- **Artifacts/provenance:** data/manifests/m0 (Seal #1) · m1 (noise summary) · m2 (η table)
 
 ## Findings Status
 
 - Critical/Must-fix: F1, F2, F6, F8 — ✅ resolved and sealed
 - Should-fix: R-4, R-5, R-6, R-7 — ✅ folded into v2 seal
-- Remaining: Medium/Low hygiene only (F7 charter note, F9 BLS wording, references.bib) — non-blocking
+- F7 (charter scoping note) — ✅ done; references.bib — ✅ created
+- Remaining: Low hygiene only (F9 BLS wording) — non-blocking
 
 ## Next Action
 
