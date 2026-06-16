@@ -1,0 +1,71 @@
+# M3 threshold-calibration config — SIGNED OFF 2026-06-16 (PHASE1_M3_PLAN.md §10, decisions A-G).
+# Untrained search machinery + threshold calibration on the CALIBRATION-null pool ONLY.
+# TEST is sealed until M4. No threshold value is hard-coded here: targets are sealed (VAL App. A),
+# the achieving values are DERIVED on calibration and recorded in the M3 report -> Seal #2 (post review).
+
+# --- Decision A: detector (GP-whitened matched filter, MATH §2) ---
+detector:
+  statistic: "whitened_matched_filter"   # box template, red-noise-aware normalization (duration-timescale scatter)
+  template: "box"
+  duration_grid_days: [0.05, 0.1, 0.2, 0.4, 0.8]   # T14 templates
+  t0_stride_frac: 0.5            # trial-epoch stride as a fraction of T14
+  whitening: "celerite2_SHOTerm" # GP kernel from the M1 2.5 d noise model; near-white residuals -> reduces to box MF
+  z_star_target_false_events_per_lc: 1.0   # A.3: <=1 expected false event per null LC
+  z_mono_target_false_events_per_lc: 0.1   # Decision B: monotransit branch, weaker FP control
+
+# --- Decision B: routing ---
+routing:
+  n_min: 2                       # SEALED: multi-event fast path iff >= N_min events
+  z_mono_gt_z_star: true         # z_mono > z_star enforced
+
+# --- Decision C: period-from-spacing + block-bootstrap FAP (MATH §4, §9.1; A.8) ---
+period_recovery:
+  method: "integer_comb"         # P_hat from event spacings t_j - t_i = m_ij P
+  bootstrap: "circular_block"    # noise-model-aware circular block bootstrap
+  block_len_multiple: 3          # SEALED formula: L_b = 3 * max(tau_GP, T14)
+  n_surrogates: 1000             # B = 1000
+  alpha_fap_target: 0.01         # 1% null-exceedance target; cutoff DERIVED + verified on null stars (H4)
+
+# --- Decision D: shared TLS engine (A.1, fairness keystone) ---
+tls:
+  engine: "transitleastsquares"  # PINNED; no BLS substitute
+  oversampling_factor: 3
+  period_min_days: 0.5
+  period_max_frac_baseline: 0.5  # P_max = 0.5 * T_base (>=2 transits)
+  identical_both_arms: true
+  far_target_per_star: 0.01      # A.2: empirical FAR <= 1%/star on null calibration stars -> threshold T
+
+# --- Decision E: fast-path window ---
+fast_path:
+  epsilon: 0.01                  # Arm B targeted window [P_hat(1-eps), P_hat(1+eps)]
+
+# --- Decision F: occurrence weights / prevalence (A.5/A.6) ---
+occurrence:
+  framework: "Kunimoto_Matthews_2020"   # sealed; w_c and pi_hat instantiated from the frozen formulae
+
+# --- Decision G: runtime / provenance ---
+runtime:
+  seed: 20260616
+  record_machine: true           # CPU model/cores/clock recorded in provenance (A.7)
+
+# --- Data scope (CALIBRATION-null only; TEST sealed) ---
+data_scope:
+  split: "calibration"
+  null_only: true                # is_null = not is_known_planet and not is_known_fp
+  calibration_sample: "null_random_1000"   # FINAL-scale: 1000 random null cal stars (owner 2026-06-16);
+                                            # diagnostic 185 archived under data/manifests/m3/diagnostic_185/
+  null_random_n: 1000            # draw size from the full 6885 null calibration pool (seed=runtime.seed)
+  detrend_window_days: 2.5       # FINALIZED at M2; condition null stars at this window
+
+# --- Inputs ---
+input:
+  manifest_release: "m0-manifest-v1"
+  manifest_seal1_sha256: "1f2d49e194b0960f1eacb0c72c25087b4c299620e38f299e2d55706199e83f1f"
+  m1_noise_summary: "data/manifests/m1/m1_noise_summary.csv"   # 2.5 d (sigma, tau_GP per target)
+  m1_config: "research/m1_conditioning/config/m1_config.yaml"
+  sectors: [1, 2, 3]
+
+# --- Outputs ---
+output:
+  resid_cache_dir: "data/processed/m1"          # cache 2.5 d residuals here (gitignored)
+  report_dir: "data/manifests/m3"               # threshold report + provenance (tracked, small)

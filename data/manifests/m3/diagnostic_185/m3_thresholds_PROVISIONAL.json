@@ -1,0 +1,39 @@
+{
+  "milestone": "M3",
+  "stage": "threshold calibration (PROVISIONAL \u2014 pre-review, NO Seal #2)",
+  "config_path": "/Users/ansulsuryawanshi/Desktop/TRINETRA-X/research/m3_calibration/config/m3_config.yaml",
+  "config_sha256": "1ee26c12218631bc1e3bed5e21e526d5d38816efb0b8b47f37c2aa6e56a82714",
+  "manifest_seal1_sha256": "1f2d49e194b0960f1eacb0c72c25087b4c299620e38f299e2d55706199e83f1f",
+  "split": "calibration",
+  "null_only": true,
+  "sample": "eta_sample_188_null",
+  "n_null_stars": 185,
+  "thresholds": {
+    "z_star": 3.6,
+    "z_mono": NaN,
+    "n_min": 2,
+    "T_sde": 19.299999889500246,
+    "alpha_fap": 0.01,
+    "epsilon": 0.01,
+    "achieved": {
+      "mean_false_events_per_lc_at_z_star": 0.9513513513513514,
+      "mean_false_events_per_lc_at_z_mono": null,
+      "tls_far_target": 0.01,
+      "T_is_pct": 99.0,
+      "null_fap_exceedance_at_alpha": 0.03888888888888889,
+      "n_null_stars": 185,
+      "n_with_tls": 185,
+      "n_with_period_fap": 180,
+      "tls_sde_median": 5.719051177115948,
+      "tls_sde_max": 27.921357211444462
+    }
+  },
+  "machine": {
+    "platform": "macOS-26.5.1-arm64-arm-64bit",
+    "processor": "arm",
+    "python": "3.11.9"
+  },
+  "ran_at_utc": "2026-06-16T07:41:00.151931+00:00",
+  "seed": 20260616,
+  "note": "PROVISIONAL thresholds for owner review. No Seal #2. TEST untouched. Sample = null eta-subset (185); extensible to full 6885 null calibration pool."
+}

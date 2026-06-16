@@ -1,0 +1,41 @@
+{
+  "milestone": "M3",
+  "stage": "threshold stability + survivor audit (PROVISIONAL, pre-Seal #2)",
+  "basis": "cleaned 1000-star null calibration (854 after 146 exclusions)",
+  "bootstrap_thresholds": {
+    "n_cleaned": 854,
+    "B": 1000,
+    "z_star": {
+      "point": 3.4,
+      "median": 3.4,
+      "p2.5": 3.3,
+      "p16": 3.3,
+      "p84": 3.4,
+      "p97.5": 3.4,
+      "sd": 0.039849215801568826
+    },
+    "z_mono": {
+      "point": 5.3,
+      "median": 5.3,
+      "p2.5": 5.0,
+      "p16": 5.1,
+      "p84": 5.6,
+      "p97.5": 5.8,
+      "sd": 0.2176233213605564
+    },
+    "T_sde": {
+      "point": 10.740887727255977,
+      "median": 10.713806067388466,
+      "p2.5": 9.738953475915112,
+      "p16": 10.16045727396222,
+      "p84": 11.234955738475772,
+      "p97.5": 11.336329806953373,
+      "sd": 0.4780086601430526
+    }
+  },
+  "retained_high_sde_survivors": {
+    "n": 31,
+    "summary": "31 null stars with SDE>9 retained: passed catalog (Prsa2022/VSX) and automated EB vetting (secondary/odd-even/depth); mostly long-period few-transit TLS noise. Kept in the null FAR population (no hand-pruning).",
+    "table": "data/manifests/m3/retained_high_sde_audit.csv"
+  }
+}

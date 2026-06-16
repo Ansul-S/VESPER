@@ -1,0 +1,183 @@
+{
+  "manifest": {
+    "title": "TRINETRA-X Phase I \u2014 M3 Threshold Manifest (Seal #2 content)",
+    "seal2_status": "UNSEALED \u2014 provisional; awaiting explicit owner approval",
+    "created": "2026-06-16",
+    "binds_to": {
+      "prereg_tag": "phase1-prereg-v2",
+      "seal1_manifest_sha256": "1f2d49e194b0960f1eacb0c72c25087b4c299620e38f299e2d55706199e83f1f"
+    },
+    "calibration_basis": {
+      "set": "cleaned 1000-star null calibration (854 after 146 contaminant exclusions)",
+      "m0_null_definition": "PRESERVED (TOI-removed); cleaned set is a derived M3 subset",
+      "exclusions": {
+        "total": 146,
+        "by_reason": {
+          "eclipsing_binary": 16,
+          "variable_star": 128,
+          "vetted_eclipse": 14
+        },
+        "table": "data/manifests/m3/calibration_exclusions.csv"
+      },
+      "retained_high_sde_survivors": {
+        "n": 31,
+        "table": "data/manifests/m3/retained_high_sde_audit.csv"
+      },
+      "m3_config_sha256": "0400e2db20884ecfb6ecfb5bcd2686282e80c6ad377e78ff7476b11b7e96454d",
+      "seed": 20260616,
+      "detrend_window_days": 2.5
+    },
+    "A1_TLS_baseline": {
+      "engine": "transitleastsquares",
+      "version": "1.32",
+      "oversampling_factor": 3,
+      "period_min_days": 0.5,
+      "period_max": "0.5 * baseline (>=2 transits)",
+      "identical_both_arms": true,
+      "no_BLS_substitute": true
+    },
+    "A2_common_threshold_T": {
+      "T_sde": 10.740887727255977,
+      "rule": "FAR <= 1%/star on null calibration stars",
+      "achieved_far_basis": "p99 of cleaned null SDE distribution (n=854)",
+      "bootstrap_95CI": [
+        9.738953475915112,
+        11.336329806953373
+      ],
+      "bootstrap_sd": 0.4780086601430526
+    },
+    "A3_detector_routing": {
+      "z_star": 3.4,
+      "z_star_rule": "<=1 false event/LC (null)",
+      "z_star_achieved": 0.8594847775175644,
+      "z_mono": 5.3,
+      "z_mono_rule": "<=0.1 false event/LC (null)",
+      "z_mono_achieved": 0.09836065573770492,
+      "N_min": 2,
+      "z_mono_gt_z_star": true,
+      "detector": "GP-whitened box matched filter; duration grid {0.05,0.1,0.2,0.4,0.8} d",
+      "z_star_95CI": [
+        3.3,
+        3.4
+      ],
+      "z_mono_95CI": [
+        5.0,
+        5.8
+      ]
+    },
+    "A4_recovery_predicate": {
+      "period_tol": "1% / harmonics m in {2,3}",
+      "epoch_tol": "+/-0.5 T14",
+      "significance": "SDE >= T"
+    },
+    "A5_occurrence_weights_wc": {
+      "w_P": "log-uniform over {0.5,1,2,4,8,16} d",
+      "w_R_normalized": {
+        "1": 0.3632286995515695,
+        "2": 0.5650224215246636,
+        "4": 0.03587443946188341,
+        "8": 0.010492600909796519,
+        "12": 0.02538183855208689
+      },
+      "w_c": {
+        "P0.5_R1": 0.06053811659192827,
+        "P0.5_R2": 0.09417040358744398,
+        "P0.5_R4": 0.005979073243647237,
+        "P0.5_R8": 0.0017487668182994205,
+        "P0.5_R12": 0.0042303064253478165,
+        "P1_R1": 0.06053811659192827,
+        "P1_R2": 0.09417040358744398,
+        "P1_R4": 0.005979073243647237,
+        "P1_R8": 0.0017487668182994205,
+        "P1_R12": 0.0042303064253478165,
+        "P2_R1": 0.06053811659192827,
+        "P2_R2": 0.09417040358744398,
+        "P2_R4": 0.005979073243647237,
+        "P2_R8": 0.0017487668182994205,
+        "P2_R12": 0.0042303064253478165,
+        "P4_R1": 0.06053811659192827,
+        "P4_R2": 0.09417040358744398,
+        "P4_R4": 0.005979073243647237,
+        "P4_R8": 0.0017487668182994205,
+        "P4_R12": 0.0042303064253478165,
+        "P8_R1": 0.06053811659192827,
+        "P8_R2": 0.09417040358744398,
+        "P8_R4": 0.005979073243647237,
+        "P8_R8": 0.0017487668182994205,
+        "P8_R12": 0.0042303064253478165,
+        "P16_R1": 0.06053811659192827,
+        "P16_R2": 0.09417040358744398,
+        "P16_R4": 0.005979073243647237,
+        "P16_R8": 0.0017487668182994205,
+        "P16_R12": 0.0042303064253478165
+      },
+      "source": "Kunimoto & Matthews 2020 (AJ 159,248; arXiv:2004.05296): Table 5 (FGK, P<50 d) + Eqn 25 power law",
+      "assumptions": [
+        "w_R uses KM Table 5 FGK P<50 d marginal (closest to grid max 16 d); P<100 d available as alt.",
+        "nodes 8 & 12 R+ share KM's 8-16 bin -> split by geometric log sub-bin (giants <4% of weight).",
+        "giant-planet period shape (4-8, 8-16) approximated by the 2-4 R+ power law (negligible effect)."
+      ]
+    },
+    "A6_prevalence_pi_hat": {
+      "value": 0.03166517772039352,
+      "occurrence_over_grid_planets_per_star": 0.19735509936261286,
+      "period_fraction_Ple16_over_Plt50": {
+        "1-2": 0.6490003925630411,
+        "2-4": 0.3247078724204233,
+        "4-8": 0.3247078724204233,
+        "8-16": 0.3247078724204233
+      },
+      "geometric_RstarOverA_mean": 0.16044773012027982,
+      "n_calibration_stars": 6925,
+      "integration_bounds": {
+        "P_days": [
+          0.78125,
+          16.0
+        ],
+        "R_earth": [
+          1,
+          16
+        ],
+        "note": "grid node P=0.5 d is below KM's 0.78 d support; occurrence integrated from 0.78 d"
+      }
+    },
+    "A7_runtime_machine": {
+      "platform": "macOS-26.5.1-arm64-arm-64bit",
+      "machine": "arm64",
+      "processor": "arm",
+      "python": "3.11.9",
+      "cpu_brand": "Apple M4",
+      "physical_cores": 10,
+      "logical_cores": 10,
+      "cpu_hz": "n/a (Apple Silicon reports no fixed freq)",
+      "mem_bytes": 17179869184,
+      "protocol": "single-thread CPU-core-seconds; median >=5 repeats; warm cache; Stage-0 conditioning excluded; rho_d reported separately"
+    },
+    "A8_bootstrap_FAP": {
+      "scheme": "noise-model-aware circular block bootstrap",
+      "block_length": "L_b = 3 * max(tau_GP, T14)",
+      "B": 1000,
+      "alpha_fap": 0.01,
+      "achieved_null_exceedance": 0.010804321728691477
+    },
+    "A9_conditioning": {
+      "method": "wotan biweight",
+      "window_days": 2.5,
+      "cval": 5,
+      "masking": "SPOC default quality + momentum-dump + scattered-light",
+      "eta_min": 0.9,
+      "eta_gate": "PASS on Rp>=2 (M2); Rp=1 row noise-limited"
+    },
+    "epsilon_fast_path": {
+      "epsilon": 0.01,
+      "window": "[P_hat(1-eps), P_hat(1+eps)]"
+    },
+    "anti_tuning": {
+      "split": "CALIBRATION-null only",
+      "TEST": "sealed until single M4 run",
+      "sealed_docs_unmodified": "git diff phase1-prereg-v2 empty"
+    }
+  },
+  "candidate_content_sha256": "6292c018c6923d512ac9c90dd55289cc010724d9facc27dc087f7e3f20832692",
+  "candidate_note": "Reference only. Becomes Seal #2 ONLY upon explicit owner approval; not yet sealed (seal2_status=UNSEALED)."
+}

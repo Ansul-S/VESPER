@@ -1,0 +1,65 @@
+{
+  "milestone": "M3",
+  "stage": "recalibration on CLEANED null subset (PROVISIONAL \u2014 NO Seal #2)",
+  "ran_at_utc": "2026-06-16T15:33:20.693058+00:00",
+  "cleaning": {
+    "m0_null_definition": "PRESERVED (TOI-removed); cleaned set is a derived M3 subset",
+    "excluded_stars": 146,
+    "by_reason": {
+      "eclipsing_binary": 16,
+      "variable_star": 128,
+      "vetted_eclipse": 14
+    },
+    "exclusion_table": "data/manifests/m3/calibration_exclusions.csv"
+  },
+  "targets": {
+    "z_star_false_events_per_lc": 1.0,
+    "z_mono_false_events_per_lc": 0.1,
+    "far_per_star": 0.01,
+    "alpha_fap": 0.01
+  },
+  "before_raw": {
+    "n": 1000,
+    "z_star": 3.5,
+    "z_mono": 13.6,
+    "T_sde": 18.653946624985927,
+    "false_events_at_z_star": 0.933,
+    "false_events_at_z_mono": 0.1,
+    "alpha_fap_null_exceedance": 0.02066115702479339,
+    "sde_median": 5.661679326933404,
+    "sde_max": 40.36208946083365
+  },
+  "after_cleaned": {
+    "n": 854,
+    "z_star": 3.4,
+    "z_mono": 5.3,
+    "T_sde": 10.740887727255977,
+    "false_events_at_z_star": 0.8594847775175644,
+    "false_events_at_z_mono": 0.09836065573770492,
+    "alpha_fap_null_exceedance": 0.010804321728691477,
+    "sde_median": 5.5464468244048355,
+    "sde_max": 17.753768321375386
+  },
+  "tail_composition_sde_gt9": {
+    "survivor_kept": 31,
+    "eclipsing_binary": 15,
+    "vetted_eclipse": 14,
+    "variable_star": 14
+  },
+  "T_sensitivity_to_top_survivors": {
+    "T_cleaned": 10.740887727255977,
+    "T_drop_top1": 10.59200543048156,
+    "T_drop_top3": 10.18102830090919,
+    "T_drop_top5": 9.959097651385864,
+    "top5_survivor_sde": [
+      17.75,
+      17.73,
+      12.79,
+      11.69,
+      11.34
+    ]
+  },
+  "high_sde_survivors_kept": 31,
+  "survivor_review_set": "data/manifests/m3/high_sde_survivor_review_set.csv",
+  "note": "1000-star cleaned null calibration. PROVISIONAL \u2014 NO Seal #2 until reviewed. Survivors retained per owner directive (leverage reduced by scale, not exclusion)."
+}

@@ -4,10 +4,25 @@
 |-------|-------|
 | **Purpose** | Let a fresh Claude Code session resume TRINETRA-X with **zero reliance on chat history**. |
 | **Phase** | Phase I — Scientific Validation |
-| **Status** | Pre-registration **v2 SEALED**. **M0, M1, M2 executed.** Next: **M3** (threshold calibration → Seal #2). |
-| **Read first** | [`CLAUDE.md`](./CLAUDE.md) → this file → [`PHASE1_EXECUTION_PLAN.md`](./PHASE1_EXECUTION_PLAN.md) → [`PHASE1_M1_PLAN.md`](./PHASE1_M1_PLAN.md) → [`PHASE1_M2_PLAN.md`](./PHASE1_M2_PLAN.md) |
+| **Status** | Pre-registration **v2 SEALED**. **M0, M1, M2, M3 executed — Seal #2 recorded (`6292c018…`).** Next: **M4** (single sealed-TEST run → E1/E2). |
+| **Read first** | [`CLAUDE.md`](./CLAUDE.md) → this file → [`PHASE1_M3_PLAN.md`](./PHASE1_M3_PLAN.md) → [`PHASE1_M2_PLAN.md`](./PHASE1_M2_PLAN.md) |
 
-> Authority order: repository documents are authoritative; the Obsidian `vault/` mirrors them; this handoff is a convenience pointer. Sealed documents govern on any conflict. Supersedes `SESSION_HANDOFF_2026-06-15.md`.
+> Authority order: repository documents are authoritative; the Obsidian `vault/` mirrors them; this handoff is a convenience pointer. Sealed documents govern on any conflict. Supersedes `SESSION_HANDOFF_2026-06-15.md`. **Updated end of session 2 (2026-06-16): M3 + Seal #2 added below.**
+
+---
+
+## 0. SESSION-2 UPDATE — M3 complete, Seal #2 recorded (read this first)
+
+- **M3 — threshold calibration → Seal #2: ✅ DONE (2026-06-16).** Untrained machinery built (`research/m3_calibration/`): GP-whitened box matched-filter detector; integer-comb period + circular block bootstrap (B=1000, L_b=3·max(τ_GP,T₁₄)); pinned `transitleastsquares` 1.32 (identical both arms).
+- **M1 noise model recomputed at the finalized 2.5 d window** (188/188; 0.5 d archived `data/manifests/m1/superseded_0.5d/`).
+- **Null-pool contamination found + cleaned (owner-directed).** "Null" = TOI-removed only → unlabeled EBs/variables inflated T and z_mono (z⋆ robust). **Prša 2022 EB + VSX** cross-match (132) + automated EB vetting — secondary/odd-even/depth (14) → **146 excluded → cleaned 854** of a 1000-star null draw. M0 null definition **preserved**; 31 high-SDE survivors retained + audited.
+- **SEALED thresholds (bootstrap B=1000 CIs):** z⋆ = **3.4** [3.30,3.40] · z_mono = **5.3** [5.0,5.8] · T = **10.74** [9.74,11.34] · α_FAP = **1%** (null exceedance 1.08%) · ε = **0.01** · N_min = **2**. **w_c** (A.5; 92.8% on Rₚ≤2 R⊕) + **π̂ = 3.17%** (A.6) from Kunimoto & Matthews (2020, arXiv:2004.05296). A.7 machine: Apple M4 (10 cores).
+- **Seal #2 (threshold manifest SHA-256): `6292c018c6923d512ac9c90dd55289cc010724d9facc27dc087f7e3f20832692`** (owner-approved 2026-06-16; distinct from Seal #1 `1f2d49e1…`). Verify: `shasum -a 256 data/manifests/m3/m3_threshold_manifest_SEALED_CORE.json`. Seal record + expected-evaluation note (E1 dominated by Rₚ≤2) in `data/manifests/m3/SEAL2_RECORD.json`.
+- **Anti-tuning intact:** `git diff phase1-prereg-v2` empty; **0 TEST TICs** in any M3 artifact. **TEST untouched — read for the first and only time at M4.**
+- **Next: M4 — the single sealed-TEST run** against Seal #2 → E1 (recall non-inferiority) / E2 (scoped compute). No threshold/config change permitted.
+- **Network note:** conditioning + catalog (MAST/Vizier) queries run **sandbox-disabled** (host network); PyPI reachable. Multiprocessing TLS uses `imap_unordered` chunksize=1.
+
+*The sections below are the prior end-of-session-1 handoff (M0–M2), retained for context.*
 
 ---
 

@@ -1,0 +1,44 @@
+{
+  "milestone": "M3",
+  "stage": "recalibration on CLEANED null subset (PROVISIONAL \u2014 NO Seal #2)",
+  "ran_at_utc": "2026-06-16T08:07:38.288885+00:00",
+  "cleaning": {
+    "m0_null_definition": "PRESERVED (TOI-removed); cleaned set is a derived M3 subset",
+    "excluded_stars": 32,
+    "by_reason": {
+      "eclipsing_binary": 4,
+      "variable_star": 29,
+      "vetted_eclipse": 2
+    },
+    "exclusion_table": "data/manifests/m3/calibration_exclusions.csv"
+  },
+  "targets": {
+    "z_star_false_events_per_lc": 1.0,
+    "z_mono_false_events_per_lc": 0.1,
+    "far_per_star": 0.01,
+    "alpha_fap": 0.01
+  },
+  "before_185": {
+    "n": 185,
+    "z_star": 3.6,
+    "z_mono": 14.4,
+    "T_sde": 19.299999889500246,
+    "false_events_at_z_star": 0.9513513513513514,
+    "false_events_at_z_mono": 0.0972972972972973,
+    "alpha_fap_null_exceedance": 0.03888888888888889,
+    "sde_median": 5.719051177115948,
+    "sde_max": 27.921357211444462
+  },
+  "after_cleaned": {
+    "n": 153,
+    "z_star": 3.4,
+    "z_mono": 5.3,
+    "T_sde": 10.087535348387327,
+    "false_events_at_z_star": 0.8431372549019608,
+    "false_events_at_z_mono": 0.09803921568627451,
+    "alpha_fap_null_exceedance": 0.020134228187919462,
+    "sde_median": 5.687981289305438,
+    "sde_max": 17.753768321375386
+  },
+  "note": "Diagnostic 185-star sample. Per owner: if cleaning yields sensible thresholds, scale to the full cleaned calibration-null pool for the FINAL FAR<=1%/star T. No Seal #2."
+}

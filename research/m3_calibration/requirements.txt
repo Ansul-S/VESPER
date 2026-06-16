@@ -1,0 +1,5 @@
+# M3 threshold-calibration tooling — pinned engines (Phase I).
+# Inherits the M1/M2 stack (lightkurve, wotan, celerite2, astropy, pandas, pyarrow, pyyaml).
+transitleastsquares==1.32   # PINNED shared TLS engine (VAL A.1; no BLS substitute) — Hippke & Heller 2019
+numpy
+scipy

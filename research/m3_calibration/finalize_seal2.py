@@ -1,0 +1,67 @@
+"""Finalize Seal #2 (owner-approved 2026-06-16) for the M3 threshold manifest.
+
+The approved candidate hash was computed over the manifest object as presented. To KEEP that exact
+hash as Seal #2, the sealed core is frozen byte-identical (json.dumps(manifest, sort_keys=True))
+and re-hashed to verify == the approved candidate. The owner's explanatory note + seal status +
+A.10 reference live in a SEPARATE seal record (outside the hashed core), so Seal #2 stays the
+approved hash and no threshold/weight/prevalence/config value is altered.
+"""
+
+from __future__ import annotations
+
+import datetime
+import hashlib
+import json
+from pathlib import Path
+
+REPORT = Path("data/manifests/m3")
+APPROVED = "6292c018c6923d512ac9c90dd55289cc010724d9facc27dc087f7e3f20832692"
+
+NOTE_RP2 = ("Expected-evaluation note (non-parametric; does not affect any sealed value): the "
+            "occurrence-weighted E1 evaluation is expected to be dominated by the Rp <= 2 R_earth "
+            "population, because the Kunimoto & Matthews (2020) weighting places ~92.8% of w_c on "
+            "Rp<=2 (Rp=1 alone ~36.3%), combined with the empirically observed M2 detectability "
+            "limitation of Earth-radius single-transit signals (noise-limited Rp=1 row). Recovery of "
+            "that population relies on the full-TLS fallback (folding), not single-transit conditioning.")
+
+
+def run() -> None:
+    wrapper = json.loads((REPORT / "m3_threshold_manifest_PROVISIONAL.json").read_text())
+    manifest = wrapper["manifest"]
+
+    core_bytes = json.dumps(manifest, sort_keys=True, default=str).encode()
+    recomputed = hashlib.sha256(core_bytes).hexdigest()
+    assert recomputed == APPROVED, f"hash mismatch: {recomputed} != approved {APPROVED}"
+
+    # freeze the sealed core byte-identical to what was hashed (independently verifiable)
+    (REPORT / "m3_threshold_manifest_SEALED_CORE.json").write_bytes(core_bytes)
+
+    seal_record = {
+        "seal": "Seal #2 — M3 threshold manifest",
+        "status": "SEALED",
+        "sha256": APPROVED,
+        "sealed_date": "2026-06-16",
+        "approved_by": "Ansul (owner) — explicit in-session approval",
+        "sealed_core_file": "data/manifests/m3/m3_threshold_manifest_SEALED_CORE.json",
+        "verify": "sha256(m3_threshold_manifest_SEALED_CORE.json) == sha256 above",
+        "distinct_from": {"seal1_manifest_sha256":
+                          "1f2d49e194b0960f1eacb0c72c25087b4c299620e38f299e2d55706199e83f1f"},
+        "a10_reference": ("VAL Appendix A.10: on M3 completion all [sealed at M3] values + Appendix A "
+                          "are hashed into the frozen manifest and the hash recorded before the single "
+                          "M4 run. This record IS that A.10 manifest hash for Phase I M3. The sealed "
+                          "pre-registration docs (phase1-prereg-v2) are NOT modified."),
+        "expected_evaluation_note": NOTE_RP2,
+        "scope": ("Seals the M3 CALIBRATION-derived thresholds + frozen Appendix-A config + w_c/pi_hat. "
+                  "TEST split remains sealed/untouched until the single M4 run."),
+        "recorded_at_utc": datetime.datetime.now(datetime.timezone.utc).isoformat(),
+    }
+    (REPORT / "SEAL2_RECORD.json").write_text(json.dumps(seal_record, indent=2))
+
+    print("SEAL #2 RECORDED")
+    print("  sha256 :", APPROVED)
+    print("  verify : recomputed core hash ==", recomputed, "(match)")
+    print("  files  : m3_threshold_manifest_SEALED_CORE.json, SEAL2_RECORD.json")
+
+
+if __name__ == "__main__":
+    run()

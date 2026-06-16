@@ -161,6 +161,93 @@ Next Action:
 
 ---
 
+## 2026-06-16 (session 2) — M3 start: M1 recompute, M3 sign-off, null-pool contamination discovery
+
+Worked On:
+- **M1 noise-model recompute at the finalized 2.5 d window** (M3 prerequisite). Membership pinned to the original **188** η-sample targets (12 skipped NOT retried; window-only comparison). 188/188, zero MAST drift. 0.5 d artifacts archived under `data/manifests/m1/superseded_0.5d/`.
+  - Medians 0.5 d → 2.5 d: σ 1067→**1123** ppm; CDPP 1 h 222→**250**, 2 h 154→**191**, 4 h 98→**142** ppm; τ_GP unchanged; stationarity unchanged. Wider window leaves more low-frequency power (grows with timescale) — the expected transit-preservation tradeoff; thresholds will be set against this (honest, conservative) noise.
+- **`PHASE1_M3_PLAN.md` drafted + SIGNED OFF** (decisions A–G). Scope reconciliation accepted: the untrained detector + period-from-spacing + shared TLS engine are **built in M3** (M2 delivered only injection+η). Still no learned models.
+- Built `research/m3_calibration/`: GP-whitened **box matched-filter detector**, **integer-comb** period + **circular block bootstrap** (B=1000, L_b=3·max(τ_GP,T₁₄)), **pinned `transitleastsquares` 1.32** (identical both arms), two-phase calibration driver (serial condition → parallel TLS/bootstrap).
+
+Discoveries:
+- **NULL-POOL CONTAMINATION (significant).** First calibration on 185 null calibration stars: **z⋆=3.6 is robust**, but **T(SDE)=19.3** and **z_mono=14.4** are **inflated by unlabeled eclipsing binaries / variables** still in the "null" pool (null = TOI-removed only; Prša 2022 EB catalog was deferred at M0). SDE body is clean (median 5.7) but the tail is contaminated (max **27.9 = EI Tuc**, an Algol EB). This is the **R0-3 / H4 null-pool-contamination risk** coming due.
+- **Cleaning confirms the hypothesis.** Catalog cross-match (**Prša et al. 2022** TESS EB + **VSX** variables) excluded **30/185**; automated EB vetting (secondary-eclipse / odd-even / V-shape) flagged **+2** → **32 excluded**. Cleaned 153: **z⋆ 3.4, z_mono 5.3 (was 14.4), T 10.1 (was 19.3), α_FAP exceedance 3.9%→2.0%**; body unchanged. Contamination was the cause.
+
+Decisions:
+- Clean via **Option 3** (catalog enrichment + vetting); M0 null definition **preserved** — cleaned set is a *derived M3 calibration subset* with a documented exclusion table (`calibration_exclusions.csv`).
+- **Scale to ~1000 cleaned null stars** for the final FAR≤1%/star T (153 confirms the hypothesis but the 1% tail is under-sampled; full 6,885 deferred pending the 1000-star read).
+- **Keep the 5 catalog+vetting survivors** (no EB signature) — documented "high-SDE survivor review set"; reduce their leverage by scale, not subjective exclusion.
+
+Artifacts created/updated:
+- `research/m1_conditioning/recompute_noise_window.py`, `eta_sample_188.txt`; `data/manifests/m1/` (2.5 d summary + provenance; 0.5 d under `superseded_0.5d/`).
+- `research/m3_calibration/` (config, detector, period_recovery, tls_engine, m3_calibrate, null_cleaning, vet_outliers, recalibrate, requirements).
+- `data/manifests/m3/`: `m3_thresholds_*PROVISIONAL.json`, `calibration_exclusions.csv`, `m3_vetting.csv`, `m3_per_star*.csv`; 185 diagnostic archived under `diagnostic_185/`.
+- `PHASE1_M3_PLAN.md` (drafted + §10 signed).
+
+Problems / Risks carried forward:
+- **No Seal #2** — thresholds are PROVISIONAL pending owner review of the 1000-star cleaned distributions; then decide if the full 6,885 pass is needed.
+- 5 high-SDE survivors (esp. TIC 150102227, SDE 17.8 / 167 ppm) keep T mildly elevated; scale should dilute their p99 leverage.
+- Branch `phase1/m3-calibration`; nothing committed yet (commit on owner request).
+
+Next Action:
+- 1000-star cleaned-null calibration executing (background). On completion: clean → vet → recalibrate; report T, z_mono, α_FAP exceedance, tail composition, T-sensitivity to top survivors → **owner review before Seal #2**. Then instantiate w_c/π̂ (Kunimoto & Matthews 2020) and assemble the threshold manifest.
+
+---
+
+## 2026-06-16 (session 2, cont.) — M3 1000-star cleaned calibration converged
+
+Worked On:
+- **1000-star null calibration** (full pool draw, seed 20260616). Phase A conditioning 1000/1000 at 2.5 d (0 failures, after hardening Phase A with retry/skip — a transient MAST drop had killed the first attempt). Phase B parallel TLS/bootstrap (imap_unordered, chunksize=1).
+- **Cleaning at scale:** Prša 2022 + VSX cross-match excluded **132**; automated EB vetting of the 45 residual SDE>9 outliers flagged **+14** (incl. TIC 370324073 at 42.6σ odd-even + 12.9% depth; TIC 207238086 at 60σ secondary) → **146 excluded → cleaned 854**.
+- **Bootstrap stability** (B=1000 resamples of the 854) + **retained-high-SDE survivor audit** (31 kept).
+
+Discoveries / Results:
+- **Contamination pattern held at scale** (raw 1000: z⋆ 3.5 stable; T 18.7, max SDE 40.4 from EBs). Cleaned 854 thresholds, with bootstrap 95% CIs: **z⋆ = 3.4 [3.30,3.40]** · **z_mono = 5.3 [5.0,5.8]** · **T(SDE) = 10.74 [9.74,11.34]** · **α_FAP = 1%** (null exceedance **1.08%**, at target) · ε = 0.01 · N_min = 2.
+- **Tail composition (SDE>9, n=74):** 15 EB + 14 variable + 14 vetted-eclipse = 43 contaminants; **31 survivors retained**.
+- **T robust:** drop-top-5 survivors → 9.96 (only −7%); no single survivor dominates the 1% tail. z⋆ unaffected by contamination at every scale.
+- **31 survivors** mostly long-period (17/31 P>10 d) few-transit TLS noise + a few shallow (15/31 <500 ppm); top = TIC 150102227 (SDE 17.8, 167 ppm, single-event 3.5σ, period-FAP 0.76 → red-noise latch, not a coherent transit).
+
+Decisions (owner):
+- **Accept the cleaned 1000-star basis**; full 6,885 pass **not** required (CIs tight, no new pathology).
+- **Keep all 31 survivors** (passed catalog + vetting); document in a retained-high-SDE audit table; no hand-pruning (avoids biasing T downward).
+
+Artifacts:
+- `research/m3_calibration/`: + `null_cleaning.py`, `vet_outliers.py`, `recalibrate.py`, `stability_audit.py`.
+- `data/manifests/m3/`: `m3_per_star*.csv`, `calibration_exclusions.csv` (146), `m3_vetting.csv`, `m3_null_cleaned_catalog.csv`, `m3_thresholds_cleaned_PROVISIONAL.json`, `m3_stability_audit.json`, `retained_high_sde_audit.csv`; diagnostic 185 under `diagnostic_185/`.
+
+Next Action:
+- **Before Seal #2:** instantiate **w_c / π̂** (Kunimoto & Matthews 2020; A.5/A.6) → assemble the threshold manifest → **hash (Seal #2)** on owner go-ahead → M4 single sealed-TEST run. TEST sealed until M4.
+
+---
+
+## 2026-06-16 (session 2, cont.) — M3 Decision F + Seal #2 recorded → M3 DONE
+
+Worked On:
+- **Decision F (occurrence weights / prevalence).** Pulled Kunimoto & Matthews (2020) from source (arXiv:2004.05296): Table 5 FGK radius marginals (P<50 d: 1-2 R⊕ 16.2%, 2-4 25.2%, 4-8 1.6%, 8-16 1.6%) + Eqn 25 period power law. Instantiated **w_c** = log-uniform w_P × K&M radius prior w_R, and **π̂** = occurrence over grid × geometric ⟨R⋆/a⟩.
+- Recorded **A.7 runtime machine** (Apple M4, 10 cores, 16 GB, macOS 26.5.1, Python 3.11.9).
+- Assembled the **complete threshold manifest** (VAL Appendix A.1–A.10), presented for review, then **recorded Seal #2** on owner approval.
+
+Results:
+- **w_R (normalized):** R=1 0.363 · R=2 0.565 · R=4 0.036 · R=8 0.0105 · R=12 0.0254. **w_c puts 92.8% of weight on Rₚ≤2 R⊕** (Rₚ=1 alone 36.3%).
+- **π̂ = 3.17%** = occurrence 19.74% (P∈[0.78,16] d, R 1–16) × geometric ⟨R⋆/a⟩ 0.160 (n=6925 cal stars).
+- **Seal #2 (threshold manifest SHA-256): `6292c018c6923d512ac9c90dd55289cc010724d9facc27dc087f7e3f20832692`** — owner-approved 2026-06-16; distinct from Seal #1 (`1f2d49e1…`). Independently verifiable: `shasum -a 256 data/manifests/m3/m3_threshold_manifest_SEALED_CORE.json`.
+
+Decisions (owner):
+- Approve the manifest as presented; **create Seal #2 using the candidate hash** (no changes to thresholds/weights/prevalence/conditioning/bootstrap/detector).
+- Add an **expected-evaluation note** (E1 dominated by Rₚ≤2 due to K&M weighting + M2 Earth-radius single-transit limit) — recorded **outside** the hashed core (in `SEAL2_RECORD.json`) to preserve the approved hash; no sealed value altered.
+
+Anti-tuning verified:
+- `git diff phase1-prereg-v2` on the 3 sealed docs = **empty**; **0 TEST TICs** in any M3 artifact. TEST sealed until the single M4 run.
+
+Artifacts:
+- `research/m3_calibration/`: + `occurrence_weights.py`, `assemble_manifest.py`, `finalize_seal2.py`.
+- `data/manifests/m3/`: `m3_occurrence_weights.json`, `m3_threshold_manifest_SEALED_CORE.json`, `SEAL2_RECORD.json`, `m3_threshold_manifest_PROVISIONAL.json`.
+
+Next Action:
+- **M4 — single sealed-TEST evaluation** against Seal #2 (`6292c018…`): apply frozen machinery + thresholds to the TEST split exactly once → E1 (recall non-inferiority) / E2 (scoped compute). No threshold/config change permitted; TEST read for the first time at M4.
+
+---
+
 ## Template for future entries
 
 Date:
