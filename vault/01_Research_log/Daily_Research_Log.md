@@ -161,6 +161,39 @@ Next Action:
 
 ---
 
+## 2026-06-16 (session 2) — M3 start: M1 recompute, M3 sign-off, null-pool contamination discovery
+
+Worked On:
+- **M1 noise-model recompute at the finalized 2.5 d window** (M3 prerequisite). Membership pinned to the original **188** η-sample targets (12 skipped NOT retried; window-only comparison). 188/188, zero MAST drift. 0.5 d artifacts archived under `data/manifests/m1/superseded_0.5d/`.
+  - Medians 0.5 d → 2.5 d: σ 1067→**1123** ppm; CDPP 1 h 222→**250**, 2 h 154→**191**, 4 h 98→**142** ppm; τ_GP unchanged; stationarity unchanged. Wider window leaves more low-frequency power (grows with timescale) — the expected transit-preservation tradeoff; thresholds will be set against this (honest, conservative) noise.
+- **`PHASE1_M3_PLAN.md` drafted + SIGNED OFF** (decisions A–G). Scope reconciliation accepted: the untrained detector + period-from-spacing + shared TLS engine are **built in M3** (M2 delivered only injection+η). Still no learned models.
+- Built `research/m3_calibration/`: GP-whitened **box matched-filter detector**, **integer-comb** period + **circular block bootstrap** (B=1000, L_b=3·max(τ_GP,T₁₄)), **pinned `transitleastsquares` 1.32** (identical both arms), two-phase calibration driver (serial condition → parallel TLS/bootstrap).
+
+Discoveries:
+- **NULL-POOL CONTAMINATION (significant).** First calibration on 185 null calibration stars: **z⋆=3.6 is robust**, but **T(SDE)=19.3** and **z_mono=14.4** are **inflated by unlabeled eclipsing binaries / variables** still in the "null" pool (null = TOI-removed only; Prša 2022 EB catalog was deferred at M0). SDE body is clean (median 5.7) but the tail is contaminated (max **27.9 = EI Tuc**, an Algol EB). This is the **R0-3 / H4 null-pool-contamination risk** coming due.
+- **Cleaning confirms the hypothesis.** Catalog cross-match (**Prša et al. 2022** TESS EB + **VSX** variables) excluded **30/185**; automated EB vetting (secondary-eclipse / odd-even / V-shape) flagged **+2** → **32 excluded**. Cleaned 153: **z⋆ 3.4, z_mono 5.3 (was 14.4), T 10.1 (was 19.3), α_FAP exceedance 3.9%→2.0%**; body unchanged. Contamination was the cause.
+
+Decisions:
+- Clean via **Option 3** (catalog enrichment + vetting); M0 null definition **preserved** — cleaned set is a *derived M3 calibration subset* with a documented exclusion table (`calibration_exclusions.csv`).
+- **Scale to ~1000 cleaned null stars** for the final FAR≤1%/star T (153 confirms the hypothesis but the 1% tail is under-sampled; full 6,885 deferred pending the 1000-star read).
+- **Keep the 5 catalog+vetting survivors** (no EB signature) — documented "high-SDE survivor review set"; reduce their leverage by scale, not subjective exclusion.
+
+Artifacts created/updated:
+- `research/m1_conditioning/recompute_noise_window.py`, `eta_sample_188.txt`; `data/manifests/m1/` (2.5 d summary + provenance; 0.5 d under `superseded_0.5d/`).
+- `research/m3_calibration/` (config, detector, period_recovery, tls_engine, m3_calibrate, null_cleaning, vet_outliers, recalibrate, requirements).
+- `data/manifests/m3/`: `m3_thresholds_*PROVISIONAL.json`, `calibration_exclusions.csv`, `m3_vetting.csv`, `m3_per_star*.csv`; 185 diagnostic archived under `diagnostic_185/`.
+- `PHASE1_M3_PLAN.md` (drafted + §10 signed).
+
+Problems / Risks carried forward:
+- **No Seal #2** — thresholds are PROVISIONAL pending owner review of the 1000-star cleaned distributions; then decide if the full 6,885 pass is needed.
+- 5 high-SDE survivors (esp. TIC 150102227, SDE 17.8 / 167 ppm) keep T mildly elevated; scale should dilute their p99 leverage.
+- Branch `phase1/m3-calibration`; nothing committed yet (commit on owner request).
+
+Next Action:
+- 1000-star cleaned-null calibration executing (background). On completion: clean → vet → recalibrate; report T, z_mono, α_FAP exceedance, tail composition, T-sensitivity to top survivors → **owner review before Seal #2**. Then instantiate w_c/π̂ (Kunimoto & Matthews 2020) and assemble the threshold manifest.
+
+---
+
 ## Template for future entries
 
 Date:

@@ -16,18 +16,20 @@ Current Status:
 - **M0 EXECUTED (2026-06-15).** Seal #1 (manifest hash) `1f2d49e1…` cut; 22,723 SPOC 2-min targets (S1–S3 south); leakage-safe 30/70 split; TEST set sealed (read once at M4). M0.5 feasibility passed — no sector widening needed.
 
 Current Milestone:
-**M2 — Injection + transit-preservation — DONE / SIGNED OFF (2026-06-16).** Detrend window **finalized at 2.5 d** (from 0.5 d provisional); full η grid (30 cells × 200 inj) **gate PASS** on the measurable population (Rₚ≥2, η≥0.90). **Rₚ=1 (Earth) row excluded as noise-limited** (SNR₁~0.07, below the conditioning floor — the detectability bimodality); **0.5/2 documented borderline** (η=0.892). (M1 η-sample done; M0 Seal #1 `1f2d49e1…`.)
+**M3 — Threshold calibration → Seal #2 — IN PROGRESS (2026-06-16).** Plan `PHASE1_M3_PLAN.md` **SIGNED OFF** (frozen choices A–G). Untrained machinery built (`research/m3_calibration/`): GP-whitened box matched-filter detector; integer-comb period + circular block bootstrap (B=1000, L_b=3·max(τ_GP,T₁₄)); pinned `transitleastsquares` 1.32 (identical both arms).
+- **M3 prerequisite DONE:** M1 noise model recomputed at **2.5 d** (188/188, window-only; 0.5 d archived under `data/manifests/m1/superseded_0.5d/`). Medians: σ 1067→1123, CDPP 1 h 222→250 / 2 h 154→191 / 4 h 98→142 ppm; τ_GP unchanged.
+- **DISCOVERY — null-pool contamination.** First null-star calibration: **z⋆ robust (~3.4–3.6)**, but **T and z_mono inflated by unlabeled EBs/variables** ("null" = TOI-removed only). Catalog cleaning (**Prša 2022 EB + VSX**) + automated EB vetting → cleaned 153: z⋆ 3.4, z_mono 14.4→**5.3**, T 19.3→**10.1**, α_FAP exceedance 3.9%→2.0%. **Contamination hypothesis confirmed.**
+- **Now running:** ~1000-star cleaned-null calibration for the final FAR≤1%/star T. M0 null definition preserved; cleaned set is a documented derived M3 subset. 5 high-SDE survivors retained (review set).
+- **NO Seal #2 yet** — thresholds PROVISIONAL pending owner review of the 1000-star distributions; then decide if the full 6,885 pass is needed.
 
 Next Milestone:
-**M3 — Threshold calibration** on the CALIBRATION set → derive + hash-seal `z⋆, θ, z_mono, T, α, α_FAP, ε, τ_GP` (**Seal #2**; VAL A.10), before the single M4 test run. Not started.
-
-⚠ **M3 prerequisite:** recompute the M1 noise model (σ/CDPP/τ_GP) at the finalized **2.5 d** window — the 0.5 d η-sample model is superseded.
+**M4 — Single sealed-TEST evaluation** → primary endpoints E1 (recall non-inferiority) / E2 (scoped compute). Requires Seal #2 first. TEST stays sealed until this run.
 
 Next Action:
-M2 done + signed off (PR #4 to open). **Begin M3 — threshold calibration** on the CALIBRATION set: first recompute the M1 noise model at the finalized 2.5 d window, then derive `z⋆, θ, z_mono, T, α, α_FAP, ε, τ_GP` on calibration null/injection data and **hash-seal them (Seal #2)** before the single M4 test run. TEST stays sealed until M4. M3 involves frozen-parameter choices (FAR/FAP targets, routing rule) → bring for sign-off before sealing, per the established pattern.
+1000-star cleaned-null calibration executing (background). On completion: clean → vet → recalibrate → report T, z_mono, α_FAP exceedance, tail composition, T-sensitivity to top survivors → **owner review**. Then instantiate w_c/π̂ (Kunimoto & Matthews 2020), assemble the threshold manifest, and **hash-seal (Seal #2)** only after review. Branch `phase1/m3-calibration`; nothing committed yet (commit on request).
 
 Execution Plan:
-`PHASE1_EXECUTION_PLAN.md` (v0.1, M0 increment — M0 executed). Tooling: `research/m0_manifest/`. Manifest + provenance: `data/manifests/m0/`.
+`PHASE1_EXECUTION_PLAN.md` (v0.1, M0). M3: `PHASE1_M3_PLAN.md` (signed). Tooling: `research/m3_calibration/`. Provisional artifacts: `data/manifests/m3/` (185 diagnostic under `diagnostic_185/`).
 
 Sealed Documents (do not edit without a new re-registration):
 - SCIENTIFIC_HYPOTHESIS.md — v2.0
