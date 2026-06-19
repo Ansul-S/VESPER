@@ -1,0 +1,22 @@
+{
+  "n_null": 854,
+  "n_null_routed": 163,
+  "n_fap_gate_pass": 9,
+  "fap_gate_pass_rate": 0.01053864168618267,
+  "FAR_target": 0.01,
+  "allowed_false_confirmations": 8,
+  "T_red": 0.0,
+  "T_red_binding": false,
+  "achieved_FAR_end2end": 0.00117096018735363,
+  "achieved_FAR_fapgate_conditional": 1.0,
+  "achieved_FAR_marginal_diagnostic": 1.0,
+  "recall_preview": {
+    "n_inj_routed": 114,
+    "fast_path_recall": 0.45614035087719296,
+    "fast_path_recall_strong_Rp>=4": 0.5131578947368421,
+    "fallback_fraction": 0.543859649122807,
+    "AUC_planet_vs_null_Lambda": 0.8937143472177376,
+    "note": "REPORTED only; T_red set by FAR, not recall (P-3)"
+  },
+  "degeneracy_note": "FAP gate already controls FAR<=target -> T_red non-binding; FP control shared, confirmer adds recall protection + shape/EB vetting"
+}

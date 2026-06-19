@@ -2,6 +2,33 @@
 
 ---
 
+## 2026-06-19 — v3 re-registration drafted + owner-approved (DR-002); Seal #2b prep begun
+
+Worked On:
+- Resumed from the 2026-06-18 handoff. Verified integrity before any work: `git diff phase1-prereg-v2` on the three sealed docs empty (pre-edit); Seal #2 hash `6292c018…` matches; 0 TEST TICs across all `data/manifests/m4/dry_run/*.csv` (re-verified against the M0 parquet split: 15,798 test / 6,925 calibration). TEST untouched.
+- Owner walked a 4-step sign-off gate; then drafted the full v3 re-registration package.
+
+Discoveries / Decisions:
+- **4-step owner gate (all CALIBRATION-only, TEST unread):** (1) **adopted** the v3-as-final stopping rule **P-1…P-9** + pre-committed E1/E2/inconclusive outcome mapping; (2) **NN#3 condition #1 = YES** — arbiter must be a genuine **transit-template likelihood-ratio** (Λ/ΔBIC), the dry-run box depth-SNR **rejected**; (3) **v3 scope = Option-2 confirmer + Lever 1b (period-FAP cheapening), equivalence-gated** — Lever 1a subsumed/excluded, Lever 2 (harmonics) deferred to P-8, Lever 3/4 narrative-only; (4) drafting authorized.
+- **Key reasoning locked in DR-002:** Lever 1b's admissibility warrant is the **numerical-equivalence gate** (compute the *same* sealed FAP via a cheaper EVT/precomputed estimator), **not** the Finding-A precedent (demoted to supporting illustration per owner revision). Confirmer-only v3 is the fallback if the gate fails. The "same TLS engine" keystone (A6) is relaxed to "**common false-alarm rate**" — the principle survives, the targeted-TLS realization does not (Finding B).
+- **Consistency catch:** SCIENTIFIC_HYPOTHESIS.md also carried the v2 "identical TLS engine" keystone (mechanism clause + A6) → amended to **v2.1** so the sealed set stays internally consistent (was not in the owner's explicit list; flagged + closed).
+- Owner **approved** the package on governance / internal-consistency / anti-tuning / equivalence-gate / T_red-logic. One remaining gate before Seal #2b: a final **implementation-spec review of the transit-LR confirmer**.
+
+Artifacts created/updated:
+- Created: `docs/decisions/DR-002_DECISION_RECORD.md` (ADOPTED), `research/m4_evaluation/LEVER1B_EQUIVALENCE_VALIDATION_PLAN.md`, `research/m4_evaluation/TRED_CALIBRATION_PLAN.md`.
+- Amended (drafts, pending Seal #2b): `TRINETRA_X_PHASE1_VALIDATION.md` → v3 (§2 keystone, §4.1(iii), §7a stopping rule, A.1/A.2/A.4/A.8a/A.11); `TRINETRA_MATHEMATICAL_FOUNDATIONS.md` → v1.2 (§6, §9.1a); `SCIENTIFIC_HYPOTHESIS.md` → v2.1 (mechanism clause, A6).
+- No sealed numeric value changed; nothing committed/tagged/sealed; TEST unread.
+
+Problems / Risks carried forward:
+- **Single-shot M4** is the irreversible read — must follow a verified-correct Seal #2b (P-5). Hard checkpoints set at Seal #2b and immediately before the TEST read.
+- **Equivalence gate may fail** → confirmer-only v3 → likely E2-fail/negative result, reported as-is (the honest fallback).
+- The transit-LR confirmer must be implemented as a genuine shape LR (NN#3), not the dry-run box-SNR — the pending implementation-spec review.
+
+Next Action:
+- Draft the transit-LR confirmer **implementation spec** for owner review (last gate before Seal #2b). Then, on sign-off: Lever-1b equivalence validation → T_red calibration → assemble v3 manifest → Seal #2b → single M4 TEST run → pre-committed verdict.
+
+---
+
 ## 2026-06-15 — Phase I pre-registration completed and sealed (v2)
 
 Worked On:
@@ -245,6 +272,96 @@ Artifacts:
 
 Next Action:
 - **M4 — single sealed-TEST evaluation** against Seal #2 (`6292c018…`): apply frozen machinery + thresholds to the TEST split exactly once → E1 (recall non-inferiority) / E2 (scoped compute). No threshold/config change permitted; TEST read for the first time at M4.
+
+---
+
+## 2026-06-18 — M4 dry-run: protocol blocker found (Finding B), resolution path validated
+
+Worked On:
+- Built the M4 evaluation harness (`research/m4_evaluation/`): Seal #2 read-only loader + TEST-access guard, injection, dual-arm runner, recovery predicate, E1/E2 endpoints, orchestrator.
+- Ran the full **CALIBRATION/synthetic dry-run** end-to-end (offline; cached calibration residuals as hosts). **TEST never read** (hard-blocked by the guard).
+- Investigated two findings on the targeted (Arm B) search; ran CALIBRATION-only methodology diagnostics; validated an epoch-fixed confirmation statistic.
+
+Discoveries / Decisions:
+- **Dry-run validated the machinery.** All TEST-access guards pass (dry-run cannot read TEST; the TEST run needs an explicit token; sealed keys cannot be overridden). Injection→conditioning→detection→routing→recovery→E1-weighting→E2-ledger all execute and behave sensibly (w_c loads from Seal #2: 92.83% on Rₚ≤2; recovery physically correct).
+- **Finding A (implementation, fixable):** `transitleastsquares.grid.period_grid` discards the `[P̂(1±ε)]` restriction when the window holds < `MINIMUM_PERIOD_GRID_SIZE=100` periods and silently returns the full default grid. At sealed ε=0.01 the window holds only ~20–35 periods → "targeted" TLS secretly ran a full search (cost ratio 0.995). Feeding TLS the in-window periods directly → real saving (1.7 s vs 164 s, ratio 0.010). M3 never hit this (calibration used `full_tls` only).
+- **Finding B (methodology, blocking — CONFIRMED):** TLS **SDE is normalized across the searched grid**, so it is not comparable across grid widths. At the identical period on the same LC: full-grid SDE=40.36 (PASS T) vs narrow-grid SDE=3.55 (FAIL T=10.74). The sealed rule "targeted TLS on [P̂(1±ε)], SDE≥T, single common T both arms" (VAL §2/§4.1, A.1/A.4) is internally inconsistent → Arm B would reject planets Arm A accepts → E1 fails by construction.
+- **Methodology review (CALIBRATION-only, 16 hosts):** **Option 1** (per-arm narrow-SDE threshold T_B) **rejected** — narrow-grid SDE AUC=0.43 (chance), no separation. **Option 3** (wider window, single T) **rejected** — AUC only 0.72 at ε=0.2 where 84% of saving is already gone; comparability and savings mutually exclusive. **Option 2** (period-fixed statistic) recommended.
+- **Epoch-fixed confirmation statistic VALIDATED (CALIBRATION-only, cleaned 854-null pool):** evidence-first supplies P̂ **and** t̂₀ → matched-filter S/N at fixed (P̂,t̂₀), no phase search, no period grid. Red-noise-aware variant (per-transit-timescale scatter, effective N=N_transits): **AUC=0.877**, FAR-controllable (**T_red≈5.5** at FAR≤1%/star), **range-invariant by construction**, **cost 3.3e-5× full TLS** (~0.9 ms vs 28 s). The earlier T=199/recall-0 collapse was an artifact of a null sample that wrongly included M3-excluded EBs (folded depths 5–22%, acf≈0.999) — resolved on the sealed cleaned pool.
+- **Recall accounting:** fast-path confirmation recall tracks transit count (P=1→0.92, P=4→0.56). The fast-path gap vs Arm A is **not lost recall** — non-routed / unconfirmed planets fall back to full TLS, so combined recall (E1) is protected; E2 saving accrues on the cheaply-confirmed fraction (ρ_d dominant → R-1 the live risk).
+
+Project state:
+- **M4 is BLOCKED pending a protocol amendment** (Finding B). **TEST remains unread; Seal #2 unchanged; no sealed value modified.**
+- Recommended next milestone: **Option-2 re-registration / Seal #2b preparation** (red-noise-aware epoch-fixed Arm-B arbiter). Owner to review amendment scope before any re-registration begins.
+
+Artifacts created:
+- `PHASE1_M4_PLAN.md` (M4 execution plan, drafted before dry-run).
+- `research/m4_evaluation/`: `seal_loader.py`, `injection.py`, `arms.py`, `recovery.py`, `endpoints.py`, `m4_run.py`, `finding_b_diagnostic.py`, `epoch_fixed_diagnostic.py`, `config/m4_config.yaml`, `requirements.txt`.
+- Reports: `research/m4_evaluation/M4_DRYRUN_VALIDATION.md`, `M4_FINDING_B_METHODOLOGY_REVIEW.md`, `M4_EPOCH_FIXED_DIAGNOSTIC.md`.
+- Diagnostic data: `data/manifests/m4/dry_run/` (per-injection, E1 per-cell, E2 ledger, finding-B + epoch-fixed CSVs).
+
+Problems / Risks carried forward:
+- Finding B requires a re-registration (redefines A.1/A.4 Arm-B arbiter + adds T_red); legitimate as a **pre-TEST** amendment decided on CALIBRATION, sealed before the single TEST run.
+- R-1 (detector/period-FAP overhead ρ_d dominates Arm-B cost) is now the live E2 risk; R-3 (red-noise false alarms) is real but controlled by the red-noise-aware normalization on the cleaned pool.
+- Compute logistics: full TLS is 30–160 s/LC; the full ≥15k-injection campaign is a multi-day parallel job — plan the M3 `Pool`/`imap_unordered` pattern.
+
+Next Action:
+- Present the **proposed Option-2 amendment scope + Appendix-A changes** for owner review (next decision point). Do **not** begin re-registration or create Seal #2b until approved. TEST stays unread.
+
+---
+
+## 2026-06-18 (cont.) — Option-2 system result + methodology & governance boards
+
+Worked On:
+- Built + ran the **combined-arm system dry-run** (recall-safe Option-2: route → epoch-fixed confirm → full-TLS fallback) on CALIBRATION. Convened a **methodology review board** (is Option-2 the same experiment?) and a **governance review board** (amendment policy / stopping rule). **TEST never read; Seal #2 unchanged; 0 TEST TICs in any artifact (verified).**
+
+Discoveries / Decisions:
+- **System-level endpoints (CALIBRATION, 150 injections + 200 nulls + 12-star timing):** **E1 PASS** (ΔR̄ = −0.39 pp, one-sided 95% lower bound −0.80 pp; fallback + occurrence weighting protect recall). **E2 FAIL** (combined/full = 0.799 → ~20% reduction; population estimate ~29%; both < 30%). E2 shortfall is **structural**: ρ_d ≈ 12.4% (sealed B=1000 block-bootstrap FAP charged on every routed star) + **59% of routed stars fail the FAP gate** → full-TLS fallback. **T_red = 0 (degenerate)** — the FAP gate, not the MF threshold, does the FP rejection on the cleaned pool.
+- **Methodology board verdict: Option-2 APPROVED CONDITIONALLY as an AMENDMENT (not a replacement).** Key reconstruction: **MATH §6 defines the arbiter as a likelihood-ratio on folded photometry — "Λ, equivalently ΔBIC or the transit-fit SNR"** — so the epoch-fixed folded-photometry significance is an admitted arbiter form and **satisfies Non-Negotiable #3** (photometry, not timing coherence; repairs the four v3 errors of §E). Option-2 **amends the fairness keystone** (A6: "same TLS engine both arms" → "common false-alarm rate"). The **evidence-first principle survives; the targeted-TLS realization does not** (Finding B). Conditions: (1) arbiter must be a genuine transit-LR (box depth-SNR borderline); (2) re-register the keystone change transparently; (3) anti-tuning discipline. If condition (1) cannot be met as true physics, verdict flips to REJECT.
+- **Governance board: proposed v3 = the FINAL permissible amendment + a Phase-I stopping rule (P-1…P-9).** Core distinction: *amendment* (pre-TEST defect fix, e.g. Finding B) vs *tuning* (outcome-motivated change, forbidden by NN#2 on TEST **and** calibration). After v3 no *known defect* compels change, so any v4 would be outcome-driven → unfalsifiability/creep. Pre-commit the E1/E2/inconclusive outcome mapping before TEST; one evaluation; a TEST failure → the pre-committed falsification (no v4); new ideas → new pre-registered experiments. **Pending owner adoption.**
+- **If v3 fails on the sealed TEST:** E1 fail → recall falsification (H1 falsified); E2 fail → compute falsification (H1 falsified); inconclusive → pre-planned injection-count increase only. A v3 failure means *both* faithful cheap-confirmer realizations fail on TESS — a strong honest verdict, not a prompt to keep amending.
+
+Artifacts created:
+- `research/m4_evaluation/`: `combined_arm_dryrun.py`; reports `M4_COMBINED_ARM_RESULT.md`, `M4_OPTION2_REVIEW_BOARD.md`, `M4_OPTION2_METHODOLOGY_DECISION.md`, `PHASE1_AMENDMENT_STOPPING_RULE.md`.
+- `data/manifests/m4/dry_run/`: `combined_arm_recovery.csv`, `combined_arm_timing.csv`, `combined_arm_e1_per_cell.csv`, `combined_arm_summary.json`, `epoch_fixed_*.csv`.
+- Vault synchronized; `SESSION_HANDOFF_2026-06-18.md` updated; `NEXT_SESSION_PROMPT.md` regenerated.
+
+Problems / Risks carried forward:
+- **R-1 (compute external validity) is now the live, measured risk:** ρ_d (B=1000 FAP) ≈ 12% + 59% FAP-gate fallback drive E2 below 30%. The E2 shortfall sits in *sealed* machinery (A.8 B=1000, α_FAP=0.01) — the Arm-B confirmer swap alone cannot fix it.
+- **Anti-tuning / amendment creep** — governed by the proposed stopping rule (v3 final; pre-committed outcomes).
+- **E2 timing subset = 12 stars** (noisy Σ-cost); a larger timing pass would tighten ~20% vs ~29% (both < 30%).
+- The methodology APPROVE is **conditional** on the arbiter being a true transit-LR; the box depth-SNR used in the dry-run does not yet clear that bar.
+
+Next Action:
+- **Owner decisions (in order): (1) adopt the v3-as-final stopping rule (P-1…P-9); (2) rule on NN#3 condition — is a folded-photometry transit likelihood-ratio an acceptable physics arbiter; (3) if yes, authorize DR-002 + VAL v3 + T_red calibration plan.** No re-registration / VAL v3 / Seal #2b until adopted. TEST stays unread.
+
+---
+
+## 2026-06-18 (cont. 2) — E2-fix R&D: margined white-noise pre-filter (exploratory)
+
+Worked On:
+- Exploratory investigation (CALIBRATION-only, no seal change) into *why* E2 fails and whether it is fixable. Built + ran two validation experiments on existing/cached calibration data. **TEST never read; Seal #2 unchanged; 0 TEST TICs across all m4 artifacts (re-verified).**
+
+Discoveries:
+- **Root cause of E2 failure is the sealed B=1000 period-FAP** (ρ_d≈12%, charged on every routed star) + the FAP gate bouncing 59% of routed stars to full-TLS fallback. So E2 is dominated by a *configuration* cost, not a property of the evidence-first principle.
+- **Pre-filter premise check** (`validate_prefilter.py`, 120 M3 null stars): the clean per-star inequality "white-FAP ≤ red-FAP" holds only **18.3%** of the time — so the "provably safe, mathematically impossible to pass red if it fails white" justification is **false as stated**. BUT the white FAP is a strong proxy (corr 0.868 with red) and the bare pre-filter rejects 98.3% of null candidates. The null-only safety check was under-powered (nulls rarely pass red).
+- **Injection recall-safety test** (`validate_prefilter_injections.py`, 100 injected planets, B=1000): the **bare** pre-filter (reject if white-FAP > α) **loses ~5% of real planets** (4/46 red-pass, 2/39 true recoveries clipped) — confirming the danger. **A safety margin fixes it:** rejecting only at **white-FAP > 5.5·α clips ZERO red-pass planets** (3.2·α for period-matched true recoveries), while null rejection only drops **98.3% → 97.5%**. → ρ_d→~0 with recall preserved → projected **E2 ~25%→~40% (PASS)**.
+- **Net:** a *margined* white-noise pre-filter (+ O(1) lookup/EVT FAP for the ~2.5% survivors + multi-period harmonic confirm) is a viable, recall-safe fix for the E2 compute shortfall. **E2 is fixable, not a fundamental falsification.**
+
+Decisions / status:
+- This is **exploratory R&D, NOT an adopted decision and NOT a seal change.** It informs the still-pending owner decisions (stopping-rule adoption, NN#3 ruling, v3 scope).
+- **Governance implication:** the fix touches **sealed A.8 (period-FAP) machinery** — adopting it would *expand* the v3 re-registration scope beyond the Option-2 confirmer swap, and bumps against the proposed "v3-as-final" stopping rule. Owner must decide v3 scope (confirmer-only vs confirmer + FAP-cheapening).
+
+Artifacts created:
+- `research/m4_evaluation/validate_prefilter.py`, `validate_prefilter_injections.py`.
+- `data/manifests/m4/dry_run/prefilter_validation.csv`, `prefilter_injection_safety.csv`.
+
+Risks / caveats:
+- Margin (5.5·α) is from ~40 red-passers (n small) on strong/recoverable cells (P≤4 d, R≥2) — **deploy with a buffer (~6–8·α) and re-validate on a larger, full-grid injection set** before trusting operationally.
+- The pre-filter premise (white as a *bound*) is false per-star; it works only as a *margined heuristic*, validated empirically — not a proof. Margin is statistic-specific (uniform-redraw white tested; analytic-formula white would need its own calibration).
+
+Next Action:
+- **Owner: decide v3 SCOPE** — confirmer-only, or confirmer + period-FAP cheapening (the E2-fix). Then (if approved) DR-002 + VAL v3 + T_red calibration + (optional) margined-pre-filter plan, sealed before the single TEST run. TEST stays unread.
 
 ---
 

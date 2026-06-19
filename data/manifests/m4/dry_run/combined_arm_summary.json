@@ -1,0 +1,25 @@
+{
+  "T_red": 0.0,
+  "n_injections": 150,
+  "routed_frac": 0.74,
+  "confirmed_cheap_frac": 0.30666666666666664,
+  "E1": {
+    "delta_R_bar": -0.003937197309848226,
+    "ci95_one_sided_lower": -0.008020949177446246,
+    "pass": true,
+    "margin": -0.02,
+    "n_cells": 30,
+    "n_injections_eligible": 150,
+    "bootstrap_B": 2000,
+    "bootstrap_mean": -0.003940101880097809
+  },
+  "E2": {
+    "compute_ratio": 0.7990988839362891,
+    "reduction": 0.20090111606371086,
+    "rho_d": 0.12434638843203796,
+    "n_timed": 12
+  },
+  "confirmer": "red-noise epoch-fixed MF (R2 LR-upgrade still pending)",
+  "seal2_sha256": "6292c018c6923d512ac9c90dd55289cc010724d9facc27dc087f7e3f20832692",
+  "test_accessed": false
+}
