@@ -194,7 +194,12 @@ Paper IV (Phase IV)  "TRINETRA-X: A Scalable Evidence-First Pipeline & Candidate
 
 **Integrity.** Sealed v3 (`phase1-prereg-v3`); read exactly once; both seals hash-verified in-run; `git diff phase1-prereg-v3` empty (NN#2); verdict pre-committed before the read; v3 is the terminal amendment (P-2). The decisive lever for a future, *separately pre-registered* experiment (P-8) is a cheaper-but-provably-equivalent period-FAP.
 
-**Feeds.** T2 (headline), T3 (recall by population — the $R_p$/period loss-gain structure above), T7 (compute ledger / $\rho_d$), F3 (completeness + $\Delta R$ maps), F8 (runtime). Source: `research/m4_evaluation/M4_TEST_RESULT.md`; `data/manifests/m4/test_run/{summary.json,recovery.csv,e1_per_cell.csv,timing_ledger.csv}`.
+**Feeds — GENERATED (2026-06-25).** T2/T3/T7 + F3/F8 are now produced by `research/m4_evaluation/make_paper_artifacts.py` → tables in `research/m4_evaluation/M4_TABLES.md` (+ `tables/*.csv`), figures in `research/m4_evaluation/figures/{F3_completeness_maps.png,F8_runtime.png}`.
+- **T3-by-radius** makes the structure explicit: $R_p$=2 near-parity (−0.37 pp, the weight-dominant class), worst loss at $R_p$=4 (−5.1 pp), $R_p$=8/12 (−2.1/−2.7 pp), $R_p$=1 ≈0 (noise-limited, both arms). **T3-by-period:** P=0.5 d **+19 pp** (combined beats full) vs P=1–4 d losses.
+- **F3** (completeness + ΔR maps) reads at a glance: blue gain column at P=0.5 d / large $R_p$, red loss band at P=1–4 d / $R_p$≥4, ≈0 at $R_p$≤2. **F8** shows confirmed-cheap stars saving ~80 s→~10 s while fallback stars pay the entry tax *on top of* full TLS (why net is +24.4%, not larger).
+- **Two recall scales — keep distinct in prose:** the *occurrence-weighted* recall (T2: full 0.218 / combined 0.213; the scale on which $\overline{\Delta R}=-0.48$ pp is defined and E1 is judged) is low because the K&M-2020 weight sits on small, hard $R_p$≤2 planets; the *unweighted grid-average* recall (0.509 / 0.488) is higher. Both are correct views of the same run; E1 uses the weighted difference.
+- **No monotransits in the grid (review finding 2026-06-25):** all 15,000 injections have $\ge2$ transits over the S1–S3 baseline (min `n_transits`=2; T3-by-regime is single-row "multi"). The monotransit advantage region (F7) is therefore *not exercised* and is deferred to a future longer-period/single-event campaign — do not claim a monotransit result from this run.
+- Source data: `research/m4_evaluation/M4_TEST_RESULT.md`; `data/manifests/m4/test_run/{summary.json,recovery.csv,e1_per_cell.csv,timing_ledger.csv}`.
 
 ---
 

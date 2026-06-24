@@ -1,0 +1,12 @@
+item,value
+n eligible stars timed,12
+mean full-TLS cost / star (s),39.1
+mean detector cost / star (s),5.65
+mean combined-TLS cost / star (s),23.9
+C_full total (s),469.6
+C_comb total (s),355.1
+compute ratio,0.756
+reduction,24.4 %
+ρ_d (entry tax),14.4 %
+π* break-even occurrence,0.236
+fast-path confirmed (of timed),3/12
