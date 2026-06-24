@@ -39,7 +39,7 @@ Most likely first paper: a **methods + validation** paper in AJ/MNRAS reporting 
 **If negative result:**
 6. *The Limits of Evidence-First Transit Detection: A Pre-Registered Null Result on TESS*
 
-*(Working favourite: #1 for a positive result, #6 for a null.)*
+*(Working favourite: #1 for a positive result, #6 for a null. **Realized outcome is the null → #6 is now the operative front-runner**, though the recall-preservation pass means a "what works and what doesn't" framing — e.g. #3 — is also viable, leading recall-first.)*
 
 ---
 
@@ -48,8 +48,10 @@ Most likely first paper: a **methods + validation** paper in AJ/MNRAS reporting 
 ### 3a. Positive-result abstract (draft)
 > Transit surveys fold every light curve at thousands of trial periods, an exhaustive search whose cost scales poorly to the $\sim10^5$–$10^6$ stars of missions like TESS. We test, in a pre-registered experiment, whether detection cost can be reduced by **routing on evidence**: detecting individual transit-like events directly, inferring the period from their spacing, confirming with a physics-based transit fit, and reserving a full Transit Least Squares (TLS) search only for stars lacking local evidence. Using injection–recovery into real TESS light curves — preserving genuine correlated noise — and an identical TLS engine in both arms, we find that evidence-first routing reduces total compute by [X]% while remaining recall non-inferior to full TLS within a 2-percentage-point margin (recall difference [Δ ± CI]). The advantage is concentrated, as predicted, on the high single-transit-SNR (large-planet) population and on single-transit (monotransit) events that a periodogram cannot fold. Crucially, detection is adjudicated by calibrated photometric significance rather than timing coincidence, and every significance statistic is validated against a bootstrap null. We discuss the compute–recall frontier and its extrapolation to full-survey scale.
 
-### 3b. Null-result abstract (draft)
-> We report a pre-registered test of evidence-first transit detection on TESS and find that, under realistic correlated noise, [it fails to preserve recall within the 2-pp margin / the routing fraction is too small to yield meaningful compute savings]. We trace the outcome to [seed-accuracy collapse under red noise / low single-transit detectability of the TESS planet population], quantify the boundary at which the approach would become viable, and release the benchmark to support future work.
+### 3b. Null-result abstract — REALIZED (2026-06-24; the operative abstract)
+> We report a pre-registered, single-evaluation test of evidence-first transit detection on TESS. Routing on cheap local evidence — detecting transit-like events, inferring the period from their spacing, and confirming with a calibrated folded-photometry transit likelihood-ratio held to a common false-alarm rate with the baseline, with a full Transit Least Squares (TLS) fallback — **preserves recall non-inferiorly** to an exhaustive TLS search (occurrence-weighted recall difference $-0.48$ pp; one-sided 95% lower bound $-0.60$ pp; 2-pp margin) on a sealed test set of 15,000 injection–recovery trials into real TESS light curves. **However, the compute saving over the fast-path-eligible population (24.4%) falls short of our pre-registered 30% threshold, falsifying the compute branch of the hypothesis.** We localize the shortfall to a single replaceable component — the per-star bootstrap period false-alarm-probability entry tax ($\rho_d\approx14\%$), charged on every routed star — which a numerical-equivalence gate proved cannot be cheapened without altering which stars pass. Recall losses (all from the cheap confirmer suppressing the fallback on a right-period/wrong-epoch seed) concentrate on large, low-occurrence planets and are partly offset by gains on short-period planets the periodogram misses. The recall principle is supported; the compute claim, in this realization, is not. We release the sealed benchmark and identify the cheaper-but-equivalent period-FAP as the decisive lever for future work.
+
+*(The positive-result abstract 3a is retained as an unrealized template; the realized Phase-I outcome is the null above — recall preserved, compute claim falsified.)*
 
 ---
 
@@ -175,6 +177,24 @@ Paper IV (Phase IV)  "TRINETRA-X: A Scalable Evidence-First Pipeline & Candidate
 **Scope / caveats (do not overstate).** This is an **M2 transit-preservation validation result on the S1–S3 southern calibration sample at the finalized 2.5 d biweight window** — *not* a universal statement about all TESS Earth-sized planets. The Rₚ=1 η medians are noise-dominated (depth ~70–85 ppm, single-transit SNR₁ ~0.07–0.08; broad, non-physical η with negative lower quartiles); the boundary depends on stellar noise (σ), sector baseline, and the detrending configuration. The 0.5/2 cell is a documented low-SNR borderline (η = 0.892).
 
 **Connects to.** F1 (single-transit SNR bimodality), the §1 rationale / HYP A1, and the fallback's role (small planets recovered by folding, not single-transit conditioning). Source: `data/manifests/m2/m2_eta_table.csv`; `PHASE1_M2_PLAN.md` §3b. Candidate figure: η map over $(P, R_p)$ as a supplement to F1.
+
+### EF-2 — M4 sealed-test HEADLINE result: H1 falsified (compute branch) (2026-06-24)
+
+**Finding.** The single sealed-test evaluation (15,000 injections; 30 $(P,R_p)$ cells × 500; read **once**, P-5) returns **E1 recall non-inferiority PASS** (occurrence-weighted $\overline{\Delta R}=-0.48$ pp; one-sided 95% lower bound $-0.60$ pp; 2-pp margin) and **E2 scoped-compute FAIL** (reduction 24.4%, ratio 0.756; $\rho_d=14.4\%$; target ≥30%). **Pre-committed verdict (VAL §7a): H1 FALSIFIED — compute branch.** The recall principle is supported; the compute claim, in the sealed v3 realization, is not. A successful negative Phase I.
+
+**Mechanism (from `recovery.csv`, 15,000 rows).**
+- *Funnel:* 75.2% routed → 38.7% of routed pass the period-FAP gate → 72.5% of those confirmed by the transit-LR confirmer; the gate-failures (≈61% of routed) + confirmer-rejects fall to full-TLS fallback.
+- *Outcomes vs full TLS:* both 6761 / neither 6807 / **loss 869 / gain 563**; combined recall 0.488 vs full-TLS 0.509.
+- *Losses (869) are one pathway* — **100% `cheap_confirm` with the fallback suppressed:** the confirmer confirmed at the seeded ephemeris and suppressed the full-TLS fallback, but the seed then failed the recovery predicate. **80% right-period/wrong-epoch** (the detector's event epoch is less precise than TLS's fitted $T_0$), 20% wrong-period. They concentrate on **large, low-occurrence planets** ($R_p$=4/8/12: 306/254/297; only 12 at $R_p$=2) and intermediate periods ($P$=1–4 d). This is why the *occurrence-weighted* $\overline{\Delta R}$ is small despite 869 raw losses — the K&M-2020 weight sits on $R_p$≤2, where the arms agree ($\Delta R\approx0$).
+- *Gains (563) are almost entirely short-period* ($P$=0.5 d: 561/563), larger planets ($R_p$=4/8/12: 153/192/217): the confirmer recovers short-period planets whose full-grid TLS SDE fell just below $T$, partly offsetting the losses.
+
+**Why E2 fails (structural, pre-identified).** $\rho_d\approx14\%$ is the per-routed-star entry tax (detector + the sealed $B{=}1000$ block-bootstrap period-FAP). The Lever-1b numerical-equivalence gate proved both cheap estimators (EVT/GPD, precomputed-LUT) inequivalent → the bootstrap stands → the fast path cannot earn ≥30%. The CALIBRATION dress rehearsal projected this. **The failure is in a replaceable component, not the evidence-first principle.**
+
+**Scope (do not overstate — feeds R6/R7 rebuttals).** The 24.4% is the **scoped** reduction over the *fast-path-eligible* population (DR-001 / F1), measured on a 12-star timing subset — **not** a survey-representative figure ($E_3$ is expected near-zero by construction). The absolute recall (~49–51%) is the injected-grid average across easy and noise-limited cells; E1 concerns the cheap-vs-full *difference*, not an absolute detection rate.
+
+**Integrity.** Sealed v3 (`phase1-prereg-v3`); read exactly once; both seals hash-verified in-run; `git diff phase1-prereg-v3` empty (NN#2); verdict pre-committed before the read; v3 is the terminal amendment (P-2). The decisive lever for a future, *separately pre-registered* experiment (P-8) is a cheaper-but-provably-equivalent period-FAP.
+
+**Feeds.** T2 (headline), T3 (recall by population — the $R_p$/period loss-gain structure above), T7 (compute ledger / $\rho_d$), F3 (completeness + $\Delta R$ maps), F8 (runtime). Source: `research/m4_evaluation/M4_TEST_RESULT.md`; `data/manifests/m4/test_run/{summary.json,recovery.csv,e1_per_cell.csv,timing_ledger.csv}`.
 
 ---
 

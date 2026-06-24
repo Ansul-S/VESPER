@@ -1,27 +1,29 @@
 # Next-Session Bootstrap Prompt
 
-> Copy-paste the block below into a fresh Claude Code session. It assumes **zero chat history**.
+> Paste the block below into a fresh Claude Code session. Assumes **zero chat history**.
 
 ---
 
-Resume **TRINETRA-X Phase I** (evidence-first exoplanet detection, TESS era). Assume zero chat history; **repository documents are authoritative**, the Obsidian `vault/` mirrors them.
+Resume **TRINETRA-X Phase I** (evidence-first exoplanet detection, TESS). Assume zero chat history; **repository documents are authoritative**, the Obsidian `vault/` mirrors them. This repo uses **Markdown docs as deliverables (no GSD / `.planning/`)**.
 
-**Read in order:** `CLAUDE.md` → `SESSION_HANDOFF_2026-06-16.md` → `PHASE1_M3_PLAN.md`.
+**Read in order:** `CLAUDE.md` → `SESSION_HANDOFF_2026-06-24.md` → `research/m4_evaluation/M4_TEST_RESULT.md` → `docs/decisions/DR-002_DECISION_RECORD.md`.
 
-**State:** M0–M3 complete. **Seal #1** (M0 data manifest) = `1f2d49e1…`; **Seal #2** (M3 threshold manifest) = `6292c018…`. Confirm both intact before any work:
-- `git diff phase1-prereg-v2 -- docs/SCIENTIFIC_HYPOTHESIS.md docs/TRINETRA_X_PHASE1_VALIDATION.md docs/TRINETRA_MATHEMATICAL_FOUNDATIONS.md` → must be **empty**.
-- `shasum -a 256 data/manifests/m3/m3_threshold_manifest_SEALED_CORE.json` → must equal `6292c018c6923d512ac9c90dd55289cc010724d9facc27dc087f7e3f20832692`.
+**State: the Phase-I PRIMARY RESULT IS IN.** The single irreversible TEST read (P-5) was executed once on 2026-06-24 against sealed v3 → **VERDICT: H1 FALSIFIED — compute branch (E1 PASS, E2 FAIL).** A successful negative Phase I. Verify integrity first:
+- `shasum -a 256 data/manifests/m3/m3_threshold_manifest_SEALED_CORE.json` → `6292c018…32692` (Seal #2).
+- `shasum -a 256 data/manifests/m4/v3/m4_v3_threshold_manifest.json` → `54f06a94…c9b18` (Seal #2b).
+- `git diff phase1-prereg-v3 -- docs/SCIENTIFIC_HYPOTHESIS.md docs/TRINETRA_X_PHASE1_VALIDATION.md docs/TRINETRA_MATHEMATICAL_FOUNDATIONS.md data/manifests/m3 data/manifests/m4/v3` → **empty** (NN#2 intact).
+- Tags `phase1-prereg-v2` + `phase1-prereg-v3` (→ `ff869d4b`); branch `phase1/m4-v3-seal2b`. Seal #1 = `1f2d49e1…`.
 
-**Sealed thresholds (Seal #2, do not change):** z⋆=3.4 · z_mono=5.3 · N_min=2 · T=10.74 · α_FAP=1% · ε=0.01 · w_c (92.8% on Rₚ≤2 R⊕) · π̂=3.17%.
+**The result (`data/manifests/m4/test_run/summary.json`):** 15,000 injections (30 cells × 500, literal ≥500/cell). **E1** recall non-inferiority PASS (occurrence-weighted ΔR̄ = −0.48 pp, one-sided 95% lower bound −0.60 pp; margin −2 pp; combined recall 0.488 vs full-TLS 0.509). **E2** scoped compute FAIL (reduction 24.4%, ratio 0.756, ρ_d = 14.4%; target ≥30%). Recall principle holds; compute claim is the falsified branch — the un-cheapenable sealed B=1000 block-bootstrap period-FAP entry tax (Lever-1b had already proven it un-cheapenable). Pre-committed verdict (VAL §7a) applied. TEST conditioned (sanctioned first-touch) via frozen Stage-0: `research/m1_conditioning/condition_test_hosts.py`, exactly the driver's `sample(80, random_state=22)` draw, 80/80.
 
-**Current milestone — M4: the single sealed-TEST run** → E1 (occurrence-weighted recall non-inferiority vs full TLS, pass iff one-sided 95% CI lower bound > −2 pp) and E2 (scoped compute, with detector overhead ρ_d). The **TEST split (15,798 targets) has never been read — it is read exactly once, at M4.** No threshold/weight/conditioning/detector/bootstrap change is permitted under Seal #2 (any change needs a new pre-registration).
+**Integrity / anti-tuning:** both seals hash-verified in-run + intact; `git diff phase1-prereg-v3` empty; `test_accessed:true`; TEST read **exactly once**; verdict pre-committed before the read. Clean end-to-end.
 
-**Objective this session:** draft `PHASE1_M4_PLAN.md` (execution-only — reuses Seal #2, introduces no new frozen parameters; plan TEST conditioning + dual-arm shared-TLS recovery + the compute ledger), **confirm scope with me before touching TEST**, then execute the single run. Expect E1 to be dominated by Rₚ≤2 (report the Rₚ=1 noise-limited bound honestly).
+**Immediate next step: M7 — the Phase-I write-up** from `research/m4_evaluation/M4_TEST_RESULT.md` + `docs/PAPER_NOTES.md`. Report the negative result with equal rigor (recall supported, compute falsified, traced to the period-FAP). Optional owner action: open a PR `phase1/m4-v3-seal2b` → `main`. M5/M6 (coverage/ablation) are optional extensions, not gates.
 
-**Env:** `.venv/` (transitleastsquares 1.32, lightkurve, wotan, celerite2, astroquery). Conditioning/catalog queries (MAST/Vizier) are **blocked in the sandbox — run sandbox-disabled (host network)**; PyPI reachable. This repo uses **Markdown docs as deliverables (no GSD / `.planning/`)**.
+**Hard constraints:** TEST has been read once and **will not be read again** (P-5). **No sealed value, threshold, statistic, or config may change — v3 is the FINAL amendment (P-2); NO v4.** Any new idea (cheaper period-FAP with a passing equivalence proof, harmonics, recall-protective confirmer floor, clean-skip tier) is **P-8 territory only** — a new, separately pre-registered experiment, not a continuation of this one.
 
-Report current state + the proposed M4 plan first; do not read TEST until the plan is approved.
+**Housekeeping:** all v3 + M4 work (incl. this result) is committed on `phase1/m4-v3-seal2b`; the branch is **not merged to `main`** and not pushed unless asked — PR/merge/push are owner actions; the frozen tag is unaffected.
 
 ---
 
-*Generated 2026-06-16 (end of session). Mirrors `SESSION_HANDOFF_2026-06-16.md`. The handoff is authoritative on any conflict.*
+*Generated 2026-06-24. Mirrors `SESSION_HANDOFF_2026-06-24.md`; the handoff is authoritative on any conflict.*

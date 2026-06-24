@@ -1,0 +1,93 @@
+{
+  "authority": "DR-002 (ADOPTED); VAL v3; MATH v1.2; SCIENTIFIC_HYPOTHESIS v2.1",
+  "carried_forward_from_seal2_UNCHANGED": {
+    "N_min": 2,
+    "T_sde": 10.740887727255977,
+    "alpha_FAP": 0.01,
+    "epsilon": 0.01,
+    "pi_hat": "unchanged (A.6, 3.17%)",
+    "seal2_hash": "6292c018c6923d512ac9c90dd55289cc010724d9facc27dc087f7e3f20832692",
+    "w_c": "unchanged (A.5)",
+    "z_mono": 5.3,
+    "z_star": 3.4
+  },
+  "content_hashes": {
+    "HYP_v2.1": "4e505df61e103e9002d6bbe9fbadbae66c88948f234d00a7e50d1091dd175cc1",
+    "MATH_v1.2": "9980d0ca0f655abf21d2f58e75a14f4c7f769553aaa81f697a73a24df4d96ffb",
+    "TRANSIT_LR_CONFIRMER_SPEC.md": "df0143fffbbfa759ad77211fd35e7ffc882847bfa71beaa2d1eec05a218c881c",
+    "VAL_v3": "ce1c92c82292c44a0be0a32d348fa378681a9ec542033e6dc26a2d0c677faba8",
+    "_note": "frozen specs + confirmer + result memos; DR-002 (decision record) is frozen by the git tag, not hashed here (avoids a reference cycle)",
+    "confirmer.py": "89d06a623367a90c9100ba4f976572939465fa9eb9a2fd3e237dfeade25d5185",
+    "elut_summary.json": "0effc4f39e0241d2f7f48e5829569cee33f0c8958326020451cd140b0d3afa14",
+    "equivalence_summary.json": "cc32e8265a67a06b495fe568a96a3b5832a4af12584aa815b2ad479cb58eafe7",
+    "tred_summary.json": "44f56b51b7699c47454789c37f993afee0b05b07c855185f81961af36336499b"
+  },
+  "date": "2026-06-19",
+  "integrity": {
+    "TEST_TICs_in_calibration_artifacts": 0,
+    "seal2_unchanged": true
+  },
+  "manifest": "TRINETRA-X Phase I \u2014 v3 threshold manifest (confirmer-only)",
+  "status": "SEALED v3 (tag phase1-prereg-v3) \u2014 frozen before the single TEST read; confirmer-only",
+  "v3_A11_confirmer": {
+    "T_red": 0.0,
+    "T_red_binding": false,
+    "T_red_rule": "set solely from FAR target (P-3); non-binding because FAP gate + shape vetting already give FAR<=target",
+    "achieved_FAR_end2end": 0.00117096018735363,
+    "box_depth_SNR": "REJECTED (DR-002 2.2)",
+    "noise_model": "GP marginal likelihood, per-star Matern-3/2 (D-2a)",
+    "recall_preview_AUC": 0.8937143472177376,
+    "statistic": "folded-photometry transit likelihood-ratio Lambda (depth-only linear GLS, D-1a)",
+    "t0_refinement": "none (D-3 i)",
+    "vetting": "sign-aware; odd-even + secondary EB rejection (N_tr>=2); MATH 6 monotransit (headline-excluded)"
+  },
+  "v3_A8_period_FAP": {
+    "A8a_cheap_estimator_admitted": null,
+    "candidate_E_EVT": {
+      "crit_i_fap_agreement": {
+        "PASS": false,
+        "corr_ref_evt": 0.9876554297109048,
+        "median_abs_dFAP": 0.01281720931190829,
+        "p95_abs_dFAP": 0.08481418481518477,
+        "tau_abs": 0.005
+      },
+      "crit_ii_gate_membership": {
+        "PASS": false,
+        "admit_extra_FP": 7,
+        "discordant": 9,
+        "limit": 8
+      },
+      "crit_iii_recall_safety": {
+        "PASS": false,
+        "clipped_by_evt": 2,
+        "n_ref_pass_periodmatched": 38
+      }
+    },
+    "candidate_E_EVT_verdict": "FAIL -> confirmer-only fallback",
+    "candidate_E_LUT": {
+      "crit_i_fap_agreement": {
+        "PASS": false,
+        "corr_ref_lut": 0.8215423655747401,
+        "median_abs_dFAP": 0.027117845913147087,
+        "p95_abs_dFAP": 0.10407761446251826,
+        "tau_abs": 0.005
+      },
+      "crit_ii_gate_membership": {
+        "PASS": false,
+        "admit_extra_FP": 9,
+        "discordant": 11,
+        "limit": 8
+      },
+      "crit_iii_recall_safety": {
+        "PASS": false,
+        "clipped_by_lut": 2,
+        "n_ref_pass_periodmatched": 38
+      }
+    },
+    "candidate_E_LUT_verdict": "FAIL",
+    "equivalence_gate": "FAILED for BOTH pre-registered candidates -> confirmer-only fallback (DR-002 2.3a)",
+    "estimator_of_record": "B=1000 circular block bootstrap (sealed A.8, UNCHANGED)",
+    "rho_d_consequence": "~12.4% retained (no cheapening) -> E2 projected <30% (pre-committed compute-falsification path)"
+  },
+  "v3_keystone_A6": "common false-alarm rate (Arm A: SDE>=T_sde; Arm B: Lambda>=T_red), each calibrated to FAR<=1%/star"
+}

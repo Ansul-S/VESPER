@@ -1,0 +1,34 @@
+# M4 run config — EXECUTION-ONLY. Introduces NO new frozen parameter.
+# Every threshold/weight/grid value is loaded read-only from Seal #2 (see seal_loader.py).
+# This file selects ONLY run logistics (mode, host source, batch sizes), never science.
+#
+# mode: dry_run  -> CALIBRATION/synthetic hosts; TEST access is hard-blocked.
+# mode: test     -> the single sealed-TEST run; requires the owner §10 confirmation token.
+
+run:
+  mode: "dry_run"               # dry_run | test
+  split: "calibration"          # dry-run uses calibration cached residuals (offline)
+  host_mode: "cached_residual"  # cached_residual (offline dry-run) | raw (production, network)
+  confirm_token: null           # set to the §10 token ONLY for the approved TEST run
+
+# Injection campaign (grid is SEALED in injection.py / VAL §3; these are batch sizes only).
+campaign:
+  injections_per_cell: 4        # dry-run smoke scale; production uses the sealed >=500/cell
+  max_hosts: 40                 # dry-run cap on distinct hosts drawn
+  limit_cells: null             # null = all 30 (P,Rp) cells
+
+# E2 timing subset rule (frozen in PHASE1_M4_PLAN §6).
+timing:
+  per_cell_min: 10
+  cap: 300
+  repeats: 5                    # >=5 warm-cache repeats (A.7)
+
+input:
+  m0_manifest: "data/manifests/m0/m0_manifest.parquet"
+  m1_noise_summary: "data/manifests/m1/m1_noise_summary.csv"
+  cached_resid_dir: "data/processed/m1"     # offline calibration residuals (dry-run hosts)
+  seal2_sha256: "6292c018c6923d512ac9c90dd55289cc010724d9facc27dc087f7e3f20832692"
+
+output:
+  report_dir: "data/manifests/m4"           # dry-run writes under <report_dir>/dry_run/
+  seed: 20260616

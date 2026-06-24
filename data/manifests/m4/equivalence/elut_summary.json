@@ -1,0 +1,24 @@
+{
+  "candidate": "E-LUT (uniform-epoch null, keyed on k + baseline)",
+  "n_null_routed": 833,
+  "n_inj_routed": 155,
+  "crit_i_fap_agreement": {
+    "tau_abs": 0.005,
+    "median_abs_dFAP": 0.027117845913147087,
+    "p95_abs_dFAP": 0.10407761446251826,
+    "corr_ref_lut": 0.8215423655747401,
+    "PASS": false
+  },
+  "crit_ii_gate_membership": {
+    "discordant": 11,
+    "limit": 8,
+    "admit_extra_FP": 9,
+    "PASS": false
+  },
+  "crit_iii_recall_safety": {
+    "n_ref_pass_periodmatched": 38,
+    "clipped_by_lut": 2,
+    "PASS": false
+  },
+  "VERDICT": "FAIL"
+}

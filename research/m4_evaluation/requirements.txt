@@ -1,0 +1,13 @@
+# M4 evaluation — pins identical to M3 (the fairness keystone: same TLS engine + version).
+# Install into the project .venv. No new scientific dependency beyond M1–M3.
+transitleastsquares==1.32
+lightkurve
+wotan
+celerite2
+batman-package
+astroquery
+numpy
+pandas
+pyarrow
+pyyaml
+scipy

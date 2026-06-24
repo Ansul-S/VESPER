@@ -1,0 +1,42 @@
+{
+  "mode": "test",
+  "split": "test",
+  "test_accessed": true,
+  "seal2_sha256": "6292c018c6923d512ac9c90dd55289cc010724d9facc27dc087f7e3f20832692",
+  "v3_manifest_sha256": "54f06a947a096bd496830858595dbc74a667d00dec580a92e0c92b10395c9b18",
+  "T_red": 0.0,
+  "n_injections": 15000,
+  "routed_frac": 0.7519333333333333,
+  "confirmed_cheap_frac": 0.211,
+  "E1": {
+    "delta_R_bar": -0.004795041405004603,
+    "ci95_one_sided_lower": -0.006025453056510998,
+    "pass": true,
+    "margin": -0.02,
+    "n_cells": 30,
+    "n_injections_eligible": 15000,
+    "bootstrap_B": 2000,
+    "bootstrap_mean": -0.004777514077273263
+  },
+  "E2": {
+    "n_eligible": 12,
+    "C_full_s": 469.64665779296774,
+    "C_comb_s": 355.0785518361954,
+    "compute_ratio": 0.7560546763067206,
+    "reduction": 0.24394532369327937,
+    "rho_d": 0.1443096781752311,
+    "f_p_search_frac": 0.6117449981314895,
+    "pi_star_breakeven": 0.235898419465643,
+    "reduction_target": 0.3,
+    "recall_non_inferior": true,
+    "pass": false,
+    "per_stage_means_s": {
+      "detector": 5.647879836848006,
+      "period": 0.0,
+      "tls_comb": 23.941999482834945,
+      "full_tls": 39.137221482747314
+    }
+  },
+  "verdict_pre_committed": "FALSIFIED \u2014 compute branch (E1 pass, E2 fail)",
+  "confirmer": "transit-LR (D-1a/D-2a/D-3-i); box depth-SNR rejected"
+}

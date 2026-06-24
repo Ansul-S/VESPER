@@ -1,0 +1,25 @@
+{
+  "n_null_routed": 833,
+  "n_inj_routed": 155,
+  "null_fap_gate_pass": 9,
+  "crit_i_fap_agreement": {
+    "tau_abs": 0.005,
+    "median_abs_dFAP": 0.01281720931190829,
+    "p95_abs_dFAP": 0.08481418481518477,
+    "corr_ref_evt": 0.9876554297109048,
+    "PASS": false
+  },
+  "crit_ii_gate_membership": {
+    "discordant": 9,
+    "limit": 8,
+    "admit_extra_FP": 7,
+    "PASS": false
+  },
+  "crit_iii_recall_safety": {
+    "n_ref_pass_periodmatched": 38,
+    "clipped_by_evt": 2,
+    "PASS": false
+  },
+  "VERDICT": "FAIL -> confirmer-only fallback",
+  "estimator_of_record": "bootstrap (fallback)"
+}

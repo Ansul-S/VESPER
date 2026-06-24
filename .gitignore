@@ -73,6 +73,9 @@ data/benchmark/
 !data/**/.gitkeep
 !data/**/*manifest*.json
 
+# M4 incremental crash-recovery checkpoint (scratch; final result is recovery.csv)
+data/manifests/m4/**/recovery_partial.csv
+
 *.nbconvert.ipynb
 
 *.fits
