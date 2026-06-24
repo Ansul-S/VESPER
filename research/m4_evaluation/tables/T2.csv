@@ -1,0 +1,15 @@
+quantity,value
+Recall — full TLS (occ-weighted),0.218
+Recall — combined (occ-weighted),0.213
+ΔR̄ (occ-weighted),-0.48 pp
+ΔR̄ one-sided 95% lower bound,-0.60 pp
+E1 margin,-2 pp
+E1 — recall non-inferiority,PASS
+Compute ratio (combined/full),0.756
+Compute reduction (scoped),24.4 %
+ρ_d (routing entry tax),14.4 %
+Reduction target,30 %
+E2 — scoped compute,FAIL
+Routing fraction,0.752
+Injections,15000
+"VERDICT (pre-committed, VAL §7a)","FALSIFIED — compute branch (E1 pass, E2 fail)"
