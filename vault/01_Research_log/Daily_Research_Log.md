@@ -2,7 +2,55 @@
 
 ---
 
-## 2026-06-19 — v3 re-registration drafted + owner-approved (DR-002); Seal #2b prep begun
+## 2026-06-20 — M4 driver built + CALIBRATION dress rehearsal; TEST authorized (held at scale)
+
+Worked On:
+- Built `m4_driver.py` (v3 confirmer-only): one driver for the CALIBRATION dress rehearsal (`--mode dry_run`) and the token-gated single TEST run (`--mode test --confirm-token READ-TEST-ONCE-SEAL2-APPROVED`). Wired the transit-LR confirmer + sealed T_red=0 + B=1000 FAP gate + full-TLS fallback; E1 (occurrence-weighted ΔR̄ + one-sided 95% CI) + E2 (compute ledger); dual hash-verification + TEST guard; incremental recovery checkpoint.
+
+Discoveries / Decisions:
+- **Dress rehearsal verdict: FALSIFIED — compute branch (E1 PASS, E2 FAIL).** E1 ΔR̄=−0.17 pp, lo95=−0.51 pp (per-cell 8, 240 inj) — comfortably non-inferior. E2 reduction −5.6%, ρ_d=0.138 → fail.
+- **Power lesson:** the first rehearsal (per-cell 5) showed E1 "FAIL" (lo95 −5.19 pp). That was **underpowered noise**, not a real recall failure — per-cell 8 tightened it to −0.51 pp (PASS). The driver's binary `pass=lo>−2pp` over-reads underpowered CIs; VAL §5's three-way rule calls that INCONCLUSIVE.
+- **Recall-loss mechanism fully characterized (owner-requested):** 14/240 losses, **ALL one pathway** — `cheap_confirm` with `fallback_suppressed=True` (the confirmer confirms at the seeded ephemeris → suppresses fallback → seed fails the recovery predicate → miss; Arm A's full TLS recovers them). **11/14 = right period, wrong epoch** (detector t̂₀ less precise than TLS's fitted T₀); 3/14 wrong period. Net −0.17 pp (sub-margin; 9 gains offset). → a **v3-confirmer interaction** (T_red=0 has no recall-protective floor), NOT a fundamental evidence-first failure; does not threaten E1.
+- **The genuine, robust limitation is E2 (compute):** the sealed B=1000 period-FAP (un-cheapenable — both Lever-1b candidates failed equivalence) charges ρ_d≈0.12–0.14 on every routed star → no ≥30% saving. This is the honest falsification.
+- **Owner AUTHORIZED the single irreversible TEST read.** Held at one decision only: TEST scale — ~per-cell 50 (§6 realized-CI rule, ~3–5 h) vs literal ≥500/cell (~1.5–2 days). Same expected verdict.
+
+Artifacts created/updated:
+- `research/m4_evaluation/m4_driver.py`, `M4_DRESS_REHEARSAL_READINESS.md`; `data/manifests/m4/dress_rehearsal/` (recovery, timing_ledger, e1_per_cell, summary). Logs: `m4_dress_rehearsal{,2}.log`, `m4_smoke.log`.
+- All CALIBRATION-only; 0 TEST TICs; Seal #1/#2/#2b intact; nothing of the seal changed.
+
+Problems / Risks carried forward:
+- **Single TEST read is the next, irreversible action** (P-5). Multi-day at ≥500/cell — incremental checkpoint added for crash-robustness. **No v4 (P-2/P-8).**
+- T_red=0 recall leak is understood + sub-margin, but is a real (small) cost of the cheap path that would persist on TEST.
+
+Next Action:
+- Resolve the TEST-scale choice; fire the token-gated read once; accept the pre-committed verdict (VAL §7a).
+
+---
+
+## 2026-06-19 (PM) — Seal #2b CUT: v3 = confirmer-only (Lever-1b equivalence failed)
+
+Worked On:
+- Implemented the transit-LR confirmer (`confirmer.py`; spec-locked D-1a/D-2a/D-3-i) and ran the two pre-registered CALIBRATION campaigns; assembled + sealed the v3 manifest.
+
+Discoveries / Decisions:
+- **Lever-1b equivalence gate — BOTH candidates FAILED** (854 nulls + injections, B=1000 reference). **E-EVT** (GPD, B′=100): p95 |ΔFAP|=0.085 (17× tol), 7 FP-admit, 2 recoveries clipped — GPD can't fit the discrete low-event-count null. **E-LUT** (uniform-epoch grid, nsim=4000): 0.104, corr 0.82, 9 FP-admit, 2 clipped — can't capture per-star red-noise event clustering. → **pre-committed confirmer-only fallback** (DR-002 §2.3a): period-FAP stays the sealed B=1000 bootstrap, **ρ_d≈12.4% retained**. The equivalence gate worked exactly as designed — the cheap estimator was *required* to be numerically equivalent and isn't.
+- **T_red = 0.0 (non-binding), FAR-calibrated** (P-3): end-to-end Arm-B FAR 0.12%. The genuine transit-LR confirmer **rejects 8/9 FAP-gate-passing nulls** (real FP rejection, unlike the dry-run box-S/N; AUC 0.894). Fast-path recall 46% (54% fallback is period-seed error, not the confirmer → combined recall protected).
+- **Honest projection:** confirmer-only v3 keeps ρ_d≈12.4% → **E2 expected <30% → H1 compute-branch FALSIFIED** on the single TEST run (E1 recall pass). A legitimate negative Phase I; the recall principle + confirmer upgrade stand.
+
+Artifacts created/updated:
+- **Seal #2b cut:** tag `phase1-prereg-v3` (annotated → commit `ff869d4b`), branch `phase1/m4-v3-seal2b`; manifest `data/manifests/m4/v3/m4_v3_threshold_manifest.json` SHA-256 `54f06a94…`.
+- Code: `confirmer.py`, `equivalence_validation.py`, `elut_equivalence.py`, `tred_calibration.py`, `assemble_v3_manifest.py`. Memos: `LEVER1B_EQUIVALENCE_RESULT.md`, `TRED_CALIBRATION_RESULT.md`, `TRANSIT_LR_CONFIRMER_SPEC.md`. Data: `data/manifests/m4/{equivalence,tred,v3}/`.
+- Integrity: 0 TEST TICs (verified vs parquet split; substring flags were false positives in float values); Seal #1/#2 intact; no sealed numeric changed.
+
+Problems / Risks carried forward:
+- **M4 single TEST run is the next, irreversible action** (P-5): wire transit-LR into the M4 driver + CALIBRATION dress rehearsal first; then one read; accept pre-committed verdict. **No v4 (P-2/P-8).**
+
+Next Action:
+- Owner go for the M4 TEST path (driver + dress rehearsal → single TEST read).
+
+---
+
+## 2026-06-19 (AM) — v3 re-registration drafted + owner-approved (DR-002); Seal #2b prep begun
 
 Worked On:
 - Resumed from the 2026-06-18 handoff. Verified integrity before any work: `git diff phase1-prereg-v2` on the three sealed docs empty (pre-edit); Seal #2 hash `6292c018…` matches; 0 TEST TICs across all `data/manifests/m4/dry_run/*.csv` (re-verified against the M0 parquet split: 15,798 test / 6,925 calibration). TEST untouched.
@@ -362,6 +410,32 @@ Risks / caveats:
 
 Next Action:
 - **Owner: decide v3 SCOPE** — confirmer-only, or confirmer + period-FAP cheapening (the E2-fix). Then (if approved) DR-002 + VAL v3 + T_red calibration + (optional) margined-pre-filter plan, sealed before the single TEST run. TEST stays unread.
+
+---
+
+## 2026-06-24 — M4 single sealed-TEST read EXECUTED → H1 FALSIFIED (compute branch)
+
+Worked On:
+- **TEST conditioning (sanctioned first-touch).** The TEST split had never been conditioned (Stage-0); the M1 pipeline is calibration-locked by design and the M4 driver only consumes a residual cache. Built `research/m1_conditioning/condition_test_hosts.py` — reuses `m1_pipeline._condition_one`/`_noise_model` verbatim, frozen-param + threshold-key guards, conditions **exactly** the driver's `test_pool.sample(80, random_state=22)` draw. Verified the conditioned set == the driver's host selection (set-identical). Conditioned **80/80** through frozen Stage-0 (2.5 d biweight, sectors 1–3); 5 transient network failures recovered via an idempotent retry. Provenance: `data/manifests/m4/test_conditioning/`.
+- **Fired the single irreversible TEST read once (P-5):** `m4_driver.py --mode test --split test --confirm-token … --per-cell 500 --workers 8`, `caffeinate -i -s`, ~65 h. 15,000 injections (30 cells × 500, literal ≥500/cell — the scale locked after correcting the prior session's "<500 is within §6" read; §6 fixes ≥500 as the floor).
+
+Discoveries (the result):
+- **VERDICT: H1 FALSIFIED — compute branch (E1 PASS, E2 FAIL).** Pre-committed mapping VAL §7a applied.
+- **E1 PASS:** occurrence-weighted ΔR̄ = **−0.48 pp**, one-sided 95 % lo **−0.60 pp** (margin −2 pp). Combined recall 0.488 vs full-TLS 0.509. ΔR̄ small because weight (K&M-2020) sits on Rₚ≤2 where arms agree; larger per-cell losses (Rₚ=4–12, ΔR −0.10..−0.26) are low-weight. Cheap path **beats** full TLS at P=0.5 d, Rₚ≥4 (+0.24..+0.39). No INCONCLUSIVE cells.
+- **E2 FAIL:** reduction **24.4 %** (ratio 0.756), **ρ_d = 14.4 %** (un-cheapenable B=1000 period-FAP entry tax). Target ≥30 %. Cause structural + pre-identified (dress rehearsal + the failed Lever-1b equivalence gate).
+- **Reading:** recall principle holds; compute claim is the falsified branch. A **successful negative Phase I** (prime directive: negative results are results).
+
+Integrity:
+- Both seals hash-verified in-run (fail-closed) + intact post-run; `git diff phase1-prereg-v3` over sealed docs + manifests **empty** (NN#2); `test_accessed:true`; TEST read **exactly once**; verdict pre-committed before the read.
+
+Problems / operational:
+- Two power cuts during the 3-day run (battery carried it; no work lost; throughput unaffected). MacBook Air M4 health: Condition Normal, no thermal alarms — sustained load is in-spec.
+
+Artifacts:
+- `research/m4_evaluation/M4_TEST_RESULT.md` (authoritative result record); `data/manifests/m4/test_run/{summary.json,recovery.csv,e1_per_cell.csv,timing_ledger.csv}`; `data/manifests/m4/test_conditioning/`; `research/m1_conditioning/condition_test_hosts.py`.
+
+Next Action:
+- **M7 Phase-I write-up** from the result record + PAPER_NOTES. Optional PR `phase1/m4-v3-seal2b` → `main` (owner). Future ideas → **P-8** (new pre-registered experiments): equivalence-proven cheaper period-FAP, harmonics, recall-protective confirmer floor, clean-skip tier. **No v4 (P-2); TEST will not be read again.**
 
 ---
 

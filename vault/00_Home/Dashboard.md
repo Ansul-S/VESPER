@@ -23,8 +23,10 @@ Determine whether evidence-first routing can reduce computational cost while pre
 - M1 noise model recomputed at 2.5 d (M3 prerequisite) — ✅ DONE (188/188; 0.5 d archived, 2026-06-16)
 - **M3 — threshold calibration → Seal #2 — ✅ DONE** (cleaned 854 null; Seal #2 `6292c018…`, 2026-06-16)
 - **M4 dry-run — ✅ DONE (2026-06-18); TEST UNREAD** — harness built + validated; **Finding B blocks M4**
-- **v3 re-registration — ✅ DRAFTED + OWNER-APPROVED (2026-06-19)** — 4-step gate decided; DR-002 adopted; VAL v3 / MATH v1.2 / HYP v2.1 + 2 plans drafted
-- **Current milestone — Seal #2b prep** — remaining gate: transit-LR confirmer implementation-spec review → equivalence validation → T_red → manifest → Seal #2b → single M4 TEST run
+- **v3 re-registration — ✅ SEALED #2b (2026-06-19)** — tag `phase1-prereg-v3`; manifest `54f06a94…`; **confirmer-only** (both Lever-1b equivalence candidates failed); T_red=0 non-binding; ρ_d≈12.4% retained
+- **M4 driver + dress rehearsal — ✅ DONE (2026-06-20)** — E1 PASS (−0.17pp, lo −0.51pp) · E2 FAIL (−5.6%, ρ_d 0.138) → verdict FALSIFIED–compute; recall-loss = one sub-margin pathway (cheap-confirm fallback-suppression). Machinery ready.
+- **M4 SINGLE SEALED-TEST RUN — ✅ DONE (2026-06-24). VERDICT: H1 FALSIFIED — compute branch.** One irreversible read (P-5): 15,000 inj (30 cells × 500). **E1 PASS** (ΔR̄=−0.48pp, lo95 −0.60pp) · **E2 FAIL** (24.4%, ratio 0.756, ρ_d=14.4%; <30%). Recall non-inferiority supported; compute claim falsified (un-cheapenable B=1000 period-FAP). Seals intact, `git diff phase1-prereg-v3` empty (NN#2), TEST read once. A **successful negative Phase I**. → `research/m4_evaluation/M4_TEST_RESULT.md`.
+- **Current milestone — M7 Phase-I write-up** (M5/M6 optional). Report the negative result; future ideas are P-8 (new pre-registered experiments). No v4 (P-2).
 
 ## Milestone Ladder
 
@@ -38,17 +40,19 @@ Determine whether evidence-first routing can reduce computational cost while pre
 - **M4 — Sealed-test evaluation (single run) → E1/E2** — ⛔ BLOCKED by Finding B (SDE not comparable across grid widths) — awaiting protocol amendment
 - **Governance: adopt v3-as-final stopping rule (P-1…P-9)** — ✅ ADOPTED (2026-06-19)
 - **Option-2 v3 re-registration (DR-002)** — ✅ DRAFTED + OWNER-APPROVED (2026-06-19) — transit-LR Arm-B arbiter (common-FAR keystone) + Lever-1b equivalence-gated period-FAP; VAL v3 / MATH v1.2 / HYP v2.1
-- **Seal #2b prep** — ▶ NEXT — confirmer implementation-spec review → Lever-1b equivalence validation (CALIBRATION) → T_red calibration (CALIBRATION) → assemble v3 manifest → cut Seal #2b
-- **M4 — single sealed-TEST run → E1/E2** — ⛔ after Seal #2b — one irreversible read; accept pre-committed verdict (VAL §7a). Calibration dry-run: E1 pass, E2 fail (E2 fixable via Lever 1b)
-- M5/M6 — Parameter coverage, reality check, ablation
-- M7 — Write-up
+- **Seal #2b** — ✅ CUT (2026-06-19) — confirmer-only v3 (both Lever-1b candidates failed equivalence); tag `phase1-prereg-v3`, manifest `54f06a94…`
+- **M4 driver + CALIBRATION dress rehearsal** — ✅ DONE (2026-06-20) — E1 PASS / E2 FAIL → verdict FALSIFIED–compute; recall-loss = one sub-margin pathway; machinery ready
+- **M4 — single sealed-TEST run → E1/E2** — ✅ DONE (2026-06-24) — one irreversible read; **E1 PASS (−0.48pp, lo −0.60pp) / E2 FAIL (24.4%, ρ_d 14.4%) → H1 FALSIFIED — compute branch.** Pre-committed verdict (VAL §7a) applied; seals intact; NN#2 clean. Successful negative Phase I.
+- M5/M6 — Parameter coverage, reality check, ablation — optional extensions (not gates on the headline verdict)
+- **M7 — Phase-I write-up** — ▶ NEXT — report the negative result with equal rigor (recall supported, compute falsified). Future ideas → P-8 (new pre-registered experiments); no v4 (P-2).
 
 ## Sealed Documents (pre-registration set, hash-verified)
 
-- SCIENTIFIC_HYPOTHESIS.md — sealed v2.0 · **v2.1 drafted (pending Seal #2b)**
-- TRINETRA_X_PHASE1_VALIDATION.md — sealed v2 (incl. Appendix A) · **v3 drafted (pending Seal #2b)**
-- TRINETRA_MATHEMATICAL_FOUNDATIONS.md — sealed v1.1 · **v1.2 drafted (pending Seal #2b)**
-- `phase1-prereg-v2` tag preserves the v2 baseline immutably; v3 drafts owner-approved, not yet sealed.
+- SCIENTIFIC_HYPOTHESIS.md — **v2.1 SEALED** (`phase1-prereg-v3`)
+- TRINETRA_X_PHASE1_VALIDATION.md — **v3 SEALED** (incl. App A; §7a stopping rule)
+- TRINETRA_MATHEMATICAL_FOUNDATIONS.md — **v1.2 SEALED**
+- v3 threshold manifest `data/manifests/m4/v3/m4_v3_threshold_manifest.json` (Seal #2b `54f06a94…`).
+- Tags: `phase1-prereg-v2` (v2 baseline) · `phase1-prereg-v3` (v3 final, → commit `ff869d4b`). TEST read once (2026-06-24); v3 is the terminal amendment (P-2).
 
 ## Other Repository Documents
 
@@ -90,7 +94,7 @@ Determine whether evidence-first routing can reduce computational cost while pre
 
 ## Next Action
 
-**Seal #2b prep, owner-approved sequence (2026-06-19):** vault sync (this commit) → **transit-LR confirmer implementation-spec review** (last gate before the seal) → Lever-1b equivalence validation (CALIBRATION) → T_red calibration (CALIBRATION) → assemble v3 threshold manifest → cut **Seal #2b** → **single M4 TEST run** → accept the pre-committed verdict (VAL §7a). Hard checkpoints at Seal #2b and immediately before the TEST read (P-5). **TEST stays unread; Seal #2 unchanged; v3 docs are drafts pending the seal.**
+**M4 complete — H1 FALSIFIED (compute branch), a successful negative Phase I (2026-06-24).** Begin the **Phase-I write-up** (M7) from `research/m4_evaluation/M4_TEST_RESULT.md` + `docs/PAPER_NOTES.md`. Optional: open a PR `phase1/m4-v3-seal2b` → `main` (owner action). **No further amendment (P-2/P-8); v3 final; TEST read once and will not be read again.** Seal #1/#2/#2b intact.
 
 ## Notes
 
