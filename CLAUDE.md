@@ -91,7 +91,7 @@ The vault must never contradict the repository. The repository is authoritative;
 
 | Document | Role |
 |----------|------|
-| [`docs/TRINETRA-X.md`](./docs/TRINETRA-X.md) | Master charter (author: Vesper) |
+| [`docs/TRINETRA-X.md`](./docs/TRINETRA-X.md) | Master charter (author: Ansul Suryawanshi) |
 | [`docs/SCIENTIFIC_HYPOTHESIS.md`](./docs/SCIENTIFIC_HYPOTHESIS.md) | Formal H1/H0 + secondary hypotheses, assumptions, success/failure criteria |
 | [`docs/TRINETRA_MATHEMATICAL_FOUNDATIONS.md`](./docs/TRINETRA_MATHEMATICAL_FOUNDATIONS.md) | Canonical theory (math only) |
 | [`docs/TRINETRA_X_ARCHITECTURE.md`](./docs/TRINETRA_X_ARCHITECTURE.md) | 7-stage system design (full vision) |

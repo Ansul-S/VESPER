@@ -1,0 +1,19 @@
+item,value
+Mission / cadence,"TESS, SPOC 2-min"
+Sectors (frozen),S1–S3 (southern)
+Targets (manifest),22723
+Calibration split,6925
+Test split,15798
+Split method,leakage-safe by sky region
+Stage-0 detrend,"wotan biweight, 2.5 d window (M2-finalized)"
+Injection grid — period (d),"0.5, 1, 2, 4, 8, 16"
+Injection grid — radius (R_earth),"1, 2, 4, 8, 12"
+Injection grid — impact parameter,"0.0, 0.3, 0.6"
+Cells (P x Rp),30
+Injections per cell (sealed test),500
+Total test injections,15000
+Test host stars,"80 (seeded draw, random_state=22)"
+Occurrence weight,Kunimoto & Matthews 2020 (92.8% on Rp<=2)
+Seal #1 (manifest),1f2d49e194b0...e83f1f
+Seal #2 (thresholds),6292c018c692...832692
+Seal #2b (v3 manifest),54f06a947a09...95c9b18

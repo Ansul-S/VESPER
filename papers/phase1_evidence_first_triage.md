@@ -1,6 +1,9 @@
 # The Limits of Evidence-First Transit Detection: A Pre-Registered Test on TESS
 
-**DRAFT v0.1 — 2026-06-25.** Phase-I validation/methods paper. Grounded in the sealed M4 result (`research/m4_evaluation/M4_TEST_RESULT.md`); numbers are from the single TEST read (`data/manifests/m4/test_run/`). Citations are name-year placeholders keyed to `docs/PAPER_NOTES.md` §11 / `docs/references.bib`. Author line per charter (Vesper); ISRO exoplanet-challenge context acknowledged.
+**Ansul Suryawanshi**
+*(affiliation TBD)* · ISRO exoplanet-challenge context acknowledged.
+
+**DRAFT v0.1 — 2026-06-25.** Phase-I validation/methods paper. Grounded in the sealed M4 result (`research/m4_evaluation/M4_TEST_RESULT.md`); numbers are from the single TEST read (`data/manifests/m4/test_run/`). Citations key to `docs/references.bib` (verified against NASA ADS).
 
 ---
 
@@ -23,7 +26,20 @@ This is a deliberately **untrained** Phase-I test: the event detector is a simpl
 ## 2. Methods
 
 ### 2.1 Data and frozen manifest (M0)
-We use TESS 2-minute SPOC light curves from sectors S1–S3 (southern ecliptic). A frozen manifest of 22,723 targets was split leakage-safe by sky region into a calibration set (6,925) and a test set (15,798); the split and target list were hash-sealed (Seal #1) before any conditioning. All thresholds are calibrated on the calibration set only; the test set is sealed until the single evaluation.
+We use TESS 2-minute SPOC light curves from sectors S1–S3 (southern ecliptic). A frozen manifest of 22,723 targets was split leakage-safe by sky region into a calibration set (6,925) and a test set (15,798); the split and target list were hash-sealed (Seal #1) before any conditioning. All thresholds are calibrated on the calibration set only; the test set is sealed until the single evaluation. The dataset and injection design are summarized in **Table T1**.
+
+**Table T1 — Dataset & injection manifest** (`research/m4_evaluation/tables/T1.csv`)
+
+| Item | Value |
+|---|---|
+| Mission / cadence | TESS, SPOC 2-min |
+| Sectors (frozen) | S1–S3 (southern) |
+| Targets (manifest) | 22,723 — calibration 6,925 / test 15,798 (leakage-safe by sky region) |
+| Stage-0 detrend | wotan biweight, 2.5 d window (M2-finalized) |
+| Injection grid | $P\in\{0.5,1,2,4,8,16\}$ d × $R_p\in\{1,2,4,8,12\}\,R_\oplus$ × $b\in\{0,0.3,0.6\}$ — 30 $(P,R_p)$ cells |
+| Sealed-test campaign | 500 injections/cell → 15,000 total, over 80 test hosts (seeded draw) |
+| Occurrence weight | Kunimoto & Matthews (2020); 92.8% on $R_p\le2\,R_\oplus$ |
+| Seals | #1 manifest `1f2d49e1…`; #2 thresholds `6292c018…`; #2b v3 `54f06a94…` |
 
 ### 2.2 Stage-0 conditioning
 Each light curve is detrended per sector with a time-windowed biweight slider (wotan; Hippke et al. 2019) at a window of 2.5 d — finalized on the calibration set by a transit-preservation criterion ($\eta\ge0.90$) — with SPOC quality masking and momentum-dump handling, yielding a zero-centred residual $r(t)$. A per-star noise model ($\sigma$, CDPP, $\tau_{\rm GP}$) is recorded. No detection threshold is set at this stage.
@@ -55,7 +71,7 @@ The single sealed-test evaluation (15,000 injections; read once) returns the hea
 ### 3.1 E1 — recall is preserved (PASS)
 The occurrence-weighted recall difference is $\overline{\Delta R}=-0.48$ pp with a one-sided 95% lower bound of $-0.60$ pp, comfortably inside the $-2$ pp margin: **routing does not sacrifice recall.** On the occurrence-weighted scale (Table T2) recall is 0.218 (full) vs 0.213 (combined); on the unweighted injected grid it is 0.509 vs 0.488. The weighted figures are low in absolute terms because the Kunimoto & Matthews (2020) weight concentrates on small ($R_p\le2$) planets, which are intrinsically hard; E1 concerns the *difference*, which is non-inferior.
 
-The completeness maps (Figure F3) and Table T3 localize the structure. At $R_p=2\,R_\oplus$ — the weight-dominant class — the arms are at near-parity ($-0.37$ pp). The largest per-cell losses are at intermediate periods and larger radii ($R_p=4$: $-5.1$ pp; $R_p=8/12$: $-2.1/-2.7$ pp), which carry little occurrence weight. At $R_p=1$ both arms recover essentially nothing (noise-limited single transits). Notably, at the shortest period ($P=0.5$ d) the combined arm **outperforms** full TLS by $+19$ pp (Table T3, by period; the blue column in F3): the confirmer recovers short-period planets whose full-grid SDE fell just below $T$.
+The completeness maps (Figure F3) and Table T3 localize the structure. At $R_p=2\,R_\oplus$ — the weight-dominant class — the arms are at near-parity ($-0.37$ pp). The largest per-cell losses are at intermediate periods and larger radii ($R_p=4$: $-5.1$ pp; $R_p=8/12$: $-2.1/-2.7$ pp), which carry little occurrence weight. At $R_p=1$ both arms recover essentially nothing (noise-limited — too shallow to detect at any period in this baseline). Notably, at the shortest period ($P=0.5$ d) the combined arm **outperforms** full TLS by $+19$ pp (Table T3, by period; the blue column in F3): the confirmer recovers short-period planets whose full-grid SDE fell just below $T$.
 
 ### 3.2 Recall-loss mechanism (one pathway)
 Against full TLS the outcomes are: both recover 6,761; neither 6,807; **combined-only (gain) 563; TLS-only (loss) 869.** All 869 losses share a single pathway: the cheap confirmer confirmed at the seeded ephemeris and therefore **suppressed the full-TLS fallback**, but the seed then failed the recovery predicate. Of these, 80% are *right-period/wrong-epoch* — the detector's event epoch is less precise than TLS's fitted $T_0$ — and 20% are wrong-period. They concentrate on large, low-occurrence planets (so the weighted $\overline{\Delta R}$ stays small). The 563 gains, almost all at $P=0.5$ d, partly offset them. This mechanism was anticipated by the calibration dress rehearsal and is a confirmer/fallback interaction (the non-binding $T_{\rm red}=0$ provides no recall floor), not a failure of period recovery.
@@ -102,12 +118,13 @@ Pre-registration (`SCIENTIFIC_HYPOTHESIS.md` v2.1, `TRINETRA_X_PHASE1_VALIDATION
 - **F6** — Period-FAP calibration on null stars (cleaned vs raw): `research/m4_evaluation/figures/F6_fap_calibration.png`.
 - **T4/T5** — FAP calibration; period/epoch accuracy: `research/m4_evaluation/M5_TABLES.md`. **T5-depth** in `research/m6_reality_check/M6_TABLES.md`.
 - **T6** (reality check: TOI recall + EB rejection), **T8** (gate ablation): `research/m6_reality_check/M6_TABLES.md`.
-- *To add:* F1 (single-transit SNR census), F4 (compute–recall frontier, calibration), F7 (monotransit — needs a single-event campaign), F9 (gate before/after illustration), T1 (dataset manifest).
+- **T1** — Dataset & injection manifest: embedded in §2.1 (`research/m4_evaluation/tables/T1.csv`).
+- *To add (optional polish):* F1 (single-transit SNR census), F4 (compute–recall frontier, calibration), F7 (monotransit — needs a single-event campaign), F9 (gate before/after illustration).
 
 ## References
 
-Compiled in `docs/references.bib`. In-text citations map to keys: TLS `HippkeHeller2019_TLS`; BLS `Kovacs2002_BLS`; wotan `Hippke2019_wotan`; lightkurve `Lightkurve2018`; TESS `Ricker2015_TESS`; SPOC `Jenkins2016_SPOC`; occurrence `KunimotoMatthews2020`; EB catalog `Prsa2022_TESSEB`; VSX `Watson2006_VSX`; AstroNet `ShallueVanderburg2018_AstroNet`; ExoMiner `Valizadegan2022_ExoMiner`; non-inferiority `Piaggio2012_NonInferiority`; conformal prediction `ShaferVovk2008_Conformal`. **Bibliographic details require a final NASA ADS verification pass before submission.**
+Compiled in `docs/references.bib`. In-text citations map to keys: TLS `HippkeHeller2019_TLS`; BLS `Kovacs2002_BLS`; wotan `Hippke2019_wotan`; lightkurve `Lightkurve2018`; TESS `Ricker2015_TESS`; SPOC `Jenkins2016_SPOC`; occurrence `KunimotoMatthews2020`; EB catalog `Prsa2022_TESSEB`; VSX `Watson2006_VSX`; AstroNet `ShallueVanderburg2018_AstroNet`; ExoMiner `Valizadegan2022_ExoMiner`; non-inferiority `Piaggio2012_NonInferiority`; conformal prediction `ShaferVovk2008_Conformal`. The 8 core astrophysics references were **verified exact against NASA ADS (2026-06-25)**; the methodology/tooling entries (Jenkins, Watson, Lightkurve, Piaggio, Shafer-Vovk) are standard and flagged for a final spot-check.
 
 ---
 
-*Draft v0.1. Living manuscript; numbers frozen to the sealed M4 read. Next: compile references, add M5/M6 figures/tables, tighten Methods §2.5 against DR-002, and decide venue (AJ/MNRAS).*
+*Draft v0.1. Living manuscript; numbers frozen to the sealed M4 read. References compiled + core set ADS-verified; T1–T8 and F3–F8 generated; consistency pass done (2026-06-25). Remaining: author affiliation + venue (AJ/MNRAS); optional figures F1/F4/F9; spot-check the non-core references.*

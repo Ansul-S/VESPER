@@ -16,7 +16,7 @@
 
 | Path | Lines | Role |
 |------|-------|------|
-| `docs/TRINETRA-X.md` | 340 | Master charter (author: Vesper) |
+| `docs/TRINETRA-X.md` | 340 | Master charter (author: Ansul Suryawanshi) |
 | `docs/TRINETRA_CONCEPT_RECONSTRUCTION.md` | 154 | Concept lineage / v3 post-mortem |
 | `docs/TRINETRA_X_ARCHITECTURE.md` | 196 | 7-stage system design |
 | `docs/TRINETRA_X_PHASE1_VALIDATION.md` | 122 | Pre-registered Phase I protocol |
