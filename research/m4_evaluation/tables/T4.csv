@@ -1,0 +1,7 @@
+metric,value
+cleaned null stars with a period-FAP,833
+"FAR at nominal α=0.01 (cleaned, sealed basis)",1.08 %
+"FAR at nominal α=0.01 (raw, pre-cleaning)",2.07 %
+nominal α_FAP (sealed),1 %
+matches sealed M3 (1.08%),YES
+calibration verdict,well-calibrated

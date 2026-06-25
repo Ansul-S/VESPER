@@ -66,6 +66,9 @@ On the fast-path-eligible timing subset the combined arm costs 0.756× the full 
 ### 3.4 Verdict
 By the pre-committed mapping (VAL §7a): **E1 PASS, E2 FAIL → H1 FALSIFIED on the compute branch.** A successful, well-characterized negative result.
 
+### 3.5 Parameter recovery and calibration
+Among the 11,036 routed injections with a period seed (Table T5; Figure F5), the inferred period matches truth within tolerance for 45.9%, with a tight median fractional error of 0.0022 for matched cases; 27.1% of matches fall on a 2×/½/3× harmonic of the fundamental rather than the fundamental itself. The seeded epoch lies within the recovery window ($\le0.5\,T_{14}$) for 54.2%, with a median offset of $0.40\,T_{14}$ — the detector-epoch imprecision (relative to TLS's fitted $T_0$) that drives the right-period/wrong-epoch loss pathway of §3.2. The period-FAP is well-calibrated: on the cleaned null pool the empirical false-alarm rate at the sealed $\alpha=0.01$ is **1.08%** (Figure F6, Table T4), reproducing the sealed M3 calibration. F6 also quantifies the value of the null-pool cleaning — before removing EB/variable contaminants (which carry real periodic signals) the raw FAR is inflated to 2.07%. *(Depth/$T_{14}$ recovery were not logged per-injection and are deferred.)*
+
 ## 4. Discussion
 
 **What holds.** The recall-safety of evidence-first routing — its hardest and most important claim — is *supported* on a sealed test set: a cheap detector plus a calibrated transit-LR confirmer plus a full-search fallback recovers planets non-inferiorly to exhaustive TLS at a common false-alarm rate. The architecture does what it was designed to do for recall.
@@ -89,11 +92,14 @@ Pre-registration (`SCIENTIFIC_HYPOTHESIS.md` v2.1, `TRINETRA_X_PHASE1_VALIDATION
 - **F3** — Completeness maps (full / combined / Δ) over $(P, R_p)$: `research/m4_evaluation/figures/F3_completeness_maps.png`.
 - **F8** — Per-star runtime, both arms, with combined-arm stage breakdown: `research/m4_evaluation/figures/F8_runtime.png`.
 - **T2/T3/T7** — Headline, recall-by-population, compute ledger: `research/m4_evaluation/M4_TABLES.md`.
-- *To add (M5/M6):* F1 (single-transit SNR census), F4 (compute–recall frontier, calibration), F5 (parameter recovery), F6 (FAP calibration), T1 (dataset manifest), T5 (parameter accuracy), T6 (reality check: TOIs/EBs), T8 (gate ablation).
+- **F5** — Period recovery (recovered vs true; harmonic aliases): `research/m4_evaluation/figures/F5_period_recovery.png`.
+- **F6** — Period-FAP calibration on null stars (cleaned vs raw): `research/m4_evaluation/figures/F6_fap_calibration.png`.
+- **T4/T5** — FAP calibration; period/epoch accuracy: `research/m4_evaluation/M5_TABLES.md`.
+- *To add:* F1 (single-transit SNR census), F4 (compute–recall frontier, calibration), F7 (monotransit — needs a single-event campaign), F9 (gate before/after), T1 (dataset manifest), T6 (reality check: TOIs/EBs — needs M6), T8 (gate ablation — needs M6); depth/$T_{14}$ recovery (needs re-run with logging).
 
 ## References
 
-Placeholder — see `docs/PAPER_NOTES.md` §11 for the citation set (TLS: Hippke & Heller 2019; BLS: Kovács et al. 2002; wotan: Hippke et al. 2019; TESS: Ricker et al. 2015; occurrence: Kunimoto & Matthews 2020; EB catalog: Prša et al. 2022; non-inferiority methodology; conformal prediction). To be compiled into `docs/references.bib`.
+Compiled in `docs/references.bib`. In-text citations map to keys: TLS `HippkeHeller2019_TLS`; BLS `Kovacs2002_BLS`; wotan `Hippke2019_wotan`; lightkurve `Lightkurve2018`; TESS `Ricker2015_TESS`; SPOC `Jenkins2016_SPOC`; occurrence `KunimotoMatthews2020`; EB catalog `Prsa2022_TESSEB`; VSX `Watson2006_VSX`; AstroNet `ShallueVanderburg2018_AstroNet`; ExoMiner `Valizadegan2022_ExoMiner`; non-inferiority `Piaggio2012_NonInferiority`; conformal prediction `ShaferVovk2008_Conformal`. **Bibliographic details require a final NASA ADS verification pass before submission.**
 
 ---
 
