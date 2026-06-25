@@ -6,7 +6,7 @@
 |-------|-------|
 | **Version** | 1.0 |
 | **Status** | Research Program Initialization |
-| **Author** | Vesper |
+| **Author** | Ansul Suryawanshi |
 | **Codename** | TRINETRA-X |
 
 ---

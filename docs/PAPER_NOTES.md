@@ -161,7 +161,7 @@ Paper IV (Phase IV)  "TRINETRA-X: A Scalable Evidence-First Pipeline & Candidate
 
 - Headline framing: lead with **compute saving** (systems audience) or **recall preservation** (astro audience)? — likely recall-first for AJ/MNRAS.
 - Whether to fold Phase II's learned detector into Paper I if Phase I passes quickly, or keep the simple-detector validation clean and separate (current lean: **keep separate** — preserves attribution of the routing principle).
-- Author/affiliation line (charter author: *Vesper*); acknowledge ISRO exoplanet-challenge context.
+- Author/affiliation line (charter author: *Ansul Suryawanshi*); acknowledge ISRO exoplanet-challenge context.
 - Exact citation set: TLS (Hippke & Heller), BLS (Kovács et al.), AstroNet (Shallue & Vanderburg), ExoMiner (Valizadegan et al.), TESS mission + SPOC/QLP, monotransit searches, conformal prediction.
 
 ---

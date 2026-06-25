@@ -6,7 +6,7 @@
 
 TRINETRA-X is a research program testing whether **evidence-first routing** can reduce the computational cost of exoplanet transit detection **without sacrificing recall**. Instead of folding every star's light curve at thousands of trial periods (the BLS/TLS approach), it detects individual transit-like events directly, infers the orbital period from their spacing, confirms candidates with a physics-based transit model, and reserves a full periodogram search only for the minority of stars showing no local evidence.
 
-**Status:** Phase I — Scientific Validation (pre-registered). · **Data:** TESS. · **Charter author:** Vesper.
+**Status:** Phase I — Scientific Validation (pre-registered). · **Data:** TESS. · **Charter author:** Ansul Suryawanshi.
 
 ---
 
