@@ -1,0 +1,8 @@
+metric,value
+routed injections with a period seed,11036
+period_match rate (within tolerance),45.9 %
+harmonic among period-matched,27.1 %
+median |ΔP/P| (all seeded),0.0162
+median |ΔP/P| (period-matched),0.0022
+epoch_ok rate (|Δt0| ≤ 0.5 T14),54.2 %
+median epoch offset (T14 units),0.402
