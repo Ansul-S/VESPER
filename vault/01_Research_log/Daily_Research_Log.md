@@ -462,6 +462,34 @@ Next Action:
 
 ---
 
+## 2026-06-25 (EOD) — Phase I COMPLETE + Phase II direction set (Kepler scaling)
+
+Worked On:
+- **M7 finalized + merged (PRs #9–#13):** manuscript v0.1; T1 dataset manifest; `references.bib` (8 core refs verified exact vs NASA ADS); consistency read-through (fixed 4 stale spots). **Author corrected Vesper → Ansul Suryawanshi** across all docs.
+- **Strategic discussion → Phase II direction.** Diagnosed why E2 failed on TESS and what generalizes.
+
+Decisions / discoveries:
+- **Phase I is COMPLETE** (M4 verdict + M5/M6 characterization + M7 write-up, all on `main`). The result: H1 falsified on the **compute** branch; recall non-inferiority **supported** (and corroborated on real planets, T6: Arm B = Arm A = 86.7%).
+- **Scaling thesis (corrected & adopted as the Phase-II hypothesis):** the compute advantage scales with search-space size because the fast lane folds **k events** vs TLS folds **N points** per trial period (k≪N). Verified the loose "fixed overhead" framing is WRONG — the bootstrap re-runs `best_period` over a baseline-scaled grid; the advantage comes from k≪N, not constant overhead.
+- **Real survey-scale bottleneck = the fallback (full TLS on no-evidence stars) = Lever 3**, not the bootstrap. Deferred to its own experiment.
+- **LSST ruled OUT** as a showcase (sparse/irregular cadence — different problem). **Kepler** (dense, 4-yr, large period grid, available now) is the proving ground; PLATO/Roman the future analogues.
+- **Cross-domain generalization:** real transferable kernel (calibrated local-evidence detection in red noise) BUT the compute thesis only beats *exhaustive periodic search* — most proposed domains (flash-crash, server-outage, ECG) are *aperiodic* anomaly detection where "TLS/Fourier fail" is a strawman vs the real incumbents. Honest version: one experiment in a genuinely periodic domain (predictive maintenance) vs correct baselines. NOT a four-domain victory lap.
+- **Phase II experiment chosen + designed:** Kepler scaling experiment; D1–D5 locked (LC; ~2000 FGK / 30-70 split / ~150 hosts; baselines {27d,0.25,1,2,4 yr}; PASS = monotone-↑ reduction AND ≥30% at 4 yr; compute not local). New pre-registration (P-8); Phase I sealed/final, no v4.
+- **Compute:** can't run on the MacBook → AWS `us-east-1` spot (Kepler in MAST Open Data, no egress) or national/university HPC; pilot-first on free credits. Condition-once-then-truncate; cloud-portable tooling.
+
+Risks:
+- Phase-II compute access undecided (HPC allocation vs AWS spend) — gates the build packaging.
+- Kepler red noise/systematics differ → thresholds must be re-calibrated (not reused from TESS).
+- Scaling is a hypothesis, not a result (NN#4) — a flat curve would falsify it; that's a valid outcome.
+
+Artifacts:
+- `docs/PHASE2_KEPLER_SCALING_PREREG.md` (sketch, D1–D5 + compute plan); `papers/phase1_evidence_first_triage.md` (final v0.1); `docs/references.bib` (verified); `research/m4_evaluation/tables/T1.csv`.
+
+Next Action:
+- **Owner:** choose compute path (HPC vs AWS) + venue (AJ/MNRAS). Then promote the Kepler sketch to a full Phase-II pre-registration, build cloud-portable M0-analogue tooling, smoke-test on a few Kepler stars locally, pilot, then full run. Nothing sealed/run until the pre-reg is signed.
+
+---
+
 ## Template for future entries
 
 Date:

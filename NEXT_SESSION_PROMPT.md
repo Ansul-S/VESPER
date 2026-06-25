@@ -4,26 +4,26 @@
 
 ---
 
-Resume **TRINETRA-X Phase I** (evidence-first exoplanet detection, TESS). Assume zero chat history; **repository documents are authoritative**, the Obsidian `vault/` mirrors them. This repo uses **Markdown docs as deliverables (no GSD / `.planning/`)**.
+Resume **TRINETRA-X**. Assume zero chat history; **repository documents are authoritative**, the Obsidian `vault/` mirrors them. Markdown docs are the deliverables (no GSD / `.planning/`).
 
-**Read in order:** `CLAUDE.md` → `SESSION_HANDOFF_2026-06-24.md` → `research/m4_evaluation/M4_TEST_RESULT.md` → `docs/decisions/DR-002_DECISION_RECORD.md`.
+**Read in order:** `CLAUDE.md` → `SESSION_HANDOFF_2026-06-25.md` → `papers/phase1_evidence_first_triage.md` → `docs/PHASE2_KEPLER_SCALING_PREREG.md`.
 
-**State: the Phase-I PRIMARY RESULT IS IN.** The single irreversible TEST read (P-5) was executed once on 2026-06-24 against sealed v3 → **VERDICT: H1 FALSIFIED — compute branch (E1 PASS, E2 FAIL).** A successful negative Phase I. Verify integrity first:
-- `shasum -a 256 data/manifests/m3/m3_threshold_manifest_SEALED_CORE.json` → `6292c018…32692` (Seal #2).
-- `shasum -a 256 data/manifests/m4/v3/m4_v3_threshold_manifest.json` → `54f06a94…c9b18` (Seal #2b).
-- `git diff phase1-prereg-v3 -- docs/SCIENTIFIC_HYPOTHESIS.md docs/TRINETRA_X_PHASE1_VALIDATION.md docs/TRINETRA_MATHEMATICAL_FOUNDATIONS.md data/manifests/m3 data/manifests/m4/v3` → **empty** (NN#2 intact).
-- Tags `phase1-prereg-v2` + `phase1-prereg-v3` (→ `ff869d4b`); branch `phase1/m4-v3-seal2b`. Seal #1 = `1f2d49e1…`.
+**State: PHASE I COMPLETE; starting PHASE II (Kepler scaling).**
+- Phase I (TESS) is done and merged to `main` (PRs #9–#13): the single sealed TEST read (P-5) → **H1 FALSIFIED — compute branch** (E1 recall non-inferiority PASS, ΔR̄ −0.48 pp / lo95 −0.60 pp; E2 scoped compute FAIL, 24.4% < 30%, ρ_d 14.4%). Recall principle **supported** (corroborated on real planets: T6 Arm B = Arm A = 86.7%). Manuscript v0.1 (author **Ansul Suryawanshi**), T1–T8, F3–F8, `references.bib` (8 core ADS-verified). Phase I is **sealed and final — no v4** (P-2).
+- Verify integrity: Seal #2 `6292c018…`, Seal #2b `54f06a94…` (`shasum -a 256` the manifests); `git diff phase1-prereg-v3` over the 3 sealed docs is empty. TEST read once, never again.
 
-**The result (`data/manifests/m4/test_run/summary.json`):** 15,000 injections (30 cells × 500, literal ≥500/cell). **E1** recall non-inferiority PASS (occurrence-weighted ΔR̄ = −0.48 pp, one-sided 95% lower bound −0.60 pp; margin −2 pp; combined recall 0.488 vs full-TLS 0.509). **E2** scoped compute FAIL (reduction 24.4%, ratio 0.756, ρ_d = 14.4%; target ≥30%). Recall principle holds; compute claim is the falsified branch — the un-cheapenable sealed B=1000 block-bootstrap period-FAP entry tax (Lever-1b had already proven it un-cheapenable). Pre-committed verdict (VAL §7a) applied. TEST conditioned (sanctioned first-touch) via frozen Stage-0: `research/m1_conditioning/condition_test_hosts.py`, exactly the driver's `sample(80, random_state=22)` draw, 80/80.
+**Phase II = Kepler scaling experiment** (new, separately pre-registered, P-8 — does NOT reopen Phase I). Hypothesis: the compute advantage **scales with search-space size** because the fast lane folds **k events** vs TLS **N points** per period (k≪N); TESS's short baseline under-powered it. Design (D1–D5 decided, in `docs/PHASE2_KEPLER_SCALING_PREREG.md`): Kepler **long-cadence**, ~2000 FGK / 30-70 split / ~150 hosts, baselines **{27 d, 0.25, 1, 2, 4 yr}** (27 d anchors to TESS), PASS = monotone-↑ reduction **AND ≥30% at 4 yr**, recall non-inferiority preserved. Re-calibrate thresholds on a Kepler calibration split; one sealed test read.
 
-**Integrity / anti-tuning:** both seals hash-verified in-run + intact; `git diff phase1-prereg-v3` empty; `test_accessed:true`; TEST read **exactly once**; verdict pre-committed before the read. Clean end-to-end.
+**Two open gates (owner decisions):**
+1. **Compute path** — university/national HPC (NSM/C-DAC PARAM, free if eligible) vs **AWS `us-east-1` spot** (Kepler in MAST Open Data → no egress). Campaign is too big for the local MacBook Air. This gates tooling packaging.
+2. **Paper venue** (AJ vs MNRAS) — non-blocking.
 
-**Immediate next step: M7 — the Phase-I write-up** from `research/m4_evaluation/M4_TEST_RESULT.md` + `docs/PAPER_NOTES.md`. Report the negative result with equal rigor (recall supported, compute falsified, traced to the period-FAP). Optional owner action: open a PR `phase1/m4-v3-seal2b` → `main`. M5/M6 (coverage/ablation) are optional extensions, not gates.
+**Immediate next step:** confirm the compute path, then (a) open a PR for branch `phase2/kepler-scaling-prereg` → `main` (lands the sketch + EOD sync), (b) promote the sketch to a full Phase-II pre-registration, (c) build the cloud-portable Kepler M0-analogue (manifest + leakage-safe split), smoke-test on a few Kepler stars locally, pilot, then the full run. **Nothing is sealed or run until the Phase-II pre-registration is signed.**
 
-**Hard constraints:** TEST has been read once and **will not be read again** (P-5). **No sealed value, threshold, statistic, or config may change — v3 is the FINAL amendment (P-2); NO v4.** Any new idea (cheaper period-FAP with a passing equivalence proof, harmonics, recall-protective confirmer floor, clean-skip tier) is **P-8 territory only** — a new, separately pre-registered experiment, not a continuation of this one.
+**Deferred to separate future experiments (not Phase II):** Lever 3 (calibrated clean-skip — the survey-scale lever, recall-risky); cross-domain generalization (only vs correct incumbents in genuinely periodic-search domains — not the aperiodic-anomaly strawman).
 
-**Housekeeping:** all v3 + M4 work (incl. this result) is committed on `phase1/m4-v3-seal2b`; the branch is **not merged to `main`** and not pushed unless asked — PR/merge/push are owner actions; the frozen tag is unaffected.
+Report verified integrity + the two open gates first; do not start building tooling until the compute path is chosen.
 
 ---
 
-*Generated 2026-06-24. Mirrors `SESSION_HANDOFF_2026-06-24.md`; the handoff is authoritative on any conflict.*
+*Generated 2026-06-25 (EOD). Mirrors `SESSION_HANDOFF_2026-06-25.md`; the handoff is authoritative on any conflict.*

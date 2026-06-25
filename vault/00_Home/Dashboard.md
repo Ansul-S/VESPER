@@ -2,7 +2,7 @@
 
 ## Current Phase
 
-Phase I — Scientific Validation
+Phase I — Scientific Validation (**COMPLETE**, 2026-06-25) → transitioning to **Phase II — Scaling Validation (Kepler)**
 
 ## Current Goal
 
@@ -26,7 +26,7 @@ Determine whether evidence-first routing can reduce computational cost while pre
 - **v3 re-registration — ✅ SEALED #2b (2026-06-19)** — tag `phase1-prereg-v3`; manifest `54f06a94…`; **confirmer-only** (both Lever-1b equivalence candidates failed); T_red=0 non-binding; ρ_d≈12.4% retained
 - **M4 driver + dress rehearsal — ✅ DONE (2026-06-20)** — E1 PASS (−0.17pp, lo −0.51pp) · E2 FAIL (−5.6%, ρ_d 0.138) → verdict FALSIFIED–compute; recall-loss = one sub-margin pathway (cheap-confirm fallback-suppression). Machinery ready.
 - **M4 SINGLE SEALED-TEST RUN — ✅ DONE (2026-06-24). VERDICT: H1 FALSIFIED — compute branch.** One irreversible read (P-5): 15,000 inj (30 cells × 500). **E1 PASS** (ΔR̄=−0.48pp, lo95 −0.60pp) · **E2 FAIL** (24.4%, ratio 0.756, ρ_d=14.4%; <30%). Recall non-inferiority supported; compute claim falsified (un-cheapenable B=1000 period-FAP). Seals intact, `git diff phase1-prereg-v3` empty (NN#2), TEST read once. A **successful negative Phase I**. → `research/m4_evaluation/M4_TEST_RESULT.md`.
-- **Current milestone — M7 Phase-I write-up** (M5/M6 optional). Report the negative result; future ideas are P-8 (new pre-registered experiments). No v4 (P-2).
+- **PHASE I COMPLETE (2026-06-25).** M4 verdict + M5/M6 characterization + M7 write-up all merged to `main` (PRs #9–#13). **Current focus → PHASE II: Kepler scaling experiment** (new pre-registration, P-8; sketch `docs/PHASE2_KEPLER_SCALING_PREREG.md`; D1–D5 decided; awaiting compute-path + full pre-reg sign-off).
 
 ## Milestone Ladder
 
@@ -45,7 +45,8 @@ Determine whether evidence-first routing can reduce computational cost while pre
 - **M4 — single sealed-TEST run → E1/E2** — ✅ DONE (2026-06-24) — one irreversible read; **E1 PASS (−0.48pp, lo −0.60pp) / E2 FAIL (24.4%, ρ_d 14.4%) → H1 FALSIFIED — compute branch.** Pre-committed verdict (VAL §7a) applied; seals intact; NN#2 clean. Successful negative Phase I.
 - **M5 — parameter recovery + FAP calibration — ✅ DONE (2026-06-25)** — F5/F6, T4/T5 from existing data (period match 45.9%, median |ΔP/P| 0.0022 matched; FAP FAR 1.08% cleaned, reproduces sealed M3).
 - **M6 — reality check + ablation + depth recovery — ✅ DONE (2026-06-25, test-blind)** — T6: TOI recall **86.7% (Arm B = Arm A)** on 30 real planets; EB rejection 12/16 (4 FP slip through). T8: FAP gate controls null FP (0→12.3% if removed); shape vetting trims recall (its value = EB rejection). T5-depth: fitted depth −20%, seed T14 −31%. Calibration + real TOI/EB only; TEST untouched; sealed thresholds unchanged. → `research/m6_reality_check/`.
-- **M7 — Phase-I write-up — ▶ IN PROGRESS** — draft v0.1 (`papers/phase1_evidence_first_triage.md`) + references.bib + all T2–T8/F3–F8 generated. PRs #9/#10/#11 merged; M6 PR pending. Future ideas → P-8; no v4 (P-2).
+- **M7 — Phase-I write-up — ✅ DONE (2026-06-25)** — manuscript v0.1 (`papers/phase1_evidence_first_triage.md`, author **Ansul Suryawanshi**); T1–T8, F3–F8; `references.bib` (8 core refs ADS-verified). PRs #9–#13 merged. Optional polish: venue (AJ/MNRAS), F1/F4/F9.
+- **PHASE II — Kepler scaling experiment — ▶ NEXT (sketch)** — tests whether the compute advantage scales with search-space size (fast lane folds k events vs TLS N points/period; k≪N). Kepler long-cadence, ~4-yr, baselines {27 d, 0.25, 1, 2, 4 yr}; new pre-registration (P-8; Phase I stays sealed/final). Sketch `docs/PHASE2_KEPLER_SCALING_PREREG.md` (D1–D5 decided). Compute: **not local** → AWS `us-east-1` spot / national HPC. Deferred to separate experiments: **Lever 3** (calibrated clean-skip — survey-scale lever), **cross-domain** generalization.
 
 ## Sealed Documents (pre-registration set, hash-verified)
 
