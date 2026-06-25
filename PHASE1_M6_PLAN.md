@@ -46,8 +46,8 @@ Quantify the recall and false-positive change → shows what the calibrated phot
 
 | # | Decision | Options / recommendation |
 |---|----------|--------------------------|
-| D1 | **TOI sample size** | Rec: ~30–50 confirmed CP/KP TOIs in S1–S3 (enough for a recall point estimate; keeps the run tractable). |
-| D2 | **EB sample** | Rec: all 158 already-labeled EB/variable TICs (reuse M3 conditioning where present; condition the rest). |
+| D1 | **TOI sample size** | **LOCKED: the 30 CALIBRATION-split CP/KP TOIs only.** Inspection found 67 of the 97 CP/KP TOIs are TEST-split; running them would touch the test split (violates §1.1). Restricting to the 30 calibration-split TOIs keeps the reality check fully test-blind. ~28 need conditioning (2 already cached). |
+| D2 | **EB sample** | **LOCKED: the 16 labeled eclipsing-binary TICs (all already conditioned, calibration-split) — zero network.** Optionally extend to all 146 EB/variable exclusions (also all conditioned) as a secondary FP-rejection set. |
 | D3 | **W4 optional pieces** | Rec: include **F9** (cheap, one star); **defer F7** (a full single-event campaign is heavier and the regime is acknowledged as future work in the draft). |
 | D4 | **Depth/T₁₄ re-run size (W1)** | Rec: per-cell ~50 on calibration (fast; enough for recovered-vs-true scatter). |
 | D5 | **Compute window** | Rec: run W1+W3 (calibration, compute-bound) and W2 (network + compute) in one gated session, `caffeinate` + AC, with the same monitoring as M4. |
