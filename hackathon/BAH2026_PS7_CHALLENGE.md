@@ -76,6 +76,32 @@
 
 ---
 
+## 2a. Committee briefing — refinements (from the live PS7 walkthrough)
+
+The committee's spoken walkthrough + slides sharpen the written PS7. **Authoritative refinements:**
+
+- **Explicit 5-step methodology:** (01) **Detrending** → (02) **Identification** (phase-fold) →
+  (03) **Characterization** (transit-shape fit) → (04) **Classification** → (05) **Statistical
+  significance**. Then: build the AI classifier **on the transit shape parameters**, train on the
+  curated/known set, apply to the unknown set, output parameters + significance.
+- **THE key insight (their false-positive slide):** a planet and a false positive can have
+  **nearly identical depth** (both ~1.4%). **Depth does NOT discriminate — SHAPE does:** the
+  **ingress/egress duration** and **flat-bottom fraction** (U-shape = planet vs V-shape = EB/FP).
+  → the classifier must be built on **trapezoid shape-fit parameters**, not depth/SNR alone.
+- **Class taxonomy (spoken):** transit *present or not*; and if present — **planet**, **massive
+  planet**, **star-on-star (EB)**, or **detector/systematic (other)**; plus **blends** (written PS).
+  Depth → planet radius gives the planet vs massive-planet distinction.
+- **Data (confirmed):** "TESS raw light curves (Target / unknown Data)" + "a curated dataset for
+  classifiers to train the AI model." Train on known → apply to unknown. (Missions named: TESS focus;
+  Kepler/K2 mentioned as analogues.)
+- **Evaluation = three things:** robustness of the AI classifier; accuracy of recovered transit
+  signatures/parameters; significance levels. (Matches the written criteria.)
+
+**Our response (implemented in `prototype/shape_fit.py` + `characterization_demo.py`):** a trapezoid
+shape-fit reproducing their slide-5/6 "Estimated Parameters" on **real** data — EB flat-fraction 0.26
+(V-shape, false positive) vs Pi Men c flat-fraction 0.67 (U-shape, planet). Shape params are now
+classifier features (`features.py`). This puts us on-method for steps 01–05.
+
 ## 3. Mapping to existing TRINETRA-X assets
 
 PS7 ≈ the TRINETRA-X spine **plus a learned multi-class classifier and crowded-field/blend handling**.

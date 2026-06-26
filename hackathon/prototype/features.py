@@ -119,7 +119,31 @@ def extract_features(time, resid, *, duration_grid=DURATION_GRID,
     else:
         f["v_over_u"] = np.nan
 
+    # --- trapezoid shape-fit parameters (committee step 03; THE discriminator) ---
+    f.update(_shape_features(t, r, P, t0, dur))
     return f
+
+
+def _shape_features(t, r, P, t0, dur):
+    """Fold + fit trapezoid -> flat_frac, ingress_frac, t_total_h, fit depth (U vs V)."""
+    out = {"flat_frac": np.nan, "ingress_frac": np.nan,
+           "t_total_h": np.nan, "fit_depth_ppm": np.nan}
+    try:
+        from shape_fit import fit_trapezoid, fold_to_hours, binned
+        win = max(6.0, dur * 24 * 3)
+        th, fx = fold_to_hours(t, r, P, t0, window_h=win)
+        if th.size < 30:
+            return out
+        xb, yb = binned(th, fx, 60)
+        if xb.size < 8:
+            return out
+        sf = fit_trapezoid(xb, yb)
+        if sf:
+            out.update(flat_frac=sf["flat_frac"], ingress_frac=sf["ingress_frac"],
+                       t_total_h=sf["t_total_h"], fit_depth_ppm=sf["depth_ppm"])
+    except Exception:
+        pass
+    return out
 
 
 FEATURE_ORDER = [
@@ -127,4 +151,5 @@ FEATURE_ORDER = [
     "max_snr", "total_snr", "best_dur_days", "period_days", "fold_R",
     "depth", "depth_snr", "duration_frac", "odd_even_diff",
     "secondary_depth", "secondary_ratio", "v_over_u",
+    "flat_frac", "ingress_frac", "t_total_h", "fit_depth_ppm",
 ]

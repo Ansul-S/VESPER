@@ -111,19 +111,33 @@ def features_slide(fig):
 
 
 def flow_slide(fig):
-    _header(fig, "Process Flow", "5")
-    steps = ["Raw TESS LC\n(MAST sector)", "Conditioning\n(detrend+noise)", "Dip detection\n(evidence-first)",
-             "Period recovery\n(bootstrap FAP)", "Phase-fold +\nfeatures", "Hybrid classifier\n+ conformal",
-             "Confirm + SNR\n(LR gate)", "Param fit +\nvisualize"]
-    n = len(steps); x0, x1 = 0.06, 0.94; y = 0.5
+    _header(fig, "Process Flow — mirrors the PS7 5-step methodology", "5")
+    steps = [("01 Detrend", "wotan biweight\n→ flat LC"),
+             ("02 Identify", "dip detection +\nperiod, phase-fold"),
+             ("03 Characterize", "trapezoid fit:\ndepth, dur,\ningress, flat-bottom"),
+             ("04 Classify", "shape params →\ntransit/eclipse/\nblend/other"),
+             ("05 Significance", "SNR + formal\nsignificance")]
+    n = len(steps); x0, x1 = 0.07, 0.93; y = 0.55
     xs = [x0 + (x1 - x0) * i / (n - 1) for i in range(n)]
-    for i, (x, s) in enumerate(zip(xs, steps)):
-        fig.text(x, y, s, fontsize=10.5, ha="center", va="center", color="#111",
+    for i, (x, (h, s)) in enumerate(zip(xs, steps)):
+        fig.text(x, y + 0.06, h, fontsize=13, ha="center", va="center", color=NAVY, weight="bold")
+        fig.text(x, y - 0.05, s, fontsize=10, ha="center", va="center", color="#111",
                  bbox=dict(boxstyle="round,pad=0.5", fc="#eaf2ff", ec=ACCENT, lw=1.3))
         if i < n - 1:
-            fig.add_artist(plt.Line2D([x + 0.035, xs[i + 1] - 0.035], [y, y], color=GREY, lw=1.2))
-    fig.text(0.5, 0.25, "Front-end (conditioning → detection → period recovery) reused from the validated TRINETRA-X pipeline;\nclassifier + blend features + visualization are the new build.",
+            fig.add_artist(plt.Line2D([x + 0.045, xs[i + 1] - 0.045], [y, y], color=GREY, lw=1.4))
+    fig.text(0.5, 0.26, "Steps 01–02 reuse the validated TRINETRA-X spine (already benchmarked vs full TLS).",
              fontsize=12, ha="center", color=GREY)
+    fig.text(0.5, 0.21, "Step 03 trapezoid shape-fit feeds Step 04 — the committee's stated approach:\n\"build the AI classifier on the transit shape parameters.\"",
+             fontsize=12, ha="center", color=ACCENT, weight="bold")
+
+
+def char_slide(fig):
+    _header(fig, "Characterization & shape-based discrimination (step 03)", "6")
+    _img(fig, os.path.join(PROTO_FIGS, "characterization.png"), [0.04, 0.20, 0.92, 0.62])
+    fig.text(0.5, 0.13, "Depth is nearly identical for the EB and the planet — the TRAPEZOID SHAPE separates them:",
+             fontsize=12, ha="center", color="#111")
+    fig.text(0.5, 0.08, "EB flat-fraction 0.26 (V-shape, false positive)  vs  planet flat-fraction 0.67 (U-shape) — on real MAST data.",
+             fontsize=12, ha="center", color=ACCENT, weight="bold")
 
 
 def arch_slide(fig):
@@ -164,12 +178,13 @@ def poc_slide(fig):
 
 
 def main():
+    slides = [title_slide, team_slide, opportunity_slide, features_slide,
+              flow_slide, char_slide, arch_slide, tech_slide, cost_slide, poc_slide]
     with PdfPages(OUT) as pdf:
-        for fn in [title_slide, team_slide, opportunity_slide, features_slide,
-                   flow_slide, arch_slide, tech_slide, cost_slide, poc_slide]:
+        for fn in slides:
             _page(pdf, fn)
     size_mb = os.path.getsize(OUT) / 1e6
-    print(f"deck -> {OUT}  ({size_mb:.2f} MB, 9 slides)")
+    print(f"deck -> {OUT}  ({size_mb:.2f} MB, {len(slides)} slides)")
 
 
 if __name__ == "__main__":

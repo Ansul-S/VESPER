@@ -45,11 +45,18 @@ def _time_grids(n):
 
 
 def _transit(t, t0, P, depth, dur):
-    """Simple analytic trapezoid/U transit (depth>0 = dip). dur in days."""
+    """U-shaped (flat-bottomed, box-like) transit — planet. depth>0 = dip; dur in days."""
     ph = ((t - t0) / P + 0.5) % 1.0 - 0.5
     x = np.abs(ph) * P / (dur / 2)          # 0 at center, 1 at contact
     u = np.clip(1 - x, 0, 1)
-    return -depth * np.sqrt(np.clip(1 - (1 - u) ** 2, 0, 1))   # rounded (U-ish)
+    return -depth * np.sqrt(np.clip(1 - (1 - u) ** 2, 0, 1))   # rounded flat-bottom (U)
+
+
+def _vshape(t, t0, P, depth, dur):
+    """V-shaped (pointed, short flat bottom) dip — eclipsing binary / diluted blend."""
+    ph = ((t - t0) / P + 0.5) % 1.0 - 0.5
+    x = np.abs(ph) * P / (dur / 2)          # 0 at center, 1 at contact
+    return -depth * np.clip(1 - x, 0, 1)    # linear -> V
 
 
 def _inject(kind, t, rms, rng):
@@ -62,7 +69,7 @@ def _inject(kind, t, rms, rng):
         sig = _transit(t, t0, P, depth, dur)
     elif kind == "eclipse":
         depth = rng.uniform(0.03, 0.20)
-        sig = _transit(t, t0, P, depth, dur)
+        sig = _vshape(t, t0, P, depth, dur)          # deep V
         # odd-even alternation
         cyc = np.round((t - t0) / P).astype(int)
         sig[cyc % 2 == 1] *= rng.uniform(0.6, 0.85)
@@ -71,10 +78,10 @@ def _inject(kind, t, rms, rng):
         sec = np.abs(ph - 0.5) < (dur / 2 / P)
         sig[sec] += -depth * rng.uniform(0.2, 0.5)
     elif kind == "blend":
-        depth = rng.uniform(0.0008, 0.008)      # shallow like a planet...
-        sig = _transit(t, t0, P, depth, dur)
+        depth = rng.uniform(0.0008, 0.008)           # shallow like a planet...
+        sig = _vshape(t, t0, P, depth, dur)          # ...but V-shaped (diluted EB)
         cyc = np.round((t - t0) / P).astype(int)
-        sig[cyc % 2 == 1] *= rng.uniform(0.5, 0.8)   # ...but odd-even tell
+        sig[cyc % 2 == 1] *= rng.uniform(0.5, 0.8)   # ...with odd-even tell
         ph = ((t - t0) / P) % 1.0
         sec = np.abs(ph - 0.5) < (dur / 2 / P)
         sig[sec] += -depth * rng.uniform(0.3, 0.6)   # ...and a secondary tell

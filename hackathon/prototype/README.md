@@ -49,6 +49,19 @@ that mimics a shallow planet). Top features: n_events, max_snr, depth_snr, **odd
 **secondary_depth** — confirming the physics tells drive the separation. The transit/blend
 gap is what **pixel-level centroid/difference-imaging features** (design §6) are for.
 
+## Characterization — trapezoid shape fit (committee step 03)
+`shape_fit.py` fits the symmetric trapezoid and returns the committee's slide-5/6 parameters
+(baseline, depth, total duration, ingress/egress, flat-bottom, flat-fraction → U-vs-V verdict).
+```bash
+.venv/bin/python hackathon/prototype/characterization_demo.py   # -> figs/characterization.png
+```
+Result on **real** data: EB (TIC 100029948) depth 26% but **flat-fraction 0.26 → V-shape /
+false-positive**; Pi Men c depth 279 ppm, **flat-fraction 0.67 → U-shape / planet**. This is the
+committee's central point — *depth does not separate planet from false positive; shape does* — and
+the shape params are now fed to the classifier (`features.py`). The shape fit cleanly handles the
+deep EB-vs-planet case (eclipse F1=1.00); the shallow **transit↔blend** case stays hard (noise-limited
+shape at low SNR) and is what pixel-level **centroid/difference-imaging** features address in round 2.
+
 ## Status / next (build phase)
 - Spine + extractor + physics-branch classifier all run end-to-end on real/realistic data.
 - Next: swap injected labels for the organizer's **curated set** (same interface); add the
