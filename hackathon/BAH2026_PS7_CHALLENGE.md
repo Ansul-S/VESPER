@@ -104,6 +104,9 @@ PS7 ≈ the TRINETRA-X spine **plus a learned multi-class classifier and crowded
 - Keep the physics-first ethos: classifier features are physics-motivated and interpretable; every confidence is calibrated; benchmark/ablate honestly.
 
 ## 5. Open items
-- [ ] Paste the dashboard proposal template fields → finalize proposal to exact format.
-- [ ] Obtain the curated labeled training dataset (link/format).
-- [ ] Confirm target TESS sector for the demo (a high-cadence sector with ~20–30k stars).
+- [x] Paste the dashboard proposal template fields → finalize proposal to exact format. *(done — web-form + 9-slide PDF deck built)*
+- [x] Team filled: **Team TRINETRA-X** — Ansul Suryawanshi (leader, IGNOU), Riddhi Jain (IGNOU), Samiksha Choudhary (Priyadarshini CoE, Hingna, Nagpur). 3 members (valid; 4th optional).
+- [ ] **Submit before 2026-07-01:** select PS7, paste Part-A fields, upload `deck/BAH2026_PS7_idea_deck.pdf`.
+- [ ] **Curated labeled training dataset — expected in Round 2** (the build phase), per organizer flow. Plugs into `prototype/train_classifier.py` (same interface). Until then we use injected labels (proof-of-path: 0.84 acc).
+- [ ] Confirm target TESS sector for the demo (a high-cadence sector with ~20–30k stars) — Round 2.
+- [ ] PR #14 left open as the working branch through the hackathon (not merged yet, owner's call).
