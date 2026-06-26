@@ -17,11 +17,23 @@ Outputs: `out/smoke_features.csv` (feature table) + `figs/folded_<TIC>.png` (exa
   oot_rms, SNRs. These are the physics-branch inputs to the hybrid classifier.
 - `smoke_test.py` — batch driver + example folded-LC figure.
 
-## What the first run showed (2026-06-26)
-- 60/60 conditioned LCs processed without error; full feature table produced.
-- **TIC 100029948** auto-flagged as an **eclipsing binary** (not a planet): ~23% depth,
-  V-shape, out-of-eclipse ellipsoidal modulation — the exact transit-vs-eclipse
-  discrimination PS7 grades, emerging directly from the physics features.
+## What the first runs showed (2026-06-26)
+- 60/60 cached conditioned LCs processed without error; full feature table produced.
+- **Fresh-from-MAST** end-to-end (`fetch_tess.py`): downloaded + conditioned
+  **TIC 100029948** (45,232 cadences, sectors 2/3/69) → auto-flagged as an
+  **eclipsing binary**: depth ~25%, V-shape, **odd-even diff 0.23**, fold_R 0.99
+  — the exact transit-vs-eclipse discrimination PS7 grades, from physics features.
+- **Planet contrast:** downloaded **Pi Mensae** (TIC 261136679, sector 1); the
+  full-search arm (**TLS**) blindly recovered planet **c** at **P=6.262 d**
+  (lit. 6.268 ✓), **depth 289 ppm** (lit. ~315 ✓), dur 3.0 h, **SDE 12.3**.
+- Figure `figs/eb_vs_planet.png`: deep-V stellar eclipse vs shallow-U planet,
+  both from fresh MAST data — the headline visual for the proposal/report.
+
+## Data scale note (PS7 full-sector)
+SPOC 2-min LC FITS ≈ 1.9 MB each → a full sector (~20-30k stars) is ~40-55 GB raw.
+Strategy: download → condition → keep only the slim npz (~10 GB/sector, less as
+float32) and delete raw FITS per target; or batch. AWS us-east-1 (MAST Open Data)
+avoids local storage entirely. Not needed for the proposal.
 
 ## Status / next (build phase)
 - This is SMOKE-TEST grade (no labels yet, no TPF/centroid blend features).
