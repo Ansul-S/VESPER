@@ -62,6 +62,22 @@ the shape params are now fed to the classifier (`features.py`). The shape fit cl
 deep EB-vs-planet case (eclipse F1=1.00); the shallow **transit↔blend** case stays hard (noise-limited
 shape at low SNR) and is what pixel-level **centroid/difference-imaging** features address in round 2.
 
+## Validation on KNOWN objects (real labels)
+`validate_known.py` runs conditioning → TLS period recovery → trapezoid shape-fit on
+confirmed planets (by name, fresh from MAST) and known EBs (RZ Cas + physically
+unambiguous deep eclipses scanned from the cache), then checks shape verdict vs truth.
+```bash
+.venv/bin/python hackathon/prototype/validate_known.py   # -> figs/validation_known.png + out/validation_known.csv
+```
+Findings (12 objects): **clean transiters recovered with literature-matching periods**
+(Pi Men, WASP-121, WASP-100 → U; RZ Cas + 3 deep EBs → V). The **single-feature** shape
+verdict scores 0.58 — and the depth×flat_frac figure shows *why*: the classes are cleanly
+separable in **2-D** but neither feature alone suffices (deep total-eclipse EBs have flat
+bottoms; phase-curve/short-period planets fold V-ish). This **empirically justifies the
+multi-feature classifier** (depth+shape+odd-even+secondary). The remaining misses are
+**period-recovery** failures on pathological stars (AU Mic active; LHS 3844 alias;
+WASP-18 phase curve) — concrete round-2 targets (robust period search, phase-curve model).
+
 ## Status / next (build phase)
 - Spine + extractor + physics-branch classifier all run end-to-end on real/realistic data.
 - Next: swap injected labels for the organizer's **curated set** (same interface); add the
