@@ -38,16 +38,16 @@
 # PART B — Idea deck (slide-by-slide; PPTX → PDF ≤5 MB)
 
 ### Slide 1 — Title
-- **Team Name:** `[team name]`
+- **Team Name:** `[team name — still TODO]`
 - **Problem Statement:** PS7 — AI-enabled Detection of Exoplanets from Noisy Astronomical Light Curves
-- **Team Leader Name:** `[leader]`
-- _(Add solution name: **TRINETRA**)_
+- **Team Leader Name:** Ansul Suryawanshi
+- _(Solution name: **TRINETRA**)_
 
 ### Slide 2 — Team Members
-- **Team Leader:** Name `[...]` · College `[...]`
-- **Member-1:** Name `[...]` · College `[...]`
-- **Member-2:** Name `[...]` · College `[...]`
-- **Member-3:** Name `[...]` · College `[...]`
+- **Team Leader:** Ansul Suryawanshi · Indira Gandhi National Open University (IGNOU)
+- **Member-1:** Riddhi Jain · Indira Gandhi National Open University (IGNOU)
+- **Member-2:** Samiksha Choudhary · Priyadarshini College of Engineering (Hingna), Nagpur
+- **Member-3:** `[optional 4th member — a team of 3 is valid; BAH allows 3–4]`
 - _(Optionally note roles: data/conditioning · ML/classifier · physics/parameter-fit · viz/report)_
 
 ### Slide 3 — Opportunity (different / solves / USP)

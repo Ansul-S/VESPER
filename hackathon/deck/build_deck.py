@@ -63,25 +63,26 @@ def title_slide(fig):
     fig.add_artist(plt.Line2D([0.3, 0.7], [0.50, 0.50], color=ACCENT, lw=2))
     fig.text(0.5, 0.42, "Bharatiya Antariksh Hackathon 2026 — Problem Statement 7", fontsize=15, color="white", ha="center")
     fig.text(0.5, 0.30, "Team Name:  [TEAM NAME]", fontsize=15, color="#cfe0f5", ha="center")
-    fig.text(0.5, 0.25, "Team Leader:  [LEADER NAME]", fontsize=13, color="#cfe0f5", ha="center")
+    fig.text(0.5, 0.25, "Team Leader:  Ansul Suryawanshi", fontsize=13, color="#cfe0f5", ha="center")
     fig.text(0.5, 0.14, "AI-enabled Detection of Exoplanets from Noisy Astronomical Light Curves",
              fontsize=11, color="#9fb8d8", ha="center", style="italic")
 
 
 def team_slide(fig):
     _header(fig, "Team", "2")
-    rows = [("Team Leader", "[Name]", "[College]"),
-            ("Member 1", "[Name]", "[College]"),
-            ("Member 2", "[Name]", "[College]"),
-            ("Member 3", "[Name]", "[College]")]
+    rows = [("Team Leader", "Ansul Suryawanshi", "Indira Gandhi National Open University (IGNOU)"),
+            ("Member 1", "Riddhi Jain", "Indira Gandhi National Open University (IGNOU)"),
+            ("Member 2", "Samiksha Choudhary", "Priyadarshini College of Engineering (Hingna), Nagpur"),
+            ("Member 3", "[optional — 4th member]", "team of 3 is valid (BAH allows 3–4)")]
     fig.text(0.08, 0.78, "Role", fontsize=13, weight="bold", color=ACCENT)
-    fig.text(0.30, 0.78, "Name", fontsize=13, weight="bold", color=ACCENT)
-    fig.text(0.60, 0.78, "College / Institution", fontsize=13, weight="bold", color=ACCENT)
+    fig.text(0.24, 0.78, "Name", fontsize=13, weight="bold", color=ACCENT)
+    fig.text(0.52, 0.78, "College / Institution", fontsize=13, weight="bold", color=ACCENT)
     for i, (role, name, coll) in enumerate(rows):
         yy = 0.70 - i * 0.12
-        fig.text(0.08, yy, role, fontsize=13, weight="bold", color="#111")
-        fig.text(0.30, yy, name, fontsize=13, color=GREY)
-        fig.text(0.60, yy, coll, fontsize=13, color=GREY)
+        last = i == len(rows) - 1
+        fig.text(0.08, yy, role, fontsize=13, weight="bold", color="#111" if not last else GREY)
+        fig.text(0.24, yy, name, fontsize=13, color=GREY)
+        fig.text(0.52, yy, coll, fontsize=12, color=GREY)
     fig.text(0.08, 0.10, "Suggested roles: data/conditioning · ML/classifier · physics/parameter-fit · visualization/report",
              fontsize=10, color=GREY, style="italic")
 
