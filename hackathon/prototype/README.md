@@ -35,8 +35,22 @@ Strategy: download → condition → keep only the slim npz (~10 GB/sector, less
 float32) and delete raw FITS per target; or batch. AWS us-east-1 (MAST Open Data)
 avoids local storage entirely. Not needed for the proposal.
 
+## Physics-branch classifier (proof of path, injected labels)
+Until the organizer's curated labels arrive, `make_labeled_set.py` injects the four
+classes onto realistic TESS noise and `train_classifier.py` trains a gradient-boosted
+classifier on the extracted features.
+```bash
+.venv/bin/python hackathon/prototype/make_labeled_set.py 120
+.venv/bin/python hackathon/prototype/train_classifier.py     # -> figs/classifier_eval.png
+```
+Result (2026-06-26): **held-out accuracy 0.84**; eclipse & other near-perfect; the only
+confusion is **transit ↔ blend** — the genuinely hard case (a blend is a diluted eclipse
+that mimics a shallow planet). Top features: n_events, max_snr, depth_snr, **odd_even_diff**,
+**secondary_depth** — confirming the physics tells drive the separation. The transit/blend
+gap is what **pixel-level centroid/difference-imaging features** (design §6) are for.
+
 ## Status / next (build phase)
-- This is SMOKE-TEST grade (no labels yet, no TPF/centroid blend features).
-- Next: train physics branch (GBT) once the organizer's **curated labeled set** arrives;
-  add the CNN folded-view branch + conformal calibration; add pixel-level blend features
-  if TPFs are pulled. See `../BAH2026_PS7_CLASSIFIER_DESIGN.md`.
+- Spine + extractor + physics-branch classifier all run end-to-end on real/realistic data.
+- Next: swap injected labels for the organizer's **curated set** (same interface); add the
+  CNN folded-view branch + conformal calibration; add pixel-level (TPF) blend features.
+  See `../BAH2026_PS7_CLASSIFIER_DESIGN.md`.
