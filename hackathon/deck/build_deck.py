@@ -62,7 +62,7 @@ def title_slide(fig):
              fontsize=17, color="#cfe0f5", ha="center")
     fig.add_artist(plt.Line2D([0.3, 0.7], [0.50, 0.50], color=ACCENT, lw=2))
     fig.text(0.5, 0.42, "Bharatiya Antariksh Hackathon 2026 — Problem Statement 7", fontsize=15, color="white", ha="center")
-    fig.text(0.5, 0.30, "Team Name:  [TEAM NAME]", fontsize=15, color="#cfe0f5", ha="center")
+    fig.text(0.5, 0.30, "Team Name:  TRINETRA-X", fontsize=15, color="#cfe0f5", ha="center")
     fig.text(0.5, 0.25, "Team Leader:  Ansul Suryawanshi", fontsize=13, color="#cfe0f5", ha="center")
     fig.text(0.5, 0.14, "AI-enabled Detection of Exoplanets from Noisy Astronomical Light Curves",
              fontsize=11, color="#9fb8d8", ha="center", style="italic")

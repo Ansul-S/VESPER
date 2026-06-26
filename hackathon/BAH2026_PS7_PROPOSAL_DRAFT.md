@@ -31,14 +31,14 @@
 > Python scientific stack: numpy, scipy, pandas, matplotlib. Astronomy: lightkurve, astropy, astroquery/MAST (TESS data access), wotan (detrending), transitleastsquares & batman (transit search + modelling). Machine learning: scikit-learn, XGBoost/LightGBM (physics-feature branch), PyTorch (CNN branch on global+local folded views), conformal-prediction calibration (e.g. MAPIE) for trustworthy confidence. Injection–recovery into real conditioned light curves for labeled augmentation and uncertainty validation. All open-source; no specialized or licensed software.
 
 ### Is this your first hackathon? If Yes, then please share your experience. *(≤1024 chars)*
-> _[FILL — honest answer. Suggested if not first: "No — our team has prior hackathon experience in <...>." Suggested regardless, to add weight:]_ Our team brings a working foundation to this problem: TRINETRA-X, a pre-registered, anti-tuning-disciplined exoplanet-triage pipeline we developed and benchmarked against full Transit Least Squares on TESS data (ISRO exoplanet context), with calibrated confidence and demonstrated eclipsing-binary rejection. We are extending that validated spine for this challenge.
+> Not for the whole team. Our team leader (Ansul Suryawanshi) has participated in several hackathons before; those earlier attempts — including round-1 exits — taught us to lead with a working, rigorously validated solution rather than a concept deck. For Riddhi Jain and Samiksha Choudhary this is their first hackathon, bringing fresh perspective and energy. What we bring to PS7 is a genuine head start: TRINETRA-X, a pre-registered exoplanet-detection pipeline we developed and benchmarked against full Transit Least Squares on TESS data (ISRO exoplanet context), with calibrated confidence and demonstrated eclipsing-binary rejection. The detection spine already runs end-to-end on real MAST data — we are extending it with the AI classifier this challenge needs, not starting from scratch.
 
 ---
 
 # PART B — Idea deck (slide-by-slide; PPTX → PDF ≤5 MB)
 
 ### Slide 1 — Title
-- **Team Name:** `[team name — still TODO]`
+- **Team Name:** TRINETRA-X
 - **Problem Statement:** PS7 — AI-enabled Detection of Exoplanets from Noisy Astronomical Light Curves
 - **Team Leader Name:** Ansul Suryawanshi
 - _(Solution name: **TRINETRA**)_
