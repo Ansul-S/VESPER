@@ -462,6 +462,37 @@ Next Action:
 
 ---
 
+## 2026-06-26 → 06-29 — PROJECT PIVOT: BAH 2026 PS7 hackathon track (extension to TRINETRA-X)
+
+Date: 2026-06-26 → 2026-06-29
+
+Worked On:
+- **Strategic pivot.** Froze Phase II (Kepler scaling) + its compute-path decision until after the hackathon (owner). Joined **ISRO BAH 2026, Problem Statement 7** (AI-enabled exoplanet detection/classification from noisy TESS light curves) as a new *applied* track extending TRINETRA-X.
+- **Built the whole round-1 package** on branch `hackathon/bah2026-ps7` → **merged to `main` via PR #14** (2026-06-27): challenge record, proposal (mapped to official template), classifier design doc, track-scoped `hackathon/CLAUDE.md`, 11-slide PDF deck, report skeleton.
+- **Working prototype** (real MAST data): `fetch_tess.py` (SPOC 2-min download + wotan condition, reuses sealed M1 recipe) · `features.py` (physics features) · `shape_fit.py` (trapezoid, committee step 03) · `make_labeled_set.py` + `train_classifier.py` (GBT) · `validate_known.py`.
+- **GSD tooling** updated 1.5.0 → 1.6.0 (global; not used in this repo).
+
+Discoveries:
+- **EB vs planet on fresh MAST data:** TIC 100029948 → eclipsing binary (depth 25%, odd-even 0.23, V-shape); Pi Mensae c blindly recovered by TLS (P=6.262 d vs lit 6.268; 289 ppm vs ~315; SDE 12.3).
+- **Committee briefing's key lesson:** depth does NOT separate planet from false positive (both ~1.4%); **shape does** (ingress/egress + flat-bottom, U vs V). The classifier should be built ON the transit shape parameters — exactly our physics-feature approach. Our trapezoid fit reproduces their slide-5/6 output on real data (EB flat-frac 0.26 vs planet 0.67).
+- **Validation on 12 known objects:** clean transiters recovered with literature-matching periods; single-feature shape verdict = 0.58, but classes separate cleanly in **2-D depth×shape** → empirically justifies the multi-feature classifier. Remaining misses are **period-recovery** failures on pathological stars (AU Mic active, LHS 3844 alias, WASP-18 phase curve) — the named round-2 weak spot.
+- **Synthetic classifier proof-of-path:** 0.82 held-out; eclipse/other F1=1.00; transit↔blend is the genuinely hard case (shallow blend mimics planet → needs pixel-level centroid).
+
+Decisions:
+1. Phase II + compute-path FROZEN until after hackathon.
+2. Join BAH 2026 PS7 as an extension track (not a fork); Phase I stays sealed/final.
+3. Classifier approach = **Hybrid** (physics features + optional CNN); physics/shape-parameter branch is the committee-aligned core, CNN is a round-2 optional ensemble.
+4. Team name = **TRINETRA-X**; 3 members (4th optional). Venue (AJ/MNRAS) for Phase-I paper deferred.
+5. Deck built with matplotlib PdfPages (no LibreOffice dep).
+
+Risks:
+- Round-1 deadline 2026-07-01 (owner must submit). Curated training labels expected only in Round 2. Period-recovery on pathological stars is the main pipeline weakness. Blend-vs-planet at planet depth needs pixel-level data (round 2).
+
+Next Action:
+- **Submit round 1 before 2026-07-01** (paste proposal fields + upload PDF). Round-2 prep: robust period recovery, CNN proof, full report. See `SESSION_HANDOFF_2026-06-29.md`.
+
+---
+
 ## Template for future entries
 
 Date:

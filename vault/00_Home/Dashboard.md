@@ -1,6 +1,22 @@
 # TRINETRA-X Dashboard
 
-## Current Phase
+> **AUTHORITATIVE CURRENT STATE — updated 2026-06-29 (EOD).** Sections below this banner are Phase-I historical record.
+
+## ▶ Active track (2026-06-29): BAH 2026 · PS7 hackathon
+
+**ISRO Bharatiya Antariksh Hackathon 2026, Problem Statement 7** — AI-enabled exoplanet detection/classification from noisy TESS light curves. An **extension/attachment to TRINETRA-X**, **merged to `main` via PR #14** (2026-06-27).
+
+- **Phase I (TESS): ✅ COMPLETE / SEALED / FINAL** — M0–M7 merged; H1 falsified (compute branch), recall supported; no v4 (P-2).
+- **Phase II (Kepler scaling): ⏸ FROZEN** until after the hackathon (compute-path decision deferred).
+- **Hackathon round-1 package: ✅ COMPLETE** (deadline 2026-07-01) — proposal + 11-slide PDF deck + report skeleton; prototype validated on real MAST data (all 5 PS7 steps; trapezoid shape-fit; 12 known-object validation). Team **TRINETRA-X** (3 members).
+- **GSD tooling:** updated 1.5.0 → **1.6.0** (global; not used in this repo — no local `.planning/`).
+
+**Hackathon artifacts:** `hackathon/` — `BAH2026_PS7_{CHALLENGE,PROPOSAL_DRAFT,CLASSIFIER_DESIGN,REPORT_SKELETON}.md`, `CLAUDE.md` (track-scoped), `deck/`, `prototype/`.
+**Next action:** submit round 1 before 2026-07-01. Handoff: `SESSION_HANDOFF_2026-06-29.md`.
+
+---
+
+## Current Phase (Phase-I historical record)
 
 Phase I — Scientific Validation
 
