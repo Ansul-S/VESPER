@@ -1,5 +1,26 @@
 # Current Mission
 
+> **AUTHORITATIVE CURRENT STATE — updated 2026-06-29 (EOD).** The detailed fields below this block are **Phase-I historical record** (kept for provenance); read this block first.
+
+## ▶ Where the project is now (2026-06-29)
+
+**Active track: BAH 2026 — Problem Statement 7 (ISRO Bharatiya Antariksh Hackathon).** A new *applied* track, an **extension/attachment to TRINETRA-X** (not a fork). Lives under `hackathon/`, **merged to `main` via PR #14** (merge commit `9d72920`, 2026-06-27).
+
+- **Phase I (TESS) — COMPLETE & SEALED & FINAL.** M0–M7 done and merged (PRs #1–#13). H1 **falsified on the compute branch** (E1 recall non-inferiority PASS; E2 scoped compute FAIL 24.4% < 30%); recall principle **supported**. v3 is terminal — **no v4** (P-2). Seals intact: #2 `6292c018…`, #2b `54f06a94…`.
+- **Phase II (Kepler scaling) — FROZEN until after the hackathon** (owner decision 2026-06-26). The compute-path decision (HPC vs AWS) is likewise deferred. Sketch: `docs/PHASE2_KEPLER_SCALING_PREREG.md` (on the unmerged `phase2/kepler-scaling-prereg` branch).
+
+### Hackathon status (BAH 2026 · PS7)
+- **Round-1 submission package is COMPLETE** (deadline **2026-07-01**): proposal web-form text + 11-slide PDF deck (`hackathon/deck/BAH2026_PS7_idea_deck.pdf`) + report skeleton. Team **TRINETRA-X** (Ansul Suryawanshi lead / IGNOU; Riddhi Jain / IGNOU; Samiksha Choudhary / Priyadarshini CoE Nagpur — 3 members, 4th optional).
+- **Working prototype validated on real MAST data** covering all 5 PS7 steps (detrend→identify→characterize→classify→significance). Trapezoid shape-fit reproduces the committee's slide-5/6 output; pipeline validated on 12 known objects (planets U vs EBs V).
+- **Owner actions left for round 1:** paste proposal fields + upload PDF before 2026-07-01.
+- **Round 2 (if shortlisted, ~Aug):** plug organizer's curated labels into the classifier; add robust period recovery + phase-curve handling + pixel-level centroid (blends) + optional CNN.
+
+**Next action:** submit round 1 before 2026-07-01. See `SESSION_HANDOFF_2026-06-29.md`.
+
+---
+
+*(Phase-I historical record follows — provenance only.)*
+
 Project:
 TRINETRA-X
 

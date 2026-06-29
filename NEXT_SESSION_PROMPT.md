@@ -4,26 +4,22 @@
 
 ---
 
-Resume **TRINETRA-X Phase I** (evidence-first exoplanet detection, TESS). Assume zero chat history; **repository documents are authoritative**, the Obsidian `vault/` mirrors them. This repo uses **Markdown docs as deliverables (no GSD / `.planning/`)**.
+Resume **TRINETRA-X**. Assume zero chat history; **repository documents are authoritative**, the vault mirrors them. Markdown docs are the deliverables (no GSD / `.planning/` in this repo).
 
-**Read in order:** `CLAUDE.md` → `SESSION_HANDOFF_2026-06-24.md` → `research/m4_evaluation/M4_TEST_RESULT.md` → `docs/decisions/DR-002_DECISION_RECORD.md`.
+**Read in order:** `CLAUDE.md` → `hackathon/CLAUDE.md` → `SESSION_HANDOFF_2026-06-29.md` → `hackathon/BAH2026_PS7_CHALLENGE.md` → `hackathon/BAH2026_PS7_PROPOSAL_DRAFT.md`.
 
-**State: the Phase-I PRIMARY RESULT IS IN.** The single irreversible TEST read (P-5) was executed once on 2026-06-24 against sealed v3 → **VERDICT: H1 FALSIFIED — compute branch (E1 PASS, E2 FAIL).** A successful negative Phase I. Verify integrity first:
-- `shasum -a 256 data/manifests/m3/m3_threshold_manifest_SEALED_CORE.json` → `6292c018…32692` (Seal #2).
-- `shasum -a 256 data/manifests/m4/v3/m4_v3_threshold_manifest.json` → `54f06a94…c9b18` (Seal #2b).
-- `git diff phase1-prereg-v3 -- docs/SCIENTIFIC_HYPOTHESIS.md docs/TRINETRA_X_PHASE1_VALIDATION.md docs/TRINETRA_MATHEMATICAL_FOUNDATIONS.md data/manifests/m3 data/manifests/m4/v3` → **empty** (NN#2 intact).
-- Tags `phase1-prereg-v2` + `phase1-prereg-v3` (→ `ff869d4b`); branch `phase1/m4-v3-seal2b`. Seal #1 = `1f2d49e1…`.
+**State.** The project pivoted to the **ISRO BAH 2026 hackathon, Problem Statement 7** (AI exoplanet detection/classification from noisy TESS light curves) — a new *applied* track that **extends** TRINETRA-X. **Phase I (TESS) is COMPLETE / SEALED / FINAL** (H1 falsified on the compute branch, recall supported; no v4). **Phase II (Kepler scaling) + its compute-path decision are FROZEN until after the hackathon.** The full **round-1 package is built and merged to `main` (PR #14)**: proposal, 11-slide PDF deck (`hackathon/deck/BAH2026_PS7_idea_deck.pdf`), classifier design, report skeleton, and a working prototype validated on real MAST data (all 5 PS7 steps; trapezoid shape-fit reproduces the committee's slide-5/6 output; 12 known-object validation). Team **TRINETRA-X** (Ansul Suryawanshi/IGNOU lead, Riddhi Jain/IGNOU, Samiksha Choudhary/Priyadarshini CoE Nagpur).
 
-**The result (`data/manifests/m4/test_run/summary.json`):** 15,000 injections (30 cells × 500, literal ≥500/cell). **E1** recall non-inferiority PASS (occurrence-weighted ΔR̄ = −0.48 pp, one-sided 95% lower bound −0.60 pp; margin −2 pp; combined recall 0.488 vs full-TLS 0.509). **E2** scoped compute FAIL (reduction 24.4%, ratio 0.756, ρ_d = 14.4%; target ≥30%). Recall principle holds; compute claim is the falsified branch — the un-cheapenable sealed B=1000 block-bootstrap period-FAP entry tax (Lever-1b had already proven it un-cheapenable). Pre-committed verdict (VAL §7a) applied. TEST conditioned (sanctioned first-touch) via frozen Stage-0: `research/m1_conditioning/condition_test_hosts.py`, exactly the driver's `sample(80, random_state=22)` draw, 80/80.
+**Immediate priority: the hackathon round-1 deadline is 2026-07-01** — the only blocker is the **owner submitting** (paste Part-A fields from `BAH2026_PS7_PROPOSAL_DRAFT.md` + upload the deck PDF; select PS7). If already submitted, move to round-2 prep.
 
-**Integrity / anti-tuning:** both seals hash-verified in-run + intact; `git diff phase1-prereg-v3` empty; `test_accessed:true`; TEST read **exactly once**; verdict pre-committed before the read. Clean end-to-end.
+**Run env:** `.venv/bin/python` (lightkurve/astropy/wotan/transitleastsquares/batman/sklearn/matplotlib; no xgboost/torch). Reused spine: `research/m3_calibration/{detector,period_recovery}.py`; cached LCs: `data/processed/m1/*.npz`. Prototype: `hackathon/prototype/` (run scripts have READMEs).
 
-**Immediate next step: M7 — the Phase-I write-up** from `research/m4_evaluation/M4_TEST_RESULT.md` + `docs/PAPER_NOTES.md`. Report the negative result with equal rigor (recall supported, compute falsified, traced to the period-FAP). Optional owner action: open a PR `phase1/m4-v3-seal2b` → `main`. M5/M6 (coverage/ablation) are optional extensions, not gates.
+**Round-2 prep (if/when shortlisted, ~Aug):** plug the organizer's curated labels into `train_classifier.py`; the named priorities are **robust period recovery + phase-curve handling** (the validation's weak spot), **pixel-level centroid/blend features**, an optional **CNN** branch (install torch), and fleshing out `BAH2026_PS7_REPORT_SKELETON.md`.
 
-**Hard constraints:** TEST has been read once and **will not be read again** (P-5). **No sealed value, threshold, statistic, or config may change — v3 is the FINAL amendment (P-2); NO v4.** Any new idea (cheaper period-FAP with a passing equivalence proof, harmonics, recall-protective confirmer floor, clean-skip tier) is **P-8 territory only** — a new, separately pre-registered experiment, not a continuation of this one.
+**Known issue:** root `CLAUDE.md` on `main` is stale (M4-era); a proposed status update is in `SESSION_HANDOFF_2026-06-29.md` §11 — apply it (owner approval) so memory reflects the hackathon pivot.
 
-**Housekeeping:** all v3 + M4 work (incl. this result) is committed on `phase1/m4-v3-seal2b`; the branch is **not merged to `main`** and not pushed unless asked — PR/merge/push are owner actions; the frozen tag is unaffected.
+**Do NOT** reopen Phase I (sealed, no v4) or resume Phase II / the compute decision (frozen until after the hackathon). Report verified state + the round-1 submission status first.
 
 ---
 
-*Generated 2026-06-24. Mirrors `SESSION_HANDOFF_2026-06-24.md`; the handoff is authoritative on any conflict.*
+*Generated 2026-06-29 (EOD). Mirrors `SESSION_HANDOFF_2026-06-29.md`; the handoff is authoritative on any conflict.*
