@@ -17,8 +17,8 @@
 |------|----------|
 | [`docs/`](./docs/) | Canonical specifications and theory (start with [`docs/VESPER.md`](./docs/VESPER.md)) |
 | [`CLAUDE.md`](./CLAUDE.md) | Operating rules for AI-agent sessions (non-negotiables, doc map) |
-| [`REPOSITORY_GAP_ANALYSIS.md`](./REPOSITORY_GAP_ANALYSIS.md) | Critical cross-document review |
-| [`PHASE1_REMEDIATION.md`](./PHASE1_REMEDIATION.md) | Fix plan for the critical / must-fix findings |
+| [`REPOSITORY_GAP_ANALYSIS.md`](./docs/REPOSITORY_GAP_ANALYSIS.md) | Critical cross-document review |
+| [`PHASE1_REMEDIATION.md`](./docs/PHASE1_REMEDIATION.md) | Fix plan for the critical / must-fix findings |
 | `src/` · `data/` · `research/` · `results/` · `notebooks/` · `papers/` | Project scaffold (no code yet — Phase I is validation-only) |
 | `archive/` | Prior-project forensic audit & scientific review (historical reference) |
 
@@ -36,7 +36,7 @@ A transit search normally asks *"is there a planet at period P?"* ten-thousand t
 
 ## Status & next step
 
-Phase I is at document/specification stage. The immediate next step is to resolve the four critical/must-fix items in [`PHASE1_REMEDIATION.md`](./PHASE1_REMEDIATION.md), reissue the pre-registration as v2, then freeze the TESS sector/target manifest (milestone M0). No project code has been written yet — by design, validation comes first.
+Phase I is at document/specification stage. The immediate next step is to resolve the four critical/must-fix items in [`PHASE1_REMEDIATION.md`](./docs/PHASE1_REMEDIATION.md), reissue the pre-registration as v2, then freeze the TESS sector/target manifest (milestone M0). No project code has been written yet — by design, validation comes first.
 
 ---
 

@@ -102,11 +102,11 @@ The vault must never contradict the repository. The repository is authoritative;
 | [`docs/PHASE1_REMEDIATION.md`](./docs/PHASE1_REMEDIATION.md) | Plan to fix the Critical + Must-fix findings (**resolved** — see DR-001) |
 | [`docs/PHASE1_READINESS_REPORT.md`](./docs/PHASE1_READINESS_REPORT.md) | Phase I scientific-readiness assessment |
 | [`docs/decisions/F1_DECISION_RECORD.md`](./docs/decisions/F1_DECISION_RECORD.md) | DR-001 — F1 compute-scope decision + seal record |
-| [`PHASE1_EXECUTION_PLAN.md`](./PHASE1_EXECUTION_PLAN.md) · [`PHASE1_M0_CHOICES.md`](./PHASE1_M0_CHOICES.md) | M0 execution plan + signed frozen choices (Seal #1) |
-| [`PHASE1_M1_PLAN.md`](./PHASE1_M1_PLAN.md) | M1 Stage-0 conditioning plan + signed choices |
-| [`PHASE1_M2_PLAN.md`](./PHASE1_M2_PLAN.md) | M2 injection + η transit-preservation; detrend-window finalization (2.5 d) |
-| [`PHASE1_M3_PLAN.md`](./PHASE1_M3_PLAN.md) | M3 threshold calibration + signed choices; null-pool cleaning; **Seal #2** record |
-| [`SESSION_HANDOFF_2026-06-16.md`](./SESSION_HANDOFF_2026-06-16.md) · [`NEXT_SESSION_PROMPT.md`](./NEXT_SESSION_PROMPT.md) | Latest session handoff (resume point) + ready-to-paste next-session bootstrap |
+| [`PHASE1_EXECUTION_PLAN.md`](./research/phase1/PHASE1_EXECUTION_PLAN.md) · [`PHASE1_M0_CHOICES.md`](./research/phase1/PHASE1_M0_CHOICES.md) | M0 execution plan + signed frozen choices (Seal #1) |
+| [`PHASE1_M1_PLAN.md`](./research/phase1/PHASE1_M1_PLAN.md) | M1 Stage-0 conditioning plan + signed choices |
+| [`PHASE1_M2_PLAN.md`](./research/phase1/PHASE1_M2_PLAN.md) | M2 injection + η transit-preservation; detrend-window finalization (2.5 d) |
+| [`PHASE1_M3_PLAN.md`](./research/phase1/PHASE1_M3_PLAN.md) | M3 threshold calibration + signed choices; null-pool cleaning; **Seal #2** record |
+| [`SESSION_HANDOFF_2026-06-16.md`](./archive/session_handoffs/SESSION_HANDOFF_2026-06-16.md) · [`NEXT_SESSION_PROMPT.md`](./NEXT_SESSION_PROMPT.md) | Latest session handoff (resume point) + ready-to-paste next-session bootstrap |
 | [`archive/`](./archive/) | Historical (Revival-era audit & review) — context only, not current |
 
 ## Directory map
@@ -142,7 +142,7 @@ archive/     prior-project audit & review (reference only)
 - **TEST read exactly once (P-5); will not be read again (P-2: v3 is final; no v4).** Anti-tuning (NN#2) intact end-to-end: `git diff phase1-prereg-v3` over sealed docs + manifests empty; both seals hash-verified in-run + intact; verdict pre-committed before the read.
 - **IDENTITY (2026-06-30): project rebranded `TRINETRA-X` → `VESPER` and shipped as the first public release `v1.0.0` — branding only; no algorithm, methodology, equation, threshold, result, or figure changed.** Acronym: *Validation Engine for Stellar Photometric Evidence and Recovery*. Folder `~/Desktop/VESPER`; repo `github.com/Ansul-S/VESPER`. ⚠️ Rebranding the sealed docs/manifests **changed their recorded SHA-256 digests by the rename only** — provenance in [`docs/decisions/F1_DECISION_RECORD.md`](./docs/decisions/F1_DECISION_RECORD.md) §5a; original sealed bytes remain intact at tags `phase1-prereg-v2/v3`. A `shasum` against the *old* recorded hashes will mismatch — read §5a first.
 - **Phase I COMPLETE / SEALED / FINAL** (M0–M7). **Active track: BAH 2026 · PS7 hackathon** — round-1 package complete; **owner submits by 2026-07-01**. Phase II (Kepler scaling) + the compute-path decision are **FROZEN** until after the hackathon.
-- **Latest handoff:** [`SESSION_HANDOFF_2026-06-30.md`](./SESSION_HANDOFF_2026-06-30.md) (supersedes 2026-06-24/29). `main` == `origin/main` (HEAD `0118548`); release `v1.0.0` on the remote. GSD Core is globally installed but **not used** here (no local `.planning/`). Archive material is reference only; prefer repository documents over chat summaries.
+- **Latest handoff:** [`SESSION_HANDOFF_2026-06-30.md`](./archive/session_handoffs/SESSION_HANDOFF_2026-06-30.md) (supersedes 2026-06-24/29). `main` == `origin/main` (HEAD `0118548`); release `v1.0.0` on the remote. GSD Core is globally installed but **not used** here (no local `.planning/`). Archive material is reference only; prefer repository documents over chat summaries.
 
 ## Conventions
 

@@ -1,6 +1,6 @@
 # M1 conditioning tooling
 
-Tooling for milestone **M1** of [`PHASE1_M1_PLAN.md`](../../PHASE1_M1_PLAN.md): download SPOC
+Tooling for milestone **M1** of [`PHASE1_M1_PLAN.md`](../phase1/PHASE1_M1_PLAN.md): download SPOC
 2-min light curves for the **calibration** pool and apply **Stage-0 conditioning** — per-sector
 `wotan` biweight detrend + masking → zero-centred residual `r(t)` — plus a per-target
 **celerite2 GP noise model** (σ, CDPP(T₁₄), τ_GP).

@@ -25,7 +25,7 @@ This plan is derived from and bound by the three sealed documents (git tag **`ph
 | `docs/VESPER_PHASE1_VALIDATION.md` | v2 (incl. Appendix A) | `441b2c94…b8846b40` |
 | `docs/VESPER_MATHEMATICAL_FOUNDATIONS.md` | v1.1 | `4f8d95c6…82034537` |
 
-Decision context: [`docs/decisions/F1_DECISION_RECORD.md`](./docs/decisions/F1_DECISION_RECORD.md) (DR-001).
+Decision context: [`docs/decisions/F1_DECISION_RECORD.md`](../../docs/decisions/F1_DECISION_RECORD.md) (DR-001).
 
 **Non-negotiables carried into every task below:** (1) recall > precision; (2) **no tuning on test data**; (3) physics decides detection; (4) every metric benchmarked against full TLS; (5) every confidence calibrated; (6) reproducible by construction.
 

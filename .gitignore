@@ -110,3 +110,12 @@ runs/
 
 # Git merge leftovers
 *.orig
+
+# Additional development artifacts
+.cache/
+logs/
+outputs/
+checkpoints/
+
+# AI workflow state (Claude continuation context; not project documentation)
+NEXT_SESSION_PROMPT.md

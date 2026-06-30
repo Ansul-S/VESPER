@@ -5,7 +5,7 @@
 | **Purpose** | Let a fresh Claude Code session resume VESPER with **zero reliance on chat history**. |
 | **Phase** | Phase I — Scientific Validation |
 | **Status** | Pre-registration **v2 SEALED**. No data read. Implementation not started. |
-| **Read first** | [`CLAUDE.md`](./CLAUDE.md) → this file → [`docs/decisions/F1_DECISION_RECORD.md`](./docs/decisions/F1_DECISION_RECORD.md) |
+| **Read first** | [`CLAUDE.md`](../../CLAUDE.md) → this file → [`docs/decisions/F1_DECISION_RECORD.md`](../../docs/decisions/F1_DECISION_RECORD.md) |
 
 > Authority order: repository documents are authoritative; the Obsidian `vault/` mirrors them; this handoff is a convenience pointer. If anything here conflicts with a sealed document, the sealed document governs.
 

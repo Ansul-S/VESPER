@@ -5,7 +5,7 @@
 | **Purpose** | Resume VESPER with **zero reliance on chat history**. |
 | **Phase** | Phase I — Scientific Validation |
 | **Status** | M0–M3 done (Seal #1 + Seal #2 intact). **M4 dry-run complete; TEST UNREAD.** Finding B blocks the sealed Arm-B mechanism. Option-2 fix **conditionally approved as an amendment**; **system-level calibration result: E1 pass, E2 fail**. A **v3-as-final stopping rule** is proposed and **pending owner adoption**. **No sealed value changed.** |
-| **Read first** | [`CLAUDE.md`](./CLAUDE.md) → this file → `research/m4_evaluation/M4_OPTION2_METHODOLOGY_DECISION.md` → `PHASE1_AMENDMENT_STOPPING_RULE.md` → `M4_COMBINED_ARM_RESULT.md` → `M4_DRYRUN_VALIDATION.md` |
+| **Read first** | [`CLAUDE.md`](../../CLAUDE.md) → this file → `research/m4_evaluation/M4_OPTION2_METHODOLOGY_DECISION.md` → `PHASE1_AMENDMENT_STOPPING_RULE.md` → `M4_COMBINED_ARM_RESULT.md` → `M4_DRYRUN_VALIDATION.md` |
 
 > Authority: repository documents are authoritative; the vault mirrors them; this handoff is a pointer. Sealed documents govern on any conflict. Supersedes the mid-session handoff of the same date.
 
@@ -80,7 +80,7 @@ Diagnosed the E2 failure and validated a fix candidate:
 - **Sealed (read-only):** `docs/SCIENTIFIC_HYPOTHESIS.md` v2.0, `docs/VESPER_PHASE1_VALIDATION.md` v2, `docs/VESPER_MATHEMATICAL_FOUNDATIONS.md` v1.1.
 
 ## 12. Recommended startup prompt
-See [`NEXT_SESSION_PROMPT.md`](./NEXT_SESSION_PROMPT.md) (also reproduced in the EOD status report).
+See [`NEXT_SESSION_PROMPT.md`](../../NEXT_SESSION_PROMPT.md) (also reproduced in the EOD status report).
 
 ---
 

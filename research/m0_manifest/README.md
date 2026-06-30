@@ -1,11 +1,11 @@
 # M0 manifest tooling
 
-Tooling that executes milestone **M0** of [`PHASE1_EXECUTION_PLAN.md`](../../PHASE1_EXECUTION_PLAN.md):
+Tooling that executes milestone **M0** of [`PHASE1_EXECUTION_PLAN.md`](../phase1/PHASE1_EXECUTION_PLAN.md):
 freeze the TESS sector/target manifest and the leakage-safe calibration/test split,
 then content-hash it (**Seal #1**).
 
 > **Status: scaffold (stubs).** Function bodies that touch archives are intentionally
-> unimplemented until the [M0 frozen-choices proposal](../../PHASE1_M0_CHOICES.md) is
+> unimplemented until the [M0 frozen-choices proposal](../phase1/PHASE1_M0_CHOICES.md) is
 > **signed off**. This package does **not** query any archive or compute a hash until
 > the config is filled and execution is authorized.
 
@@ -33,7 +33,7 @@ research/m0_manifest/
 
 ## Run order (after sign-off)
 
-1. Fill `config/m0_config.yaml` from the signed [`PHASE1_M0_CHOICES.md`](../../PHASE1_M0_CHOICES.md).
+1. Fill `config/m0_config.yaml` from the signed [`PHASE1_M0_CHOICES.md`](../phase1/PHASE1_M0_CHOICES.md).
 2. `python m0_pipeline.py --config config/m0_config.yaml`
    - M0.1 freeze sectors → M0.2 target manifest → M0.3 labels/null pool →
      M0.4 leakage-safe split → M0.5 feasibility/power → M0.6 assemble + hash (**Seal #1**).

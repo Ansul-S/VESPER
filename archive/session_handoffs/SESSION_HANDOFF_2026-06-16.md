@@ -5,7 +5,7 @@
 | **Purpose** | Let a fresh Claude Code session resume VESPER with **zero reliance on chat history**. |
 | **Phase** | Phase I — Scientific Validation |
 | **Status** | Pre-registration **v2 SEALED**. **M0, M1, M2, M3 executed.** **Seal #1 + Seal #2 recorded.** Next: **M4** (single sealed-TEST run → E1/E2). |
-| **Read first** | [`CLAUDE.md`](./CLAUDE.md) → this file → [`PHASE1_M3_PLAN.md`](./PHASE1_M3_PLAN.md) → [`PHASE1_M2_PLAN.md`](./PHASE1_M2_PLAN.md) |
+| **Read first** | [`CLAUDE.md`](../../CLAUDE.md) → this file → [`PHASE1_M3_PLAN.md`](../../research/phase1/PHASE1_M3_PLAN.md) → [`PHASE1_M2_PLAN.md`](../../research/phase1/PHASE1_M2_PLAN.md) |
 
 > Authority order: repository documents are authoritative; the Obsidian `vault/` mirrors them; this handoff is a convenience pointer. Sealed documents govern on any conflict. Supersedes the session-1 (M0–M2) handoff of the same date.
 

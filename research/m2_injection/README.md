@@ -1,6 +1,6 @@
 # M2 injection + transit-preservation tooling
 
-Tooling for milestone **M2** of [`PHASE1_M2_PLAN.md`](../../PHASE1_M2_PLAN.md): build the injection
+Tooling for milestone **M2** of [`PHASE1_M2_PLAN.md`](../phase1/PHASE1_M2_PLAN.md): build the injection
 harness (batman Mandel–Agol, quadratic Claret-2017 LD from TIC stellar params, injected into real
 **null-pool calibration** light curves) and run the **η ≥ 0.90 transit-preservation check**
 (VAL §4.2) that **finalizes the M1 detrend window** before M3.
