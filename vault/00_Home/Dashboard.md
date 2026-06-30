@@ -1,6 +1,13 @@
 # VESPER Dashboard
 
-> **AUTHORITATIVE CURRENT STATE — updated 2026-06-29 (EOD).** Sections below this banner are Phase-I historical record.
+> **AUTHORITATIVE CURRENT STATE — updated 2026-06-30 (EOD).** Sections below this banner are Phase-I historical record.
+
+## ▶ 2026-06-30: identity rebrand + first public release v1.0.0
+
+- **Rebranded `TRINETRA-X` → `VESPER`** (branding only; no science changed). Acronym: **Validation Engine for Stellar Photometric Evidence and Recovery**. Folder `~/Desktop/VESPER`; repo `github.com/Ansul-S/VESPER`.
+- **`v1.0.0` released** on `main` (HEAD `0118548`) — GitHub Release "VESPER v1.0.0 — Initial Public Release". Tree clean; `main` == `origin/main`.
+- **Sealed-doc/manifest SHA-256 digests changed by design** (owner-authorized) — provenance in `docs/decisions/F1_DECISION_RECORD.md` §5a; original bytes intact at tags `phase1-prereg-v2/v3`. ⚠️ old `shasum` values will mismatch.
+- Phase I unchanged (COMPLETE/SEALED/FINAL). Active task unchanged → hackathon round-1 submission (below). Handoff: `SESSION_HANDOFF_2026-06-30.md`.
 
 ## ▶ Active track (2026-06-29): BAH 2026 · PS7 hackathon
 

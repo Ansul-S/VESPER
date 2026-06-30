@@ -493,6 +493,35 @@ Next Action:
 
 ---
 
+## 2026-06-30 — Repository-wide rebrand TRINETRA-X → VESPER + first public release v1.0.0
+
+Worked On:
+- **Complete repository-wide rebrand** from codename **TRINETRA-X** to **VESPER** (reason: "TRINETRA-X" was already in use elsewhere; a unique identity was required). **Branding only — no algorithm, methodology, hypothesis, equation, threshold, result, figure, or scientific claim changed.**
+- Renamed the root working folder `~/Desktop/TRINETRA-X` → `~/Desktop/VESPER`; repointed all internal absolute paths (and the gitignored `.venv` console-script shebangs).
+- `git mv` of 7 files: charter `VESPER.md`, 4 sealed-doc files (`VESPER_PHASE1_VALIDATION.md`, `VESPER_ARCHITECTURE.md`, `VESPER_MATHEMATICAL_FOUNDATIONS.md`, `VESPER_CONCEPT_RECONSTRUCTION.md`), `VESPER_course.pdf`; rebranded ~60 text/code/config/manifest files; regenerated deck PDFs + 26 slide PNGs + figures from corrected source (PDF text + PNG metadata scans = 0 "TRINETRA").
+- Updated git remote + 8 in-repo URL refs to `github.com/Ansul-S/VESPER` (owner renamed the GitHub repo).
+- Reconciled with concurrently-merged **PRs #15/#16** (the 2026-06-29 eod-sync + old course branch) via **rebase onto origin/main + a rebrand sweep** of the newly-merged content (incl. `SESSION_HANDOFF_2026-06-29.md`).
+- Merged to `main`, pushed; cut the **first public release v1.0.0** (annotated tag on `main` HEAD `0118548` + GitHub Release "VESPER v1.0.0 — Initial Public Release"). Deleted the merged local branch `docs/course-master-class`; pruned stale remote-tracking refs.
+
+Discoveries / Decisions:
+- **Canonical name = bare `VESPER`** (use "Project" only where grammatically natural; not "PROJECT VESPER" as a name).
+- **Official acronym LOCKED: VESPER = Validation Engine for Stellar Photometric Evidence and Recovery** (also evokes the evening star, Latin *vesper*). Placed only at identity spots (README, `docs/VESPER.md`, Q&A bank, speaker notes, deck title slide) — not forced everywhere. The old "third eye" (Sanskrit) taglines were reworded to the true VESPER meaning rather than left as a false etymology.
+- **Sealed manifests + sealed docs were rebranded with owner authorization**, which by design **changes their recorded SHA-256 digests**. Documented in **DR-001 §5a (2026-06-30)**: any hash difference is attributable solely to the naming change; original sealed bytes remain recoverable at tags `phase1-prereg-v2/v3` (unchanged). Anti-tuning guarantee intact.
+- **`archive/` left untouched** (CLAUDE.md hard rule; it audits a *different* prior project, `trinetra-exoplanet-ai`).
+- Force-moved the `v1.0.0` tag from an interim commit to the final reconciled `main` HEAD (owner-approved).
+
+Milestone progress:
+- Not a Phase-I science milestone. Phase I stays **COMPLETE / SEALED / FINAL** (H1 falsified on compute branch; recall supported; no v4). New project-identity milestone: **v1.0.0 Initial Public Release ✅**.
+
+Risks:
+- **`shasum` verification of sealed manifests/docs against the *old* recorded hashes will now MISMATCH** — this is expected; read DR-001 §5a before treating it as tampering. Original bytes are at the pre-reg tags.
+- Pre-existing (not from this session): root `CLAUDE.md` "Current status" section is still M4-era stale (a refresh was proposed 2026-06-29 and again 2026-06-30, owner approval pending).
+
+Next Action:
+- **(Owner) Submit BAH 2026 PS7 round 1 before 2026-07-01** (unchanged active task). Optional: apply the proposed `CLAUDE.md` status refresh; optionally rebuild `.venv` cleanly. See `SESSION_HANDOFF_2026-06-30.md`.
+
+---
+
 ## Template for future entries
 
 Date:

@@ -1,6 +1,14 @@
 # Current Mission
 
-> **AUTHORITATIVE CURRENT STATE — updated 2026-06-29 (EOD).** The detailed fields below this block are **Phase-I historical record** (kept for provenance); read this block first.
+> **AUTHORITATIVE CURRENT STATE — updated 2026-06-30 (EOD).** The detailed fields below this block are **Phase-I historical record** (kept for provenance); read this block first.
+
+## ▶ Latest event: identity rebrand + first public release (2026-06-30)
+
+**The project was rebranded from codename `TRINETRA-X` to `VESPER`** (the old name was already in use elsewhere). **Branding only — no science, methodology, equations, thresholds, results, or figures changed.** Acronym locked: **VESPER = Validation Engine for Stellar Photometric Evidence and Recovery** (also the evening star). The root folder is now `~/Desktop/VESPER` and the GitHub repo is **`github.com/Ansul-S/VESPER`**.
+
+- **First public release `v1.0.0` cut** — annotated tag on `main` HEAD `0118548` + GitHub Release "VESPER v1.0.0 — Initial Public Release". `main` == `origin/main`; tree clean.
+- **Sealed-artifact hash note:** rebranding the sealed docs/manifests **changed their recorded SHA-256 digests by design** (owner-authorized). See **`docs/decisions/F1_DECISION_RECORD.md` §5a** — any mismatch is from the naming change only; original sealed bytes are intact at tags `phase1-prereg-v2/v3`. ⚠️ `shasum` against the *old* recorded hashes will mismatch — read §5a first.
+- **Phase I unchanged:** still COMPLETE / SEALED / FINAL. **Active substantive task is unchanged:** the hackathon block below. See `SESSION_HANDOFF_2026-06-30.md`.
 
 ## ▶ Where the project is now (2026-06-29)
 
@@ -73,7 +81,7 @@ Decision Records:
 docs/decisions/F1_DECISION_RECORD.md (DR-001) · docs/decisions/DR-002_DECISION_RECORD.md (DR-002 — Finding B, Option-2 v3 amendment, stopping rule)
 
 GitHub:
-origin = https://github.com/Ansul-S/VESPER — main and tag `phase1-prereg-v2` pushed.
+origin = https://github.com/Ansul-S/VESPER — `main` pushed; tags `phase1-prereg-v2`, `phase1-prereg-v3`, `m0-manifest-v1`, and release `v1.0.0` (2026-06-30) on the remote.
 
 Anti-tuning status:
 M0 read **catalog metadata only** (no flux). All calibration/amendment decisions (M1–M3, v3/Seal #2b, dress rehearsal) were made TEST-blind. **TEST was read exactly once (2026-06-24, P-5)** — the single sealed M4 evaluation. The sealed protocol was frozen *before* the read: `git diff phase1-prereg-v3` over sealed docs + manifests is **empty**, both seals hash-verified in-run and intact, no threshold/statistic/weight/config moved. The verdict (E1 pass / E2 fail) was pre-committed (VAL §7a) before the read. Anti-tuning (NN#2) intact end-to-end. **TEST will not be read again** (P-2: v3 is final; no v4).
