@@ -1,6 +1,13 @@
 # VESPER Dashboard
 
-> **AUTHORITATIVE CURRENT STATE — updated 2026-06-30 (EOD).** Sections below this banner are Phase-I historical record.
+> **AUTHORITATIVE CURRENT STATE — updated 2026-07-01 (EOD).** Sections below this banner are Phase-I historical record.
+
+## ▶ 2026-07-01: hackathon deck rebuilt into the official ISRO template + verified
+
+- **BAH 2026 · PS7 deck (14 slides) rebuilt inside the organizers' mandatory template** → `hackathon/deck/BAH2026_PS7_idea_deck.pptx` + `.pdf` (≤5 MB). Fixed: Features overlap, Architecture connectors, PoC graph clipping. `build_pptx.py` fills the template; `build_deck.py` = legacy.
+- **Classifier proof-of-path verified (SYNTHETIC, leakage-safe group CV):** accuracy 0.83, macro-F1 0.83 (95% CI 0.80–0.86); eclipse/other near-perfect; transit↔blend residual (F1≈0.66). Ablation: no single feature family > 0.72, full set 0.83. Reproducible (feature-set diff 0.0). New scripts: `ablation.py`, `failure_analysis.py`, `make_poc_fig.py`, `_deckstyle.py`.
+- **Hackathon docs aligned + claims defensible** (recall non-inferior; honest blend/CNN scope; synthetic labelled; removed the 0.58/"cleanly separable" contradiction). **Kepler/K2 cost** line added (~5,000–10,000 CPU-core-hours; feasibility, not compute-savings).
+- **No Phase-I science changed** (sealed/final). Not committed (owner's call).
 
 ## ▶ 2026-06-30: identity rebrand + first public release v1.0.0
 
@@ -16,11 +23,11 @@
 
 - **Phase I (TESS): ✅ COMPLETE / SEALED / FINAL** — M0–M7 merged; H1 falsified (compute branch), recall supported; no v4 (P-2).
 - **Phase II (Kepler scaling): ⏸ FROZEN** until after the hackathon (compute-path decision deferred).
-- **Hackathon round-1 package: ✅ COMPLETE** (deadline 2026-07-01) — proposal + 11-slide PDF deck + report skeleton; prototype validated on real MAST data (all 5 PS7 steps; trapezoid shape-fit; 12 known-object validation). Team **VESPER** (3 members).
+- **Hackathon round-1 package: ✅ COMPLETE + verified** (deadline 2026-07-01) — proposal + **14-slide deck in the official ISRO template** + report skeleton; prototype validated on real MAST data (all 5 PS7 steps; trapezoid shape-fit; 12 known-object validation) + **leakage-safe synthetic classifier** (macro-F1 0.83, CI 0.80–0.86). Team **VESPER** (3 members).
 - **GSD tooling:** updated 1.5.0 → **1.6.0** (global; not used in this repo — no local `.planning/`).
 
 **Hackathon artifacts:** `hackathon/` — `BAH2026_PS7_{CHALLENGE,PROPOSAL_DRAFT,CLASSIFIER_DESIGN,REPORT_SKELETON}.md`, `CLAUDE.md` (track-scoped), `deck/`, `prototype/`.
-**Next action:** submit round 1 before 2026-07-01. Handoff: `SESSION_HANDOFF_2026-06-29.md`.
+**Next action:** owner submits round 1 before 2026-07-01 (paste Part-A fields + upload the PDF, select PS7). Handoff: `archive/session_handoffs/SESSION_HANDOFF_2026-07-01.md`.
 
 ---
 

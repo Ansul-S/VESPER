@@ -119,3 +119,12 @@ checkpoints/
 
 # AI workflow state (Claude continuation context; not project documentation)
 NEXT_SESSION_PROMPT.md
+
+# BAH 2026 hackathon — organizer template (large; obtained from organizers) + owner's
+# compressed submission exports (kept local). Real build figures are allow-listed below.
+hackathon/deck/*Idea Submission Template*.pptx
+hackathon/deck/ISRO*Submission*.pdf
+hackathon/deck/figs/*
+!hackathon/deck/figs/arch_diagram.png
+!hackathon/deck/figs/four_class_concept.png
+!hackathon/deck/figs/process_flow.png

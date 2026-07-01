@@ -33,14 +33,18 @@ CLASSES = ["transit", "eclipse", "blend", "other"]
 
 
 def _time_grids(n):
-    """Borrow real time arrays (cadence + gaps) from cached conditioned LCs."""
+    """Borrow real time arrays (cadence + gaps) from cached conditioned LCs.
+
+    Returns (host_id, time, rms) so downstream evaluation can do leakage-safe,
+    group-aware CV (no host LC shared between train and test folds)."""
     grids = []
     for fp in sorted(glob.glob(os.path.join(M1, "*.npz")))[: max(n, 40)]:
         d = np.load(fp)
         t = np.asarray(d["time"], float)
         rms = float(1.4826 * np.median(np.abs(d["resid"] - np.median(d["resid"]))))
         if t.size > 2000 and np.isfinite(rms) and rms > 0:
-            grids.append((t, min(max(rms, 1e-4), 0.01)))
+            host = os.path.splitext(os.path.basename(fp))[0]
+            grids.append((host, t, min(max(rms, 1e-4), 0.01)))
     return grids
 
 
@@ -101,17 +105,18 @@ def main(n_per=120):
     for kind in CLASSES:
         made = 0
         while made < n_per:
-            t, rms = grids[rng.integers(len(grids))]
+            host, t, rms = grids[rng.integers(len(grids))]
             r = _inject(kind, t, rms, rng)
             try:
                 feat = extract_features(t, r)
             except Exception:
                 continue
+            feat["host"] = host
             feat["label"] = kind
             rows.append(feat); made += 1
         print(f"  {kind:8} {made} examples")
     df = pd.DataFrame(rows)
-    cols = [c for c in FEATURE_ORDER if c in df.columns] + ["label"]
+    cols = [c for c in FEATURE_ORDER if c in df.columns] + ["host", "label"]
     df = df[cols]
     out = os.path.join(OUT, "labeled_features.csv")
     df.to_csv(out, index=False)

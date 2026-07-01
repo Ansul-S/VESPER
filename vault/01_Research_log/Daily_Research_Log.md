@@ -2,6 +2,35 @@
 
 ---
 
+## 2026-07-01 — Hackathon PS7 deck rebuilt into the official ISRO template + leakage-safe classifier verified (BAH track; Phase I untouched)
+
+Worked On:
+- Rebuilt the BAH 2026 · PS7 idea-submission deck INSIDE the organizers' mandatory PowerPoint template (`deck/build_pptx.py` fills `[Pub] ISRO BAH 2026 _ Idea Submission Template (2).pptx`; background/theme unmodified). 14 slides → `deck/BAH2026_PS7_idea_deck.pptx` + `.pdf`. Fixed the three flagged defects (Features text-overlap → native text; Architecture flowchart → clean orthogonal connectors; Proof-of-Concept graph → Pi Men c curve clipped inside axes).
+- Upgraded the physics-branch classifier eval to be **leakage-safe**: host tracking in `make_labeled_set.py`; rewrote `train_classifier.py` for StratifiedGroupKFold out-of-fold metrics + bootstrap 95% CI + fold-averaged permutation importance; added `ablation.py`, `failure_analysis.py`, `_deckstyle.py`, `make_poc_fig.py`.
+- Aligned every hackathon doc with the verified state; added a Kepler/K2 scalability cost line to deck + proposal + report.
+
+Discoveries / Decisions:
+- **Reproducibility confirmed:** regenerating the 480-row synthetic set from seed reproduces the cached features exactly (max abs diff **0.0**); 116 injection hosts.
+- **Leakage-safe verdict (SYNTHETIC labels):** accuracy 0.83, macro-F1 0.83 (95% CI 0.80–0.86); the group-CV score EQUALS the earlier naive split → **no host-noise leakage inflation**. Eclipse/other near-perfect (F1 0.99/1.00); only residual = shallow transit vs blend (F1≈0.66).
+- **Ablation (group-CV macro-F1):** duration 0.50 · shape 0.53 · EB-tells 0.58 · depth 0.62 · detection 0.72 · **ALL 0.83** → no single feature family suffices; depth alone does NOT discriminate (quantifies the committee's central point). Importance is detection-driven (n_events, max_snr).
+- **Defensibility decisions:** "benchmarked vs full TLS" → **"recall non-inferior to full TLS"** (the compute-savings claim was falsified in sealed Phase I → must not be implied); "calibrated confidence by construction" → "(conformal)"; honest blend scope (pixel-level = Round-2); massive-planet path stated (depth→radius); removed the "0.58 / cleanly separable" contradiction; all synthetic evals explicitly banner-labelled.
+- **Kepler cost = feasibility, NOT savings.** "~200k long-cadence stars; full search ≈ 5,000–10,000 CPU-core-hours; public on MAST/AWS (no egress); data ₹0" — order-of-magnitude estimate, explicitly not a compute-savings claim. Does **not** unfreeze Phase II (Kepler research stays frozen).
+
+Artifacts created/updated:
+- New: `hackathon/deck/build_pptx.py`; `hackathon/prototype/{ablation,failure_analysis,make_poc_fig,_deckstyle}.py`; figures `deck/figs/process_flow.png`, `prototype/figs/{ablation,failure_case}.png`.
+- Modified: `hackathon/deck/{figures.py,build_deck.py→legacy,README.md,idea_deck.pdf}` + regenerated figs; `hackathon/prototype/{train_classifier.py,make_labeled_set.py,README.md}` + regenerated figs; hackathon docs (CLAUDE.md, CHALLENGE, PROPOSAL_DRAFT, REPORT_SKELETON).
+- Tooling (local, gitignored): python-pptx + PyMuPDF (venv); LibreOffice run from a mounted DMG (not installed) for PPTX→PDF + PNG render QA.
+
+Problems / Risks carried forward:
+- **Owner must SUBMIT round 1 before 2026-07-01** (paste Part-A fields + upload PDF, select PS7) — deadline is today.
+- The extra `hackathon/deck/` files (`ISRO BAH 2026_Idea Submission.pdf` + 4 figure-titled PNGs) are the owner's intentional **compressed** submission exports (owner confirmed — no issue; a duplicate was removed). Gitignore them if they shouldn't be committed.
+- All classifier numbers are on SYNTHETIC labels (real accuracy needs the curated set = Round-2). Nothing committed yet (owner's call). Phase I sealed/final; Phase II frozen.
+
+Next Action:
+- Owner: submit round 1 today. Then (owner's call) commit the deck + aligned docs + new prototype scripts/figures in one commit; decide on the stray export files.
+
+---
+
 ## 2026-06-20 — M4 driver built + CALIBRATION dress rehearsal; TEST authorized (held at scale)
 
 Worked On:

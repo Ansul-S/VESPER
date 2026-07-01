@@ -1,8 +1,17 @@
 # Current Mission
 
-> **AUTHORITATIVE CURRENT STATE — updated 2026-06-30 (EOD).** The detailed fields below this block are **Phase-I historical record** (kept for provenance); read this block first.
+> **AUTHORITATIVE CURRENT STATE — updated 2026-07-01 (EOD).** The detailed fields below this block are **Phase-I historical record** (kept for provenance); read this block first.
 
-## ▶ Latest event: identity rebrand + first public release (2026-06-30)
+## ▶ Latest event (2026-07-01): hackathon deck rebuilt into the OFFICIAL ISRO template + verified
+
+**BAH 2026 · PS7 idea-submission deck was rebuilt inside the organizers' mandatory PowerPoint template and verified end-to-end.** No Phase-I science touched (sealed/final).
+
+- **Deck (14 slides) now populates the official template** — `hackathon/deck/BAH2026_PS7_idea_deck.pptx` + `.pdf` (1.66 MB, ≤5 MB). Three defects fixed: Features text-overlap, Architecture flowchart connectors, Proof-of-Concept graph clipping. Built by `deck/build_pptx.py` (fills the template; `build_deck.py` demoted to legacy).
+- **Classifier evidence upgraded + verified (SYNTHETIC labels, leakage-safe).** Regenerated the injected set from scratch (reproducible: max feature diff **0.0**) with host tracking → **StratifiedGroupKFold** (no injection host shared train/test): **accuracy 0.83, macro-F1 0.83 (95% CI 0.80–0.86)**; eclipse/other near-perfect, transit↔blend the only residual (F1≈0.66). **Ablation** (group CV): no single feature family > 0.72; full physics set 0.83 → depth alone does not discriminate. New scripts: `ablation.py`, `failure_analysis.py`, `make_poc_fig.py`, `_deckstyle.py`; `train_classifier.py` / `make_labeled_set.py` upgraded.
+- **All hackathon docs aligned + claims made defensible:** "benchmarked vs full TLS" → **recall non-inferior to full TLS**; "calibrated confidence by construction" → "(conformal)"; honest blend scope (pixel-level = Round-2); removed the "0.58 / cleanly separable" contradiction; synthetic results explicitly labelled. Added a **Kepler/K2 scalability cost** line (≈ 5,000–10,000 CPU-core-hours) framed as feasibility — **not** a compute-savings claim (the sealed Phase-I result falsified compute savings).
+- **Nothing committed** (owner's call). (The extra `hackathon/deck/` files — `ISRO BAH 2026_Idea Submission.pdf` + figure-titled PNGs — are the owner's intentional **compressed** submission exports; no action needed. Gitignore if not committing.)
+
+## ▶ 2026-06-30: identity rebrand + first public release (v1.0.0)
 
 **The project was rebranded from codename `TRINETRA-X` to `VESPER`** (the old name was already in use elsewhere). **Branding only — no science, methodology, equations, thresholds, results, or figures changed.** Acronym locked: **VESPER = Validation Engine for Stellar Photometric Evidence and Recovery** (also the evening star). The root folder is now `~/Desktop/VESPER` and the GitHub repo is **`github.com/Ansul-S/VESPER`**.
 
@@ -19,12 +28,12 @@
 - **Phase II (Kepler scaling) — FROZEN until after the hackathon** (owner decision 2026-06-26). The compute-path decision (HPC vs AWS) is likewise deferred. Sketch: `docs/PHASE2_KEPLER_SCALING_PREREG.md` (on the unmerged `phase2/kepler-scaling-prereg` branch).
 
 ### Hackathon status (BAH 2026 · PS7)
-- **Round-1 submission package is COMPLETE** (deadline **2026-07-01**): proposal web-form text + 11-slide PDF deck (`hackathon/deck/BAH2026_PS7_idea_deck.pdf`) + report skeleton. Team **VESPER** (Ansul Suryawanshi lead / IGNOU; Riddhi Jain / IGNOU; Samiksha Choudhary / Priyadarshini CoE Nagpur — 3 members, 4th optional).
+- **Round-1 submission package is COMPLETE + verified** (deadline **2026-07-01**): proposal web-form text + **14-slide deck in the official ISRO template** (`hackathon/deck/BAH2026_PS7_idea_deck.pptx` + `.pdf`) + report skeleton. Team **VESPER** (Ansul Suryawanshi lead / IGNOU; Riddhi Jain / IGNOU; Samiksha Choudhary / Priyadarshini CoE Nagpur — 3 members, 4th optional).
 - **Working prototype validated on real MAST data** covering all 5 PS7 steps (detrend→identify→characterize→classify→significance). Trapezoid shape-fit reproduces the committee's slide-5/6 output; pipeline validated on 12 known objects (planets U vs EBs V).
 - **Owner actions left for round 1:** paste proposal fields + upload PDF before 2026-07-01.
 - **Round 2 (if shortlisted, ~Aug):** plug organizer's curated labels into the classifier; add robust period recovery + phase-curve handling + pixel-level centroid (blends) + optional CNN.
 
-**Next action:** submit round 1 before 2026-07-01. See `SESSION_HANDOFF_2026-06-29.md`.
+**Next action:** owner submits round 1 before 2026-07-01 — paste Part-A web-form fields from `hackathon/BAH2026_PS7_PROPOSAL_DRAFT.md`, upload `hackathon/deck/BAH2026_PS7_idea_deck.pdf`, select PS7. See `archive/session_handoffs/SESSION_HANDOFF_2026-07-01.md`.
 
 ---
 

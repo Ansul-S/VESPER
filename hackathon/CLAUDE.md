@@ -23,7 +23,7 @@ criteria — distinct from VESPER's principle-validation mission.
   (that governs the *research*). Here a **learned classifier is the point**, not a violation.
   Still keep good ML hygiene: leakage-safe train/val/test splits by star, no tuning on the
   final science/test data, calibrated confidence, honest evaluation.
-- Live on branch **`hackathon/bah2026-ps7`** (PR #14 → `main`). Don't mix with research branches.
+- Now on **`main`** (v1.0.0 shipped); the hackathon deck + prototype live under `hackathon/`.
 
 ## Deadlines (absolute)
 
@@ -38,13 +38,16 @@ CLAUDE.md                          this file
 BAH2026_PS7_CHALLENGE.md           event facts, full PS7 spec, asset-mapping, guardrails (memory)
 BAH2026_PS7_PROPOSAL_DRAFT.md      idea submission mapped to official template (web-form + slides)
 BAH2026_PS7_CLASSIFIER_DESIGN.md   hybrid classifier design spec (the centerpiece)
-deck/                              figures.py + build_deck.py -> BAH2026_PS7_idea_deck.pdf
+deck/                              figures.py + build_pptx.py -> BAH2026_PS7_idea_deck.pptx (+ .pdf)
+                                   fills the OFFICIAL ISRO template; build_deck.py is legacy
 prototype/                         working pipeline (cache/ + out/ are gitignored)
   fetch_tess.py                    download SPOC 2-min LCs from MAST + condition (reuses M1 recipe)
   features.py                      physics-feature extractor (classifier design §3)
   smoke_test.py                    batch driver over conditioned LCs
-  make_labeled_set.py              inject 4 classes -> labeled feature set
-  train_classifier.py             physics-branch GBT + confusion matrix + importances
+  make_labeled_set.py              inject 4 classes (records host) -> labeled feature set
+  train_classifier.py              leakage-safe classifier eval (group CV, CI, importance)
+  ablation.py · failure_analysis.py   feature ablation + transit/blend hard-case figures
+  make_poc_fig.py · characterization_demo.py · validate_known.py   real-data figures
 ```
 
 ## Environment & how to run
@@ -57,14 +60,17 @@ prototype/                         working pipeline (cache/ + out/ are gitignore
   scripts add it to `sys.path`. Conditioned Phase-I LCs are in `../data/processed/m1/*.npz`.
 - Filter noisy lightkurve/MAST warnings in shell output when needed.
 
-## Current status (2026-06-26)
+## Current status (2026-07-01)
 
-- Proposal v1.0 + 9-slide PDF deck built (team fields are **placeholders** — owner fills).
-- Prototype validated on **fresh MAST data**: TIC 100029948 → EB; Pi Mensae c blindly
-  recovered (P=6.262 d, 289 ppm, SDE 12.3).
-- Physics-branch classifier on injected labels: **0.84 held-out accuracy** (only
-  transit↔blend confusion — the genuinely hard case).
-- **PR #14** open.
+- **Official-template deck built + verified:** `deck/BAH2026_PS7_idea_deck.pptx` (14 slides, official
+  ISRO template, populated) + `.pdf` (≤5 MB). Team fields filled (Ansul / Riddhi / Samiksha).
+- Prototype validated on **fresh MAST data**: TIC 100029948 → EB; Pi Mensae c blindly recovered
+  (P=6.262 d, 289 ppm, SDE 12.3).
+- Physics-branch classifier (**synthetic** labels, leakage-safe group CV): **macro-F1 0.83
+  (95% CI 0.80–0.86)**; eclipse/other near-perfect; only transit↔blend confusion. Ablation: no single
+  feature family > 0.72, full set 0.83 → depth alone does not discriminate.
+- Claims aligned for defensibility: **recall non-inferior to full TLS** (not a compute claim);
+  synthetic results explicitly labelled; blend/CNN scoped to Round-2.
 
 ## Conventions / guardrails
 
@@ -77,8 +83,9 @@ prototype/                         working pipeline (cache/ + out/ are gitignore
 
 ## Immediate next steps
 
-1. Owner: fill team details (deck slides 1–2 + "first hackathon?" field) → re-run `build_deck.py`.
-2. Owner: submit before 2026-07-01 (paste Part-A fields + upload PDF, select PS7).
-3. Obtain organizer's **curated labeled set** → drop into `train_classifier.py` (same interface).
-4. Build phase (if shortlisted): CNN folded-view branch + conformal calibration + pixel-level
-   blend features. See `BAH2026_PS7_CLASSIFIER_DESIGN.md`.
+1. Owner: **submit before 2026-07-01** — upload `deck/BAH2026_PS7_idea_deck.pdf` (or the PPTX),
+   paste Part-A fields from `BAH2026_PS7_PROPOSAL_DRAFT.md`, select PS7.
+2. Owner: confirm the optional 4th member (team of 3 is valid).
+3. Round-2: swap synthetic labels for the organizer's **curated set** (same interface); add the
+   CNN folded-view branch + conformal calibration + pixel-level (TPF) blend features.
+   See `BAH2026_PS7_CLASSIFIER_DESIGN.md`.

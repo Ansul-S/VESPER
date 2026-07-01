@@ -7,7 +7,7 @@
 ---
 
 ## 1. Objective & approach (½ col)
-We detect and classify transit-like dips in noisy TESS light curves and characterize genuine transits. Our pipeline is **evidence-first and physics-grounded**: cheap detection of periodic dips, then a **classifier built on trapezoid transit-shape parameters** (transit / eclipse / blend / other) with **calibrated confidence**, then parameter fitting with uncertainties. It extends a pre-registered exoplanet pipeline already benchmarked against full Transit Least Squares (TLS).
+We detect and classify transit-like dips in noisy TESS light curves and characterize genuine transits. Our pipeline is **evidence-first and physics-grounded**: cheap detection of periodic dips, then a **classifier built on trapezoid transit-shape parameters** (transit / eclipse / blend / other) with **calibrated confidence**, then parameter fitting with uncertainties. It extends a pre-registered exoplanet pipeline whose recall is non-inferior to full Transit Least Squares (TLS).
 
 ## 2. Methodology — five steps (mirrors the PS7 brief) (~1 page)
 1. **Detrending.** Per-sector **wotan biweight** detrend (2.5-day window) removes detector/systematic ramps → zero-centred residual flux; robust noise model (σ, CDPP). *[Fig. 1: raw vs detrended]*
@@ -34,9 +34,10 @@ Python · numpy · scipy · pandas · matplotlib · **lightkurve/astroquery (MAS
 
 ## 6. Results & validation (~½ page)
 **Validated on real, labelled objects (round-1).** Conditioning → TLS period recovery → shape-fit on **12 known objects** (6 confirmed planets fresh from MAST + 6 known eclipsing binaries):
-- Clean transiters recovered with **literature-matching periods** (e.g. Pi Mensae c: P=6.262 d vs 6.268, depth 277 ppm vs ~315; WASP-121, WASP-100 likewise) and correct **U-shape**; eclipsing binaries flagged **V-shape**. *[Fig. 5: depth × shape — clean 2-D class separation]*
-- A single shape feature scores 0.58, but the classes are **cleanly separable in depth × shape space** → empirically motivates the **multi-feature** classifier.
+- Clean transiters recovered with **literature-matching periods** (e.g. Pi Mensae c: P=6.262 d vs 6.268, depth 289 ppm vs ~315; WASP-121, WASP-100 likewise) and correct **U-shape**; eclipsing binaries flagged **V-shape**. *[Fig. 5: depth × shape — no single feature separates the classes]*
+- A single shape feature scores only **0.58** — no single feature separates the classes, which empirically motivates the **multi-feature** classifier.
 - **Characterization reproduces the committee's slide-5/6 output on real data** (EB flat-fraction 0.26 = false-positive; planet 0.67).
+- **Classifier proof-of-path (SYNTHETIC labels, leakage-safe group CV):** out-of-fold macro-F1 **0.83 (95% CI 0.80–0.86)** on a 4-class injected set; eclipse & systematics near-perfect, the residual is shallow **transit vs blend** (F1 ≈ 0.66). Feature **ablation** confirms no single family exceeds 0.72 (depth-only 0.62, shape-only 0.53) while the full physics set reaches 0.83. *[Fig. 4]* These validate the pipeline + feature design, **not** real-world accuracy — real labels come with the curated set.
 
 [round-2: classification accuracy / confusion matrix on the **provided unknown dataset**; recovered parameter accuracy table (period, depth, duration vs truth); per-event significance levels.]
 
@@ -45,6 +46,7 @@ Python · numpy · scipy · pandas · matplotlib · **lightkurve/astroquery (MAS
 - **Period recovery on pathological stars** (active young stars, ultra-short-period aliases, strong phase curves) is the main failure mode found in validation → robust multi-stage period search + phase-curve model.
 - **CNN ensemble** on global+local folded views for morphology beyond hand-crafted features.
 - Multi-planet systems and monotransits.
+- **Scale-out to Kepler / K2** (~200k long-cadence stars): the same condition-then-discard, recall-first pipeline runs as a short cloud burst (≈ **5,000–10,000 CPU-core-hours**; data public on MAST / AWS Open Data, no egress) — a feasibility / order-of-magnitude estimate, not a compute-savings claim.
 
 ## Figure list (target ≤6 for 3 pages)
 1. Detrending (raw vs flat). 2. Light curve + folded transit. 3. Characterization: EB (V) vs planet (U). 4. Classifier confusion matrix + feature importances. 5. Validation on known objects (depth × shape). 6. Example output "report card" (LC + fit + class + confidence + params).

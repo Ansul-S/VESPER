@@ -130,9 +130,9 @@ PS7 ≈ the VESPER spine **plus a learned multi-class classifier and crowded-fie
 - Keep the physics-first ethos: classifier features are physics-motivated and interpretable; every confidence is calibrated; benchmark/ablate honestly.
 
 ## 5. Open items
-- [x] Paste the dashboard proposal template fields → finalize proposal to exact format. *(done — web-form + 9-slide PDF deck built)*
+- [x] Paste the dashboard proposal template fields → finalize proposal to exact format. *(done — web-form fields + 14-slide deck built inside the OFFICIAL ISRO template: `deck/BAH2026_PS7_idea_deck.pptx` + `.pdf`)*
 - [x] Team filled: **Team VESPER** — Ansul Suryawanshi (leader, IGNOU), Riddhi Jain (IGNOU), Samiksha Choudhary (Priyadarshini CoE, Hingna, Nagpur). 3 members (valid; 4th optional).
 - [ ] **Submit before 2026-07-01:** select PS7, paste Part-A fields, upload `deck/BAH2026_PS7_idea_deck.pdf`.
-- [ ] **Curated labeled training dataset — expected in Round 2** (the build phase), per organizer flow. Plugs into `prototype/train_classifier.py` (same interface). Until then we use injected labels (proof-of-path: 0.84 acc).
+- [ ] **Curated labeled training dataset — expected in Round 2** (the build phase), per organizer flow. Plugs into `prototype/train_classifier.py` (same interface). Until then we use **synthetic** labels (leakage-safe group-CV proof-of-path: macro-F1 0.83, 95% CI 0.80–0.86).
 - [ ] Confirm target TESS sector for the demo (a high-cadence sector with ~20–30k stars) — Round 2.
-- [ ] PR #14 left open as the working branch through the hackathon (not merged yet, owner's call).
+- [ ] Work now lives on **`main`** (v1.0.0 shipped); the deck + prototype are under `hackathon/`.

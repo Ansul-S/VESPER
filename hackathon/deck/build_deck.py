@@ -1,10 +1,12 @@
-"""Assemble the BAH2026 PS7 idea-submission deck as a PDF (matplotlib PdfPages).
+"""LEGACY (superseded) — matplotlib PDF deck, NOT the official-template build.
 
-Mirrors the official PPTX template slide order. Team fields are PLACEHOLDERS
-(fill before submitting). Embeds the real prototype figures.
+The organisers mandate their official PPTX template, so the submission deck is now
+built by `build_pptx.py` (fills the official template) and exported to
+`BAH2026_PS7_idea_deck.pdf`. This script is kept only for reference; it writes to a
+`_legacy` filename so it can never clobber the real deliverable.
 
 Run:  .venv/bin/python hackathon/deck/build_deck.py
-Out:  hackathon/deck/BAH2026_PS7_idea_deck.pdf
+Out:  hackathon/deck/BAH2026_PS7_idea_deck_legacy.pdf
 """
 from __future__ import annotations
 import os
@@ -18,7 +20,7 @@ import matplotlib.image as mpimg
 HERE = os.path.dirname(__file__)
 FIGS = os.path.join(HERE, "figs")
 PROTO_FIGS = os.path.join(HERE, "..", "prototype", "figs")
-OUT = os.path.join(HERE, "BAH2026_PS7_idea_deck.pdf")
+OUT = os.path.join(HERE, "BAH2026_PS7_idea_deck_legacy.pdf")
 
 NAVY, ACCENT, GREY = "#13294b", "#2c6fbb", "#444444"
 W, H = 13.33, 7.5
