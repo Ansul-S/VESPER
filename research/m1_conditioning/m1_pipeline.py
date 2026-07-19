@@ -103,17 +103,30 @@ def _condition_one(tic: str, frozen_sectors: set[int], cfg: dict[str, Any]):
 
 
 def _noise_model(t, r, cfg: dict[str, Any]):
-    """sigma (robust), CDPP at reference durations (binned RMS), tau_GP (celerite2 SHOTerm; ACF fallback)."""
+    """sigma (robust), CDPP at reference durations (binned RMS), tau_GP (celerite2 SHOTerm; ACF fallback).
+
+    Audit fix 2026-07-19: CDPP bins are computed within contiguous (gap-free) segments
+    so a bin never averages across a sector/downlink gap. The sealed Phase-I noise
+    summaries were built with the pre-fix (index-space) binning; the difference is
+    small (gap-spanning bins were a few per sector) and is disclosed in the erratum.
+    """
     import numpy as np
     sigma = 1.4826 * np.median(np.abs(r - np.median(r)))  # robust MAD
     cadence_days = np.median(np.diff(np.sort(t))) if t.size > 1 else 2.0 / 1440.0
+    seg_breaks = np.where(np.diff(t) > 0.5)[0]            # contiguous segments (gap > 0.5 d)
+    seg_slices = [slice(s, e) for s, e in zip(
+        np.concatenate([[0], seg_breaks + 1]), np.concatenate([seg_breaks + 1, [t.size]]))]
     cdpp = {}
     for hours in cfg["noise_model"]["cdpp_reference_durations_hours"]:
         nbin = max(1, int(round((hours / 24.0) / cadence_days)))
-        k = (r.size // nbin) * nbin
-        if k >= nbin:
-            binned = r[:k].reshape(-1, nbin).mean(axis=1)
-            cdpp[f"{hours}h_ppm"] = float(np.std(binned) * 1e6)
+        binned = []
+        for sl in seg_slices:
+            rs = r[sl]
+            k = (rs.size // nbin) * nbin
+            if k >= nbin:
+                binned.append(rs[:k].reshape(-1, nbin).mean(axis=1))
+        if binned:
+            cdpp[f"{hours}h_ppm"] = float(np.std(np.concatenate(binned)) * 1e6)
     tau_acf, tau_cel = _tau_gp(t, r, sigma)
     return {"sigma_ppm": float(sigma * 1e6), "cdpp_ppm": cdpp,
             "tau_gp_days": tau_acf, "tau_celerite2_days": tau_cel,

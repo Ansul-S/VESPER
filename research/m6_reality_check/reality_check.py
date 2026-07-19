@@ -75,7 +75,7 @@ def run_star(tic, fr, t_red, kind):
     t, r = M4._resid(tic)
     a = ARMS.arm_a_full(t, r, fr)
     armA = bool(np.isfinite(a.get("sde", np.nan)) and a["sde"] >= fr.T_sde)
-    s = M4._route_and_seed(t, r, fr, 0.005, np.random.default_rng(20260625))
+    s = M4._route_and_seed(t, r, fr, M4._tau_for(tic), np.random.default_rng(20260625))
     routed = bool(s["routed"])
     fap_ok = bool(np.isfinite(s["fap"]) and s["fap"] <= fr.alpha_fap and np.isfinite(s["p_hat"]))
     confirmed = sign_pass = shape_pass = np.nan; reached = False

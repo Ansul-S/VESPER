@@ -2,14 +2,17 @@
 
 Reuses the M2 geometry + batman model verbatim (the injection physics is frozen).
 Two host modes:
-  * raw            (PRODUCTION) — inject into raw PDCSAP flux, then re-condition at the
-                   frozen 2.5 d window (M2 path; network). eta attenuation is real.
-  * cached_residual (DRY-RUN, offline) — add the (model-1) transit signal to a cached
-                   conditioned residual. Validates the detector->TLS->recovery plumbing
-                   with NO network; eta is not re-measured (flagged in provenance).
+  * raw             — inject into raw PDCSAP flux, then re-condition at the frozen
+                    2.5 d window (M2 path; network). eta attenuation is real.
+  * cached_residual — add the (model-1) transit signal to a cached conditioned
+                    residual (offline; eta attenuation is NOT applied).
 
-The Claret-2017 LD interpolator (M2) needs VizieR; the dry-run uses a constant
-quadratic LD fallback so it runs fully offline. The PRODUCTION run uses Claret-2017.
+RECORD OF WHAT ACTUALLY RAN (audit 2026-07-19): the single sealed TEST run
+(2026-06-24) used host_mode='cached_residual' with the constant-LD fallback —
+NOT the raw+Claret path that PHASE1_M4_PLAN §3 described. Because both arms share
+the identical injected residual, the paired Delta-R (E1) is unaffected, but the
+conditioning attenuation eta measured at M2 was paid by neither arm, so ABSOLUTE
+recall figures from the TEST run are optimistic. Disclosed in M4_ERRATUM_2026-07-19.
 """
 
 from __future__ import annotations
@@ -30,17 +33,34 @@ GRID_B = [0.0, 0.3, 0.6]            # impact parameter
 
 
 def constant_ld(u1: float = 0.4, u2: float = 0.3):
-    """Offline LD fallback (dry-run only). PRODUCTION uses m2.build_ld_interpolator (Claret 2017)."""
+    """Offline constant quadratic LD (used by the sealed TEST run; see module doc).
+    NOTE: the sealed run's confirmer template used u2=0.25 while injection used
+    u2=0.30 — a documented (negligible-impact) inconsistency; both now default 0.30."""
     def ld(_teff, _logg):
         return u1, u2
     return ld
 
 
 def n_transits(baseline_days: float, period_days: float) -> int:
-    """Coarse transit count over the baseline (E1 restricts to cells with n_tr >= 2)."""
+    """FORMULA transit count floor(baseline/P)+1 — the sealed E1 eligibility axis.
+
+    Audit 2026-07-19: this ignores intra-baseline gaps and the drawn epoch, so it can
+    overcount (a "2-transit" P=16 d injection on a gappy 27 d baseline may present
+    only 1 observed transit). Kept verbatim because the sealed estimand is defined on
+    it; use n_transits_observed() for data-driven counts in new analyses."""
     if period_days <= 0:
         return 0
     return int(np.floor(baseline_days / period_days)) + 1
+
+
+def n_transits_observed(t, P, t0, t14) -> int:
+    """Data-driven transit count: distinct epochs with >=1 in-transit cadence in t."""
+    t = np.asarray(t, float)
+    phase = ((t - t0 + 0.5 * P) % P) - 0.5 * P
+    intr = np.abs(phase) <= 0.5 * max(float(t14), 1e-3)
+    if not intr.any():
+        return 0
+    return int(np.unique(np.round((t[intr] - t0) / P)).size)
 
 
 def inject_into_residual(t, r, t0, P, geom, u1, u2):

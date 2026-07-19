@@ -1,8 +1,13 @@
-"""M3 shared TLS engine (VAL A.1) — identical config in both arms. PINNED transitleastsquares.
+"""M3 TLS engine (VAL A.1) — the sealed full-grid baseline. PINNED transitleastsquares.
 
 Arm A (full): optimal-frequency grid over [P_min, 0.5*T_base], oversampling=3.
-Arm B (targeted): narrow window [P_hat(1-eps), P_hat(1+eps)] around the inferred period.
-Returns the TLS SDE (the single common significance statistic; threshold T calibrated in M3).
+Returns the TLS SDE (threshold T calibrated in M3).
+
+The former `targeted_tls` (narrow window [P_hat(1±eps)]) was removed in the
+2026-07-19 audit remediation: it was dead code after DR-002 Finding B (narrow-grid
+SDE incomparable to full-grid T) and additionally carried Finding A (TLS silently
+substitutes the full grid when the window holds < 100 periods). The historical
+implementation lives in research/m4_evaluation/superseded_v2/.
 """
 
 from __future__ import annotations
@@ -27,11 +32,3 @@ def full_tls(t, r, cfg):
     sde, period = _run_tls(t, 1.0 + r, cfg["period_min_days"], p_max, cfg["oversampling_factor"])
     return {"sde": sde, "period": period, "p_min": float(cfg["period_min_days"]), "p_max": p_max,
             "mode": "full"}
-
-
-def targeted_tls(t, r, p_hat, epsilon, cfg):
-    """Arm B: TLS restricted to [p_hat(1-eps), p_hat(1+eps)]."""
-    p_min = max(float(cfg["period_min_days"]), p_hat * (1.0 - epsilon))
-    p_max = p_hat * (1.0 + epsilon)
-    sde, period = _run_tls(t, 1.0 + r, p_min, p_max, cfg["oversampling_factor"])
-    return {"sde": sde, "period": period, "p_min": p_min, "p_max": p_max, "mode": "targeted"}
