@@ -1,8 +1,32 @@
 # Current Mission
 
-> **AUTHORITATIVE CURRENT STATE — updated 2026-07-01 (EOD).** The detailed fields below this block are **Phase-I historical record** (kept for provenance); read this block first.
+> **AUTHORITATIVE CURRENT STATE — updated 2026-07-20 (EOD).** The detailed fields below this block are **Phase-I historical record** (kept for provenance); read this block first.
 
-## ▶ Latest event (2026-07-01): hackathon deck rebuilt into the OFFICIAL ISRO template + verified
+## ▶ Latest event (2026-07-20): deep scientific review → PHASE II RE-SCOPED; everything pushed to GitHub
+
+**An idea-level panel review (persisted: `docs/reviews/DEEP_SCIENTIFIC_REVIEW_2026-07-19.md`) concluded the routing claim is structurally capped** (survey saving ≤ π·f_p ≈ 0.6% even at zero entry tax; the SES/FFA cheap coherent search attacks the premise itself) **and the project's real assets are the protocol, the unwritten impossibility bound, and the monotransit regime.** Owner accepted the pivot direction.
+
+- **`docs/VESPER_PHASE2_PROGRAM.md` (DRAFT v0.1, pending DR-004):** G0 gating experiment (SES/FFA confrontation, pre-registered decision rules) + Track A (triage impossibility bound) + Track B (VESPER-Bench; Kepler DR25 enters only here) + Track C (event-wise **monotransit** pipeline, flagship — K=1 forces photometry-as-arbiter, repairing the Phase-I inversion; free pre-study = the 892 effective monotransits already in `recovery.csv`). Old Kepler routing-scaling sketch **superseded** (revivable only under G0-R3 + owner writing).
+- **README updated** for the re-scoped future (public reconciliation partially executed: the withdrawn verdict is now stated on the repo front page). CLAUDE.md carries an interim supersession bullet (full rewrite at V-4).
+- **All work committed + pushed** to `origin/phase1/audit-remediation`; draft PR to `main` opened (merge = owner call at V-5).
+- **Wave 0 unchanged and still first:** E2 re-timing paused at 26/300 (resume V-1 guard, workers ≤6); erratum §5/§7 pending.
+
+## ▶ 2026-07-19: FULL AUDIT → E2 VERDICT WITHDRAWN → remediation in flight (branch `phase1/audit-remediation`)
+
+**An independent full-repository technical audit (2026-07-19) found the sealed M4 E2 verdict was not produced by the frozen protocol.** Authority: **DR-003** (`docs/decisions/DR-003_E2_REMEASUREMENT.md`); full defect register: **`research/m4_evaluation/M4_ERRATUM_2026-07-19.md`**. No sealed doc/threshold/tag changed (NN#2, P-2 intact).
+
+- **E2 "FAIL" WITHDRAWN as recorded** — the sealed run timed 12 stars × 1 wall-clock repeat vs the frozen §6 rule (≥10/cell, cap 300, ≥5 warm CPU-time repeats); bootstrap ratio CI **[0.42, 1.14]** = statistically undecided. Headline "H1 FALSIFIED — compute branch" is **superseded**: now *E1 PASS (robust) · E2 pending re-measurement*.
+- **E1 PASS is robust** across three interval methods incl. a 40-host cluster bootstrap (lo95 −0.82 pp vs −2 pp margin). Host-count corrected: a stride bug used **40 of 80** drawn hosts.
+- **E2 re-measurement under the frozen rule: PAUSED at 26/300 tasks** (owner needed the machine, ~23:20 IST). Ledger persists (`data/manifests/m4/e2_retiming/timing_ledger_full.csv`); resume needs a skip-done guard (V-1); keep **workers ≤6** (M4 = 4P+6E cores). ~19 h compute remain.
+- **NEW (edge control, 2026-07-19 evening):** the P=0.5 d "gain region" is **not** a TLS grid-edge artifact — it is a **TLS epoch (T₀) failure**: 36/38 failures epoch-only at P=0.5 vs 98% recall at P=0.62. Gains and 80% of losses are ±0.5 T₁₄ predicate phenomena. Written into erratum §6 + paper §3.1/§3.2.
+- **Second-pass audit report:** `docs/audits/PROJECT_AUDIT_2026-07-19.md` (scores: Docs 8.5, Repro 8, Research 7.5 … Pub 5, Prod 2). Key NEW findings: **w_c period dimension is log-uniform, NOT occurrence** (KM-period sensitivity = top missing analysis); π* formula inconsistency (MATH vs endpoints); seal integrity independently re-verified (0 non-branding diff lines vs `phase1-prereg-v3`).
+- **Roadmap adopted:** `docs/ROADMAP_TO_10.md` — 6 waves (Verdict → Robustness → Math → Engineering → Repro/Docs → Publication → Tool/Phase-II-prep), ~50 working days. **Phase II (Kepler) is HARD-GATED until all waves complete + DR-004 sign-off.**
+- **Uncommitted working tree** (intentional): erratum (§5/§7 pending E2), paper v0.2 edits, T1.csv (40 hosts), edge-control artifacts, audit report, roadmap. Commit = Wave-0 V-5.
+- ⚠️ **Public surfaces (v1.0.0 release notes, submitted hackathon deck) still state the withdrawn verdict** — reconciliation is PUB-6 (Wave 1).
+
+**Next action:** Wave 0 — V-1 resume-guard patch → V-2 finish E2 (~19 h) → V-3 erratum §5/§7 → V-4 propagate verdict (paper/CLAUDE.md/vault) → V-5 commit+merge. See `archive/session_handoffs/SESSION_HANDOFF_2026-07-19.md`.
+
+## ▶ 2026-07-01: hackathon deck rebuilt into the OFFICIAL ISRO template + verified
 
 **BAH 2026 · PS7 idea-submission deck was rebuilt inside the organizers' mandatory PowerPoint template and verified end-to-end.** No Phase-I science touched (sealed/final).
 

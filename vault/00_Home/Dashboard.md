@@ -1,6 +1,23 @@
 # VESPER Dashboard
 
-> **AUTHORITATIVE CURRENT STATE — updated 2026-07-01 (EOD).** Sections below this banner are Phase-I historical record.
+> **AUTHORITATIVE CURRENT STATE — updated 2026-07-20 (EOD).** Sections below this banner are Phase-I historical record. ⚠️ The historical sections state "H1 FALSIFIED (compute)" — that verdict is **WITHDRAWN** per DR-003 (2026-07-19); see the blocks below.
+
+## ▶ 2026-07-20: Phase II re-scoped (bound · benchmark · monotransit); repo pushed + draft PR open
+
+- **Deep scientific review persisted** (`docs/reviews/DEEP_SCIENTIFIC_REVIEW_2026-07-19.md`): routing claim structurally capped (saving ≤ π·f_p ≈ 0.6% at zero tax; SES/FFA attacks the premise); assets = protocol, bound, monotransit regime.
+- **`docs/VESPER_PHASE2_PROGRAM.md` DRAFT v0.1 (pending DR-004):** G0 (SES/FFA gating, sealed decision rules) → Track A (impossibility bound) · Track B (VESPER-Bench + Kepler DR25) · Track C (monotransit flagship; Λ_mono binding by NN-P2-10; raw+recondition injections; 892-monotransit free pre-study). Kepler routing-scaling sketch **superseded**.
+- **Public reconciliation advanced:** README now states the withdrawn verdict + re-scoped future on the repo front page; CLAUDE.md carries an interim supersession bullet (full rewrite at V-4). Remaining PUB-6 items: v1.0.0 release notes annotation + hackathon status note.
+- **Pushed:** branch `phase1/audit-remediation` → origin (3 commits: remediation analysis · strategy docs · sync/publish); **draft PR → `main`** open; merge = owner decision at V-5 (after E2 verdict).
+- **Wave-0 checklist:** V-1 resume guard ☐ · V-2 E2 campaign 26/300 (~19 h) ☐ · V-3 erratum §5/§7 ☐ · V-4 verdict propagation ☐ · V-5 finalize PR/merge ☐.
+
+## ▶ 2026-07-19: audit remediation — E2 verdict withdrawn; re-measurement paused 26/300; roadmap adopted
+
+- **Status: Phase I under AUDIT REMEDIATION** on branch `phase1/audit-remediation` (5 commits + uncommitted work). Verdict now: **E1 PASS (robust, 3 interval methods) · E2 UNDECIDED pending frozen-rule re-measurement** (sealed 12-star timing → ratio CI [0.42, 1.14]). Authority **DR-003**; register `M4_ERRATUM_2026-07-19.md`. Seals untouched; independently re-verified vs `phase1-prereg-v3` (0 non-branding diffs).
+- **Milestone ladder addition:** ~~M4 verdict final~~ → **W0 Verdict** (E2 re-timing 26/300, PAUSED; erratum §5/§7 pending) → **W1 Robustness** (KM-period E1 sensitivity, epoch tolerance, PUB-6 public reconciliation) → W2 Math → W3 Engineering → W4 Repro/Docs → W5 Publication → W6 Tool/Phase-II-prep. Full plan: **`docs/ROADMAP_TO_10.md`**. **Phase II hard-gated until DR-004.**
+- **Today's science:** edge control ruled out the grid-edge artifact and identified the P=0.5 d gain/loss mechanism as **TLS T₀ epoch-predicate failure** (36/38 epoch-only); erratum §6 + paper corrected. Second-pass audit: `docs/audits/PROJECT_AUDIT_2026-07-19.md` (new findings: log-uniform w_P not occurrence-based; π* formula inconsistency; detector epoch quantization).
+- **Completion checklist (Wave 0):** V-1 resume guard ☐ · V-2 E2 campaign (~19 h) ☐ · V-3 erratum §5/§7 ☐ · V-4 verdict propagation ☐ · V-5 commit+merge ☐.
+- **Hackathon:** round-1 submitted (2026-07-01); ⚠️ deck + v1.0.0 notes predate the verdict withdrawal → PUB-6.
+- **Key documents added:** `docs/decisions/DR-003_E2_REMEASUREMENT.md` · `research/m4_evaluation/M4_ERRATUM_2026-07-19.md` · `docs/audits/PROJECT_AUDIT_2026-07-19.md` · `docs/ROADMAP_TO_10.md` · M4_TEST_RESULT addendum · seal-loader dual-digest fix (rebrand had silently broken seal verification 2026-06-30 → 07-19).
 
 ## ▶ 2026-07-01: hackathon deck rebuilt into the official ISRO template + verified
 

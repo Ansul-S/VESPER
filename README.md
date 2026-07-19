@@ -14,9 +14,13 @@ orbital period from their spacing, gates candidates with a bootstrap-calibrated 
 false-alarm probability, confirms with a transit-model likelihood ratio, and reserves
 the full periodogram search for stars showing no local evidence.
 
-**Status:** Phase I (TESS, Sectors 1–3) is **complete and sealed**; an independent
-audit and remediation pass (2026-07-19) corrected the statistics of the sealed result.
-Phase II (Kepler scaling) is a pending decision.
+**Status (2026-07-20):** Phase I (TESS, Sectors 1–3) is **complete and sealed**; an
+independent audit (2026-07-19) found the sealed compute verdict was not produced by the
+frozen measurement rule — **"H1 FALSIFIED (compute branch)" is withdrawn** (decision
+record [`DR-003`](./docs/decisions/DR-003_E2_REMEASUREMENT.md)) and the frozen-rule
+re-measurement is in progress on branch `phase1/audit-remediation`. The recall result
+(E1) survived the audit and is robust. **Phase II has been re-scoped** away from Kepler
+routing-scaling — see *Where this is going* below.
 
 ## Phase-I result (sealed 2026-06-24; corrected 2026-07-19)
 
@@ -34,6 +38,31 @@ Phase II (Kepler scaling) is a pending decision.
   the single test read; the test split was read exactly once; sealed documents are
   byte-identical to their tags modulo the TRINETRA-X→VESPER rebrand strings.
 
+## Where this is going (re-scoped 2026-07-20)
+
+A full technical audit ([`docs/audits/PROJECT_AUDIT_2026-07-19.md`](./docs/audits/PROJECT_AUDIT_2026-07-19.md))
+and an idea-level scientific review ([`docs/reviews/DEEP_SCIENTIFIC_REVIEW_2026-07-19.md`](./docs/reviews/DEEP_SCIENTIFIC_REVIEW_2026-07-19.md))
+concluded that per-star routing cannot materially cut *survey-scale* transit-search
+compute for any router of this class — occurrence is dominated by planets below
+single-event visibility (measured break-even prevalence π\* ≈ 0.68 vs TESS-realistic
+≈ 0.03). Phase II is therefore **re-scoped** ([`docs/VESPER_PHASE2_PROGRAM.md`](./docs/VESPER_PHASE2_PROGRAM.md),
+draft pending owner adoption as DR-004):
+
+- **Track A — Theory:** formalize the *triage impossibility bound*, with the sealed
+  Phase-I run as its empirical witness.
+- **Track B — Infrastructure:** release the sealed injection-recovery machinery as
+  **VESPER-Bench** — a pre-registered, leakage-safe benchmark for transit-search
+  pipelines (Kepler DR25 extension).
+- **Track C — Science:** an **event-wise monotransit detection pipeline** — the K=1
+  regime where fold-based search provably cannot operate and photometric physics is
+  structurally forced to be the arbiter.
+- **G0 (gating experiment):** a fast-folding / single-event-statistic search is priced
+  against TLS first, with pre-registered decision rules.
+
+Near-term execution (verdict completion, robustness sensitivities, engineering
+hardening, publication) is governed by [`docs/ROADMAP_TO_10.md`](./docs/ROADMAP_TO_10.md).
+The original Kepler routing-scaling sketch is superseded and archived on its branch.
+
 ## Read in this order
 
 1. [`docs/VESPER.md`](./docs/VESPER.md) — master charter.
@@ -41,13 +70,15 @@ Phase II (Kepler scaling) is a pending decision.
 3. [`docs/VESPER_PHASE1_VALIDATION.md`](./docs/VESPER_PHASE1_VALIDATION.md) — the pre-registered protocol (sealed).
 4. [`research/m4_evaluation/M4_TEST_RESULT.md`](./research/m4_evaluation/M4_TEST_RESULT.md) — the sealed result + addendum.
 5. [`research/m4_evaluation/M4_ERRATUM_2026-07-19.md`](./research/m4_evaluation/M4_ERRATUM_2026-07-19.md) — corrections, deviations register, re-measured E2.
-6. [`papers/phase1_evidence_first_triage.md`](./papers/phase1_evidence_first_triage.md) — manuscript draft.
+6. [`docs/audits/PROJECT_AUDIT_2026-07-19.md`](./docs/audits/PROJECT_AUDIT_2026-07-19.md) — full second-pass audit.
+7. [`docs/VESPER_PHASE2_PROGRAM.md`](./docs/VESPER_PHASE2_PROGRAM.md) — the re-scoped future.
+8. [`papers/phase1_evidence_first_triage.md`](./papers/phase1_evidence_first_triage.md) — manuscript draft.
 
 ## Repository map
 
 | Path | Contents |
 |------|----------|
-| `docs/` | Canonical specs + theory; `docs/decisions/` decision records DR-001…DR-003 |
+| `docs/` | Canonical specs + theory; `decisions/` DR-001…DR-003; `audits/` + `reviews/` (2026-07-19 audit & review); Phase-II program + roadmap |
 | `research/` | Milestone tooling M0–M6 (`m0_manifest` … `m6_reality_check`), Phase-I plans (`phase1/`) |
 | `data/manifests/` | Sealed manifests, thresholds, and the single-test artifacts (tracked); light-curve caches are gitignored |
 | `papers/` | Manuscript draft |
