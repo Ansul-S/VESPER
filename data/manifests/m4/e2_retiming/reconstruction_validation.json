@@ -1,0 +1,14 @@
+{
+  "hosts_drawn": 80,
+  "hosts_used_reconstructed": 40,
+  "hosts_used_sealed_csv": 40,
+  "host_sets_match": true,
+  "cells_with_host_multiset_mismatch": 0,
+  "routed_frac_reconstructed": 0.7519333333333333,
+  "routed_frac_sealed_csv": 0.7519333333333333,
+  "cells_with_routed_count_mismatch": 0,
+  "max_routed_count_abs_diff": 0,
+  "n_formula_ge2": 15000,
+  "n_formula_ge2_but_observed_le1": 892,
+  "n_observed_lt_formula": 13516
+}

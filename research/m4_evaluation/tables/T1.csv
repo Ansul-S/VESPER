@@ -12,7 +12,7 @@ Injection grid — impact parameter,"0.0, 0.3, 0.6"
 Cells (P x Rp),30
 Injections per cell (sealed test),500
 Total test injections,15000
-Test host stars,"80 (seeded draw, random_state=22)"
+Test host stars,"40 used of 80 drawn (seeded draw random_state=22; stride-2 host-assignment bug — see M4_ERRATUM_2026-07-19 §2.1)"
 Occurrence weight,Kunimoto & Matthews 2020 (92.8% on Rp<=2)
 Seal #1 (manifest),1f2d49e194b0...e83f1f
 Seal #2 (thresholds),6292c018c692...832692

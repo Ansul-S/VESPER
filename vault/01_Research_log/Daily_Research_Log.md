@@ -576,6 +576,56 @@ Next Action:
 
 ---
 
+## 2026-07-19 — Full audit → E2 verdict withdrawn (DR-003); edge control; second-pass audit + roadmap; E2 re-timing paused 26/300
+
+Worked On:
+- **Morning session (lost to terminal crash; work survived in commits):** independent full-repo audit → **DR-003** adopted (owner: "full fix before Phase 2"). Committed: DR-003, M4_TEST_RESULT append-only addendum (E2 FAIL withdrawn; host count → 40), audit code fixes (host-stride bug, gap-aware detector windows, E2 timing defaults, per-star τ_GP for future runs), seal-loader dual-digest repair (**the 2026-06-30 rebrand had silently broken all seal verification until today**), tests + CI + LICENSE, sealed-run reconstruction (bit-exact vs `recovery.csv`) + corrected E1 inference (3 methods, all pass; cluster lo95 −0.82 pp).
+- **Evening session (this log):** reconstructed state from repo + memory; **re-ran edge control to completion** (prior run died at 160/180); **launched E2 re-timing** under the frozen §6 rule (300 tasks, 39 hosts, 5 warm CPU-time repeats) — **PAUSED by owner at 26/300** (~23:20 IST; ledger persists; resume = V-1 skip-done guard; workers ≤6 on the 4P+6E M4).
+- **Second-pass full audit** (re-verified everything from artifacts): `docs/audits/PROJECT_AUDIT_2026-07-19.md`.
+- **Roadmap to 10/10 adopted:** `docs/ROADMAP_TO_10.md` (6 waves; Phase II hard-gated behind completion + DR-004).
+- Erratum §6 + paper §3.1/§3.2 updated with the edge-control mechanism; T1.csv corrected to 40 hosts.
+
+Discoveries:
+- **Edge control:** the P=0.5 d "gain region" is NOT a grid-edge artifact (pmin 0.5→0.3 changes nothing, bit-identically) and NOT "SDE just below T" — full TLS at P=0.5 finds the right period at high SDE and **fails on epoch** (36/38 failures T₀-only; P=0.62 control recovers 98%). Gains and 80% of losses are ±0.5 T₁₄ **predicate** phenomena, not detection power.
+- **Audit NEW findings:** (1) w_c's period dimension is **log-uniform by fiat, not occurrence** — KM's power law would strip the P=0.5 d cells (below KM's 0.78 d support) that carry Arm B's gains → KM-period-weighted E1 sensitivity (RES-2) is the single most important missing analysis; (2) π* formula inconsistency (MATH §8.3a ρ_d/f_p vs endpoints ρ_d/(f_p(1−ρ)); exact: ρ_d/(f_p(1−ρ+ρ_d))); (3) detector seed epochs quantized to ~0.5·duration — mechanistic origin of the epoch pathway; (4) seal integrity independently re-verified (0 non-branding diff lines vs tag).
+- E2 interim (26 rows, NOT decision-grade): running ratio ~0.94–1.01 — consistent with FAIL/INCONCLUSIVE, not PASS.
+
+Decisions:
+- Owner: pause E2 re-timing (machine needed) — resume when free.
+- Roadmap `docs/ROADMAP_TO_10.md` adopted as the execution plan; **Phase II frozen until all waves complete + DR-004 sign-off** (owner instruction).
+- Edge-control interpretation supersedes the sealed gain narrative (recorded in erratum §6; sealed docs untouched).
+
+Risks:
+- Public surfaces (v1.0.0 release notes; submitted hackathon deck) still state the withdrawn verdict → PUB-6 (Wave 1).
+- Working tree intentionally uncommitted (erratum §5/§7 pending E2) — commit is V-5; do not discard.
+
+Next Action:
+- **Wave 0:** V-1 resume-guard patch → V-2 finish E2 (~19 h compute) → V-3 erratum §5/§7 → V-4 verdict propagation → V-5 commit + merge. Resume point: `archive/session_handoffs/SESSION_HANDOFF_2026-07-19.md`.
+
+---
+
+## 2026-07-20 — Deep review → Phase-II re-scoping drafted; README/publish sync; branch pushed + draft PR
+
+Worked On:
+- **Idea-level panel review** delivered and persisted (`docs/reviews/DEEP_SCIENTIFIC_REVIEW_2026-07-19.md`): tried to break the core idea; concluded the per-star routing claim is **structurally capped** (survey saving ≤ π·f_p ≈ 0.6% even at ρ_d→0) and threatened at the premise by SES/FFA cheap coherent search; identified the durable assets (protocol, impossibility bound, VESPER-Bench, monotransit regime, analytic completeness).
+- **Pivot recommendation accepted by owner** → drafted the end-to-end **`docs/VESPER_PHASE2_PROGRAM.md`** (DRAFT v0.1, Phase-I-style: hypotheses H-C1..C3, endpoints, P2C-M0..M7 ladder, draft frozen-parameter tables, data policy, governance NN-P2-8..10, kill criteria; G0 SES/FFA gating experiment with sealed decision rules; old Kepler scaling sketch superseded with an explicit revival condition G0-R3).
+- **README rewritten for the re-scoped future** (withdrawn verdict now public on the front page — PUB-6 partially executed); CLAUDE.md interim supersession bullet applied (full rewrite at V-4).
+- Vault + handoff + memory synced; **committed and pushed** `phase1/audit-remediation`; **draft PR to `main`** opened.
+
+Decisions:
+- **Phase II re-scoped** to bound/benchmark/monotransit with G0 gating (formal adoption = DR-004, after the ROADMAP_TO_10 gate). Kepler routing-scaling closed unless G0-R3 + owner writing.
+- Track-C design locks-in-principle: Λ_mono binding (NN-P2-10), raw+recondition injections, tolerance-sensitivity predicate, data-driven transit counts — each a Phase-I lesson encoded.
+- Publish now, merge later: draft PR communicates WIP; merge waits for the E2 verdict (V-5).
+
+Risks:
+- Erratum §5/§7 remain `[PENDING-*]` in the pushed branch (clearly labeled; resolves at V-3).
+- Remaining public-record items: v1.0.0 release-notes annotation + hackathon status note (Wave-1 PUB-6 completion).
+
+Next Action:
+- **Unchanged: Wave 0.** V-1 resume guard → V-2 finish E2 (~19 h, workers ≤6) → V-3 erratum → V-4 propagation → V-5 finalize PR/merge. Resume point: `archive/session_handoffs/SESSION_HANDOFF_2026-07-20.md`.
+
+---
+
 ## Template for future entries
 
 Date:

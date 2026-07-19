@@ -1,0 +1,30 @@
+{
+  "design": "A: P=0.5 on edge grid | B: same injections, pmin=0.3 | C: P=0.62 on sealed grid",
+  "n_per_condition": 60,
+  "Rp": 8,
+  "sealed_T": 10.740887727255977,
+  "recall_by_condition": {
+    "A_edge_pmin0.5": {
+      "n": 60,
+      "recall": 0.36666666666666664,
+      "period_ok": 0.9833333333333333,
+      "sde_ok": 0.9666666666666667,
+      "median_sde": 22.374548182227898
+    },
+    "B_extended_pmin0.3": {
+      "n": 60,
+      "recall": 0.36666666666666664,
+      "period_ok": 0.9833333333333333,
+      "sde_ok": 0.9666666666666667,
+      "median_sde": 22.374548182227898
+    },
+    "C_offnode_P0.62_pmin0.5": {
+      "n": 60,
+      "recall": 0.9833333333333333,
+      "period_ok": 0.9833333333333333,
+      "sde_ok": 0.9833333333333333,
+      "median_sde": 25.721188091435156
+    }
+  },
+  "verdict": "Edge artifact NOT confirmed at this sample size \u2014 the sealed interpretation stands unless a larger control says otherwise."
+}

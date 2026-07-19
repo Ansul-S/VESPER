@@ -1,0 +1,25 @@
+{
+  "margin": -0.02,
+  "n_injections": 15000,
+  "n_distinct_hosts": 40,
+  "point_delta_R_bar": -0.004795041405004603,
+  "sealed_reported_lo95": -0.006025453056510998,
+  "injection_bootstrap": {
+    "lo95_one_sided": -0.006025453056510998,
+    "sd": 0.0007368490039632528,
+    "pass": true
+  },
+  "host_cluster_bootstrap": {
+    "lo95_one_sided": -0.008218377296476759,
+    "sd": 0.0018303705764840033,
+    "pass": true,
+    "note": "corrects for 40-host noise-realization sharing"
+  },
+  "wilson_weighted_combination": {
+    "point": -0.004795041405004601,
+    "lo95_one_sided": -0.006010771500129889,
+    "pass": true,
+    "note": "the interval route named in sealed HYP section 6"
+  },
+  "conclusion": "E1 PASS is robust: all three interval constructions clear the sealed -2 pp margin."
+}
