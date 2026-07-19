@@ -78,3 +78,27 @@ The evidence-first router, evaluated once on the sealed TEST split (15,000 injec
 - Driver: `research/m4_evaluation/m4_driver.py`; conditioning: `research/m1_conditioning/condition_test_hosts.py`.
 
 *M4 result record, 2026-06-24. TEST read once; verdict pre-committed and applied; v3 is final; no seal changed.*
+
+---
+
+## ADDENDUM (2026-07-19) — audit correction; original text above is preserved unedited
+
+An independent full-repository audit (2026-07-19) found that the **E2 measurement above
+deviated from the owner-frozen timing rule** (PHASE1_M4_PLAN §6: stratified ≥10/cell,
+cap 300, ≥5 warm-cache repeats — the run used 12 stars × 1 wall-clock repeat) and is
+**statistically undecided** at that sample size (bootstrap 95% CI on the compute ratio
+[0.42, 1.14]). Under VAL §5's own INCONCLUSIVE clause, the recorded
+"E2 FAIL → H1 FALSIFIED (compute branch)" verdict **is withdrawn as recorded**.
+
+- **E1 PASS stands and is strengthened**: robust under a 40-host-cluster bootstrap
+  (lo95 = −0.82 pp) and the pre-registered Wilson combination (−0.60 pp); margin −2 pp.
+- **Host count correction**: the run used **40** distinct hosts, not 80 — a stride-2
+  host-assignment bug (`hosts[(j+sc) % 80]`); disclosed and fixed.
+- **E2 was re-measured** by executing the frozen §6 rule on the *same* sealed injection
+  set (deterministically reconstructed and validated; no new TEST information read —
+  DR-003). The corrected E2 verdict, the full deviations register (residual-space
+  injection, constant LD, flat τ_GP, π\* definition, n_transits formula), and the
+  supporting artifacts are in **[`M4_ERRATUM_2026-07-19.md`](./M4_ERRATUM_2026-07-19.md)**,
+  authority **[`DR-003`](../../docs/decisions/DR-003_E2_REMEASUREMENT.md)**.
+
+No sealed document, threshold, weight, statistic, or tag was changed by this addendum.
