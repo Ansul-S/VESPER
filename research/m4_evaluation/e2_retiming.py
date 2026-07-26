@@ -151,19 +151,27 @@ def main():
     man["tic"] = man["tic"].astype(str)
     man_idx = man[man.split == "test"].set_index("tic")
 
-    led = []
     ledger_path = OUT / "timing_ledger_full.csv"
-    with Pool(a.workers, initializer=_init, initargs=(man_idx,)) as pool:
-        for i, x in enumerate(pool.imap_unordered(_worker, sub.to_dict("records"), chunksize=1), 1):
-            if x is not None:
-                led.append(x)
-                pd.DataFrame([x]).to_csv(ledger_path, mode="a", header=not ledger_path.exists(),
-                                         index=False)
-            if i % 15 == 0:
-                done = pd.DataFrame(led)
-                print(f"[E2-retime] {i}/{len(sub)} | interim ratio "
-                      f"{done.cost_comb.sum()/done.cost_full.sum():.3f}", flush=True)
-    L = pd.DataFrame(led)
+    pending = EP.pending_timing_tasks(sub, ledger_path)   # V-1 resume guard: skip done tasks
+    n_done = len(sub) - len(pending)
+    if n_done:
+        print(f"[E2-retime] resume guard: {n_done} task(s) already in ledger; "
+              f"timing {len(pending)} remaining", flush=True)
+    if len(pending) == 0:
+        print("[E2-retime] ledger already complete for the frozen subset — nothing to time")
+    else:
+        with Pool(a.workers, initializer=_init, initargs=(man_idx,)) as pool:
+            for i, x in enumerate(pool.imap_unordered(_worker, pending.to_dict("records"),
+                                                      chunksize=1), 1):
+                if x is not None:
+                    pd.DataFrame([x]).to_csv(ledger_path, mode="a",
+                                             header=not ledger_path.exists(), index=False)
+                if i % 15 == 0:
+                    done = pd.read_csv(ledger_path)
+                    print(f"[E2-retime] {i}/{len(pending)} | ledger {len(done)} rows | "
+                          f"interim ratio {done.cost_comb.sum()/done.cost_full.sum():.3f}",
+                          flush=True)
+    L = pd.read_csv(ledger_path)   # decide on the FULL ledger (prior + this run's rows)
     e2 = EP.e2_compute(L, recall_pass=True)   # E1 pass is sealed + audit-robust
     summary = {"protocol": "PHASE1_M4_PLAN §6 frozen timing rule (audit remediation DR-003)",
                "sealed_run_deviation": "sealed run timed 12 stars x1 repeat (wall-clock)",
