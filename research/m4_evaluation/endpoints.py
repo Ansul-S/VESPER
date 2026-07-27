@@ -176,3 +176,20 @@ def timing_subset(df_eligible: pd.DataFrame, per_cell_min: int = 10, cap: int = 
     if picks.size > cap:
         picks = rng.choice(picks, cap, replace=False)
     return pd.Index(sorted(picks))
+
+
+def pending_timing_tasks(sub: pd.DataFrame, ledger_path) -> pd.DataFrame:
+    """Resume guard (audit remediation V-1): drop rows whose `task` id is already present
+    in the on-disk timing ledger, so a relaunch appends only unseen tasks and never
+    duplicates a row (the ledger is written in append mode). Returns the subset still to
+    time, re-indexed; an absent, empty, or task-less ledger yields the full input."""
+    from pathlib import Path
+
+    p = Path(ledger_path)
+    if not p.exists():
+        return sub.reset_index(drop=True)
+    prev = pd.read_csv(p)
+    if prev.empty or "task" not in prev.columns:
+        return sub.reset_index(drop=True)
+    done = set(prev["task"].astype(int).tolist())
+    return sub[~sub["task"].astype(int).isin(done)].reset_index(drop=True)

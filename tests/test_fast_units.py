@@ -103,6 +103,41 @@ def test_e2_pi_star_uses_cheap_path_fraction():
     assert out["f_p_cheap_path"] == pytest.approx(1 / 3, abs=0.05)
 
 
+# ---------------------------------------------------------------- E2 resume guard (V-1)
+def _sub(task_ids):
+    return pd.DataFrame({"task": list(task_ids), "tic": [f"t{i}" for i in task_ids],
+                         "period_days": 1.0, "radius_rearth": 2, "b": 0.6})
+
+
+def test_resume_guard_no_ledger_returns_all(tmp_path):
+    sub = _sub(range(5))
+    out = EP.pending_timing_tasks(sub, tmp_path / "nope.csv")
+    assert list(out.task) == list(range(5))
+
+
+def test_resume_guard_skips_done_tasks(tmp_path):
+    led = tmp_path / "ledger.csv"
+    pd.DataFrame({"task": [0, 2, 4], "cost_full": 1.0, "cost_comb": 0.5}).to_csv(led, index=False)
+    out = EP.pending_timing_tasks(_sub(range(5)), led)
+    assert list(out.task) == [1, 3]                 # only unseen ids, no duplicates
+    assert list(out.index) == [0, 1]                # re-indexed
+
+
+def test_resume_guard_idempotent_when_complete(tmp_path):
+    led = tmp_path / "ledger.csv"
+    pd.DataFrame({"task": list(range(5)), "cost_full": 1.0}).to_csv(led, index=False)
+    assert len(EP.pending_timing_tasks(_sub(range(5)), led)) == 0
+
+
+def test_resume_guard_empty_or_taskless_ledger_returns_all(tmp_path):
+    empty = tmp_path / "empty.csv"
+    empty.write_text("task,cost_full\n")            # header only, no rows
+    assert list(EP.pending_timing_tasks(_sub(range(3)), empty).task) == [0, 1, 2]
+    notask = tmp_path / "notask.csv"
+    pd.DataFrame({"cost_full": [1.0, 2.0]}).to_csv(notask, index=False)
+    assert list(EP.pending_timing_tasks(_sub(range(3)), notask).task) == [0, 1, 2]
+
+
 # ---------------------------------------------------------------- host assignment
 def test_host_assignment_covers_all_hosts():
     """Regression for the sealed-run parity bug: hosts[(j+sc)%80] used only 40 hosts."""
