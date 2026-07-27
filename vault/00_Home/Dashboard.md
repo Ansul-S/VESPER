@@ -5,8 +5,10 @@
 ## ▶ 2026-07-27: E2 re-measurement COMPLETE → verdict INCONCLUSIVE; Wave-0 V-1→V-4 done
 
 - **Corrected verdict: E1 PASS (robust) · E2 INCONCLUSIVE.** Frozen §6 rule, 300 inj × 5 repeats / 39 hosts → ratio **0.727** (27.3% reduction), host-clustered CI **[0.636, 0.826]** straddles 0.70; ρ_d 11.6%, f_p 23.7%, **π\*≈0.489 ≫ π≈0.03**. Neither confirmed nor falsified on compute; recall principle validated. Robust to a Low-Power-Mode window (leave-out 0.713; erratum §5.1). Results `data/manifests/m4/e2_retiming/e2_retiming_summary.json`.
-- **Wave-0 checklist:** V-1 resume guard + tests ☑ (commit `2941175`) · V-2 E2 campaign 300/300 ☑ · V-3 erratum §5/§7 ☑ · V-4 propagation (paper v0.3, M4_TEST_RESULT addendum, CLAUDE.md, vault) ☑ · **V-5 finalize PR/merge ☐ (owner call)**.
-- Next: V-5, then Wave 1 (RES-2 KM-period E1 sensitivity; PUB-6 public reconciliation). Phase II still hard-gated until DR-004.
+- **Wave-0 checklist:** V-1 ☑ (`2941175`) · V-2 E2 300/300 ☑ · V-3 erratum ☑ · V-4 propagation ☑ · **V-5 PR/merge ☑ (PR #18 merged)**. **WAVE 0 COMPLETE.**
+- **Wave-1 checklist (no-compute cluster COMPLETE, PR #19 merged):** RES-2 ☑ (E1 robust to KM period weighting, ΔR̄ −0.16 pp) · RES-3 ☑ (losses epoch-predicate) · RES-5 ☑ (supplement S-edge + fig S1) · RES-8 ☑ (endpoint disclosure) · RES-7 ☑ (monotransit design doc) · PUB-6 ☑ (public reconciliation). **Queued (compute):** RES-4 (per-star τ_GP FAP) · RES-6 (η-paid injection) · TLS-epoch re-run.
+- **Hackathon track DISCONTINUED** (owner 2026-07-27); `hackathon/` kept in place as history.
+- Next: RES-4/RES-6 compute batch, then Waves 2 (math) + 3 (engineering). Phase II hard-gated until DR-004.
 
 ## ▶ 2026-07-20: Phase II re-scoped (bound · benchmark · monotransit); repo pushed + draft PR open
 
