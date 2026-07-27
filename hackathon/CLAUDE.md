@@ -1,5 +1,12 @@
 # CLAUDE.md — Hackathon Track (BAH 2026 · PS7)
 
+> # ⛔ TRACK DISCONTINUED (2026-07-27)
+> **This track is discontinued (owner decision) and is not pursued further.** These operating
+> rules are historical — do **not** act on them. In particular the "Phase II FROZEN until after
+> the hackathon" gating below is **void**: Phase II is now gated solely by the
+> `../docs/ROADMAP_TO_10.md` completion gate + DR-004. Root [`../CLAUDE.md`](../CLAUDE.md) is
+> authoritative.
+
 > Operating rules for the **Bharatiya Antariksh Hackathon 2026, Problem Statement 7** track only.
 > This file governs work **inside `hackathon/`**. For anything project-wide, defer to the
 > **root [`../CLAUDE.md`](../CLAUDE.md)** — it is authoritative on any conflict.

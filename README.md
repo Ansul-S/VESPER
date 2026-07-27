@@ -14,26 +14,34 @@ orbital period from their spacing, gates candidates with a bootstrap-calibrated 
 false-alarm probability, confirms with a transit-model likelihood ratio, and reserves
 the full periodogram search for stars showing no local evidence.
 
-**Status (2026-07-20):** Phase I (TESS, Sectors 1–3) is **complete and sealed**; an
+**Status (2026-07-27):** Phase I (TESS, Sectors 1–3) is **complete and sealed**; an
 independent audit (2026-07-19) found the sealed compute verdict was not produced by the
 frozen measurement rule — **"H1 FALSIFIED (compute branch)" is withdrawn** (decision
-record [`DR-003`](./docs/decisions/DR-003_E2_REMEASUREMENT.md)) and the frozen-rule
-re-measurement is in progress on branch `phase1/audit-remediation`. The recall result
-(E1) survived the audit and is robust. **Phase II has been re-scoped** away from Kepler
-routing-scaling — see *Where this is going* below.
+record [`DR-003`](./docs/decisions/DR-003_E2_REMEASUREMENT.md)). The frozen-rule
+re-measurement is now **complete**: the corrected verdict is **E1 PASS (recall
+non-inferiority, robust) · E2 INCONCLUSIVE** (27.3% compute reduction, 95% CI on the
+cost ratio [0.636, 0.826], straddling the 30% threshold) — the compute claim is neither
+confirmed nor falsified at decision-grade precision. The recall result (E1) survived the
+audit and is robust. **Phase II has been re-scoped** away from Kepler routing-scaling —
+see *Where this is going* below.
 
-## Phase-I result (sealed 2026-06-24; corrected 2026-07-19)
+## Phase-I result (sealed 2026-06-24; corrected 2026-07-19 → 07-27)
 
 - **Recall non-inferiority (E1): PASS, robust.** On 15,000 sealed-test injections the
   occurrence-weighted recall difference vs full TLS is −0.48 pp; the one-sided 95%
   lower bound clears the pre-registered −2 pp margin under all three interval
-  constructions, including a host-cluster bootstrap (−0.82 pp).
-- **Scoped compute (E2):** the originally recorded "FAIL (24.4% < 30%)" rested on a
-  12-star timing subset in deviation from the frozen measurement rule and was
-  statistically undecided (ratio CI [0.42, 1.14]). It was re-measured under the frozen
-  rule in the audit remediation — see
-  [`research/m4_evaluation/M4_ERRATUM_2026-07-19.md`](./research/m4_evaluation/M4_ERRATUM_2026-07-19.md)
-  for the corrected verdict and the full deviations register.
+  constructions, including a host-cluster bootstrap (−0.82 pp). The pass is robust to
+  the period-weighting scheme: under KM-occurrence period weighting it is if anything
+  stronger (−0.16 pp; RES-2).
+- **Scoped compute (E2): INCONCLUSIVE.** The originally recorded "FAIL (24.4% < 30%)"
+  rested on a 12-star timing subset in deviation from the frozen measurement rule and was
+  statistically undecided (ratio CI [0.42, 1.14]). Re-measured under the frozen rule
+  (300 injections × 5 repeats, 39 hosts): compute ratio **0.727** (27.3% reduction),
+  host-clustered 95% CI **[0.636, 0.826]** — straddling the 0.70 boundary, so the
+  compute claim is **neither confirmed nor falsified**. Break-even prevalence
+  π\* ≈ 0.49 ≫ TESS π ≈ 0.03. See
+  [`research/m4_evaluation/M4_ERRATUM_2026-07-19.md`](./research/m4_evaluation/M4_ERRATUM_2026-07-19.md) §5/§7
+  for the full result and the deviations register.
 - Integrity: thresholds and protocol were sealed (git tags `phase1-prereg-v2/v3`) before
   the single test read; the test split was read exactly once; sealed documents are
   byte-identical to their tags modulo the TRINETRA-X→VESPER rebrand strings.
@@ -44,8 +52,8 @@ A full technical audit ([`docs/audits/PROJECT_AUDIT_2026-07-19.md`](./docs/audit
 and an idea-level scientific review ([`docs/reviews/DEEP_SCIENTIFIC_REVIEW_2026-07-19.md`](./docs/reviews/DEEP_SCIENTIFIC_REVIEW_2026-07-19.md))
 concluded that per-star routing cannot materially cut *survey-scale* transit-search
 compute for any router of this class — occurrence is dominated by planets below
-single-event visibility (measured break-even prevalence π\* ≈ 0.68 vs TESS-realistic
-≈ 0.03). Phase II is therefore **re-scoped** ([`docs/VESPER_PHASE2_PROGRAM.md`](./docs/VESPER_PHASE2_PROGRAM.md),
+single-event visibility (measured break-even prevalence π\* ≈ 0.49 under the frozen-rule
+re-measurement — 0.68 under the sealed-run values — vs TESS-realistic ≈ 0.03). Phase II is therefore **re-scoped** ([`docs/VESPER_PHASE2_PROGRAM.md`](./docs/VESPER_PHASE2_PROGRAM.md),
 draft pending owner adoption as DR-004):
 
 - **Track A — Theory:** formalize the *triage impossibility bound*, with the sealed
@@ -83,7 +91,7 @@ The original Kepler routing-scaling sketch is superseded and archived on its bra
 | `data/manifests/` | Sealed manifests, thresholds, and the single-test artifacts (tracked); light-curve caches are gitignored |
 | `papers/` | Manuscript draft |
 | `tests/` | Fast unit tests (run in CI) |
-| `hackathon/` | BAH 2026 PS7 track (separate, submitted 2026-07-01) |
+| `hackathon/` | BAH 2026 PS7 track — **DISCONTINUED 2026-07-27** (round-1 submission history; not pursued further) |
 | `archive/` | Prior-project audit (historical; do not modify) |
 | `vault/` | Obsidian research memory (mirrors the repo; repo is authoritative) |
 

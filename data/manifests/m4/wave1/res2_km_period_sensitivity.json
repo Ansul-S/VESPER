@@ -1,0 +1,58 @@
+{
+  "task": "RES-2 KM-period-weighted E1 sensitivity (Wave 1)",
+  "source": "Kunimoto & Matthews 2020, Table 7 / Eqn 22-25 (arXiv:2004.05296)",
+  "margin_pp": -2.0,
+  "n_injections": 15000,
+  "n_hosts": 40,
+  "results": {
+    "sealed": {
+      "label": "log-uniform w_P (sealed A.5)",
+      "delta_R_bar_pp": -0.4795041405004601,
+      "injection_lo95_pp": -0.6025453056510994,
+      "cluster_lo95_pp": -0.8218377296476753,
+      "wilson_lo95_pp": -0.6010771500129887,
+      "period_weight_by_node": {
+        "P0.5": 0.16667,
+        "P1": 0.16667,
+        "P2": 0.16667,
+        "P4": 0.16667,
+        "P8": 0.16667,
+        "P16": 0.16667
+      },
+      "pass_all_three": true
+    },
+    "km_extrap": {
+      "label": "KM Eqn-25 w_P, P=0.5 extrapolated below KM support",
+      "delta_R_bar_pp": -0.1555187175351878,
+      "injection_lo95_pp": -0.1808960557145725,
+      "cluster_lo95_pp": -0.22018846415647664,
+      "wilson_lo95_pp": -0.18054559544962556,
+      "period_weight_by_node": {
+        "P0.5": 0.00244,
+        "P1": 0.00955,
+        "P2": 0.03638,
+        "P4": 0.1215,
+        "P8": 0.29972,
+        "P16": 0.53042
+      },
+      "pass_all_three": true
+    },
+    "km_excl": {
+      "label": "KM Eqn-25 w_P, P=0.5 node excluded (renormalized)",
+      "delta_R_bar_pp": -0.15727507282849496,
+      "injection_lo95_pp": -0.18256490193993197,
+      "cluster_lo95_pp": -0.22191970869686423,
+      "wilson_lo95_pp": -0.18231997745812398,
+      "period_weight_by_node": {
+        "P0.5": 0.0,
+        "P1": 0.00959,
+        "P2": 0.03653,
+        "P4": 0.12194,
+        "P8": 0.30054,
+        "P16": 0.5314
+      },
+      "pass_all_three": true
+    }
+  },
+  "conclusion": "E1 PASS is robust to the period-weighting scheme: all three interval constructions clear the -2 pp margin under sealed log-uniform AND KM occurrence weighting (both P=0.5 handlings)."
+}

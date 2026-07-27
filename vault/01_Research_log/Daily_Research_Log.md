@@ -646,6 +646,42 @@ Next Action:
 
 ---
 
+## 2026-07-27 (cont.) — Wave 1 no-compute cluster complete (RES-2/3/5/7/8, PUB-6)
+
+Worked On (branch `phase1/wave1-robustness`, off merged `main`; V-5 merged as PR #18):
+- **RES-2** KM-period-weighted E1 sensitivity (audit's #1 missing analysis). Pulled KM 2020 Table 7 / Eqn 22-25 broken power law (1-2 R+: β−0.5 γ2.42 P0 5.9 d; 2-4 R+: β−0.1 γ2.3 P0 13.3 d) from the arXiv PDF; re-weighted the period dimension (radius held). **E1 PASS robust** — ΔR̄ −0.16 pp under KM (vs sealed log-uniform −0.48 pp), because real occurrence concentrates at long periods where the arms agree. Sealed column reproduces e1_corrected_inference.json exactly.
+- **RES-3** epoch-tolerance sensitivity. All 869 losses are confirmed-cheap seeds (693 right-period); loosening the combined epoch window to 0.75/1.0 T14 recovers 260/402 → combined-side ΔR̄ −0.48 → −0.00 pp. Losses are epoch-precision, not detection power. Honest scope: TLS per-injection epoch not stored → combined-side only (upper bound); symmetric sweep needs a re-run (queued).
+- **RES-5** edge control → paper supplement S-edge + figure S1 (SDE distributions + failure-mode breakdown; A/B bit-identical, 36/38 epoch-only). Cross-referenced §3.1.
+- **RES-8** endpoint-disclosure paragraph (§2.6): precision was not a pre-registered endpoint; FP control = calibrated FAR; M6 EB-leakage is the precision proxy.
+- **RES-7** monotransit campaign pre-registered protocol design doc (`docs/MONOTRANSIT_CAMPAIGN_DESIGN.md`): grid (P>baseline ⇒ K=1), endpoints (H-C1/2/3), power analysis (≥300 SNR1-visible inj/cell over ≥50 hosts; ≥100 EBs for purity). Execution = Phase II, gated behind DR-004.
+- **PUB-6** public reconciliation: README + new CHANGELOG.md (v1.0.1) + hackathon/VERDICT_CORRECTION_NOTE.md now state E1 PASS / E2 INCONCLUSIVE; no public surface states the withdrawn verdict as current.
+
+Discoveries:
+- E1 is robust to *both* the period-weighting scheme (RES-2) and the epoch predicate is the sole loss lever (RES-3) — two independent sensitivities that strengthen the recall claim and localize the loss mechanism to epoch precision (→ INN-4 epoch-refit confirmer).
+
+Problems:
+- RES-3 symmetric epoch sweep and the S-edge T0-error histogram both need TLS per-injection epochs, which the sealed run didn't persist → a small re-run, folded into the RES-4/RES-6 compute window.
+
+Next Action:
+- **Queued (compute window):** RES-4 (per-star τ_GP FAP sensitivity, ≥100 calibration nulls) + RES-6 (η-paid injection sub-study, MAST network + recondition). Then Waves 2/3 (math + engineering, parallel). Push `phase1/wave1-robustness` + open PR at owner's call. Phase II hard-gated until DR-004.
+
+---
+
+## 2026-07-27 (cont. 2) — DECISION: hackathon track discontinued
+
+Decision (owner):
+- **The BAH 2026 · PS7 hackathon track is DISCONTINUED and will not be pursued further.**
+
+Worked On:
+- Recorded the decision on every authoritative surface: root `CLAUDE.md` status bullet (hackathon "active track" → discontinued; the "Phase II FROZEN until after the hackathon" gating declared void — Phase II is gated solely by ROADMAP_TO_10 + DR-004), root `README.md` directory table, and DISCONTINUED banners on `hackathon/README.md` + `hackathon/CLAUDE.md`.
+- Vault: Current_Mission + Dashboard authoritative banners updated.
+- **Submitted round-1 materials in `hackathon/` are preserved as history, not deleted** (I did not create them and they are submission record). Physical disposition of the directory (leave-in-place / move to `archive/` / delete) left as an owner call.
+
+Next Action:
+- Owner to decide the `hackathon/` directory disposition. VESPER research continues: push `phase1/wave1-robustness` + PR (owner call); RES-4/RES-6 compute window; Waves 2/3.
+
+---
+
 ## Template for future entries
 
 Date:

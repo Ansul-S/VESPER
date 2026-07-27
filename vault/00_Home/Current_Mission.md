@@ -11,7 +11,11 @@
 - **Wave-0 progress:** V-1 resume guard + 4 unit tests ✅ (committed `2941175`); V-2 campaign ✅; V-3 erratum §5/§7 filled (no PENDING markers) ✅; V-4 verdict propagated to paper (abstract/§3.3/§3.4/§4/§5, v0.3), `M4_TEST_RESULT.md` addendum, `CLAUDE.md` status bullet, and this vault ✅. **V-5 pending:** commit the V-3/V-4 doc changes, push, un-draft the PR — **merge is the owner's call.**
 - Anti-tuning intact: this work touched no sealed doc/threshold/tag (only V-1 code + `m4/e2_retiming/` outputs); TEST not re-read (frozen §6 re-times already-read injections; DR-003).
 
-**Next action:** V-5 (commit + push + un-draft PR; ask before merge), then Wave 1 (RES-2 KM-period-weighted E1 sensitivity first; PUB-6 public reconciliation).
+**Update (2026-07-27, cont.):** V-5 merged (PR #18 → `main`). **Wave 1 no-compute cluster COMPLETE** on branch `phase1/wave1-robustness`: RES-2 (KM-period E1 sensitivity → PASS robust, ΔR̄ −0.16 pp), RES-3 (epoch-tolerance → losses are epoch-predicate), RES-5 (edge-control supplement S-edge + fig S1), RES-8 (endpoint disclosure), RES-7 (monotransit design doc), PUB-6 (README/CHANGELOG/hackathon note reconciled). Each committed. **Queued for a compute window:** RES-4 (per-star τ_GP FAP) + RES-6 (η-paid injection). **Next action:** push `phase1/wave1-robustness` + open PR (owner call), run RES-4/RES-6, then Waves 2/3. Phase II hard-gated until DR-004.
+
+**⛔ HACKATHON TRACK DISCONTINUED (owner decision 2026-07-27).** The BAH 2026 · PS7 track is stopped and not pursued further. `hackathon/` materials are kept as round-1 submission history (banners added to `hackathon/README.md` + `hackathon/CLAUDE.md`; not deleted). The old "Phase II FROZEN until after the hackathon" gating is **void** — Phase II is gated solely by the ROADMAP_TO_10 gate + DR-004. The dated hackathon blocks lower in this file are **historical record only**.
+
+**Prior next action (done):** V-5 (commit + push + un-draft PR; ask before merge), then Wave 1 (RES-2 first; PUB-6).
 
 ## ▶ 2026-07-20: deep scientific review → PHASE II RE-SCOPED; everything pushed to GitHub
 

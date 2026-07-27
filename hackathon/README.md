@@ -1,5 +1,13 @@
 # BAH 2026 · Problem Statement 7 — VESPER
 
+> # ⛔ TRACK DISCONTINUED (2026-07-27)
+> **This hackathon track has been discontinued by owner decision and is not pursued further.**
+> The contents below are preserved as **round-1 submission history** (submitted 2026-07-01) —
+> read them as a record, not as active work. Do not resume development here. The main VESPER
+> research program continues under the root [`../README.md`](../README.md) and
+> [`../docs/ROADMAP_TO_10.md`](../docs/ROADMAP_TO_10.md). Verdict-correction annotation for
+> these materials: [`VERDICT_CORRECTION_NOTE.md`](./VERDICT_CORRECTION_NOTE.md).
+
 **AI-enabled Detection of Exoplanets from Noisy Astronomical Light Curves** — the applied hackathon track of **[VESPER](../README.md)**, built for ISRO's **Bharatiya Antariksh Hackathon 2026** (powered by Hack2skill).
 
 > An **extension/attachment to VESPER**, not a fork. It reuses VESPER's validated TESS detection spine and adds the PS7-specific pieces: a 4-class classifier (transit / eclipse / blend / other), parameter estimation, visualization, and a report. **Phase-I research is sealed/final and untouched here.**
