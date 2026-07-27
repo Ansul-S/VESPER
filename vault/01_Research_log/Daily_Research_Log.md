@@ -667,6 +667,21 @@ Next Action:
 
 ---
 
+## 2026-07-27 (cont. 2) — DECISION: hackathon track discontinued
+
+Decision (owner):
+- **The BAH 2026 · PS7 hackathon track is DISCONTINUED and will not be pursued further.**
+
+Worked On:
+- Recorded the decision on every authoritative surface: root `CLAUDE.md` status bullet (hackathon "active track" → discontinued; the "Phase II FROZEN until after the hackathon" gating declared void — Phase II is gated solely by ROADMAP_TO_10 + DR-004), root `README.md` directory table, and DISCONTINUED banners on `hackathon/README.md` + `hackathon/CLAUDE.md`.
+- Vault: Current_Mission + Dashboard authoritative banners updated.
+- **Submitted round-1 materials in `hackathon/` are preserved as history, not deleted** (I did not create them and they are submission record). Physical disposition of the directory (leave-in-place / move to `archive/` / delete) left as an owner call.
+
+Next Action:
+- Owner to decide the `hackathon/` directory disposition. VESPER research continues: push `phase1/wave1-robustness` + PR (owner call); RES-4/RES-6 compute window; Waves 2/3.
+
+---
+
 ## Template for future entries
 
 Date:

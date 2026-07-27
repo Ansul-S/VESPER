@@ -1,6 +1,6 @@
 # VESPER Dashboard
 
-> **AUTHORITATIVE CURRENT STATE — updated 2026-07-27.** Sections below this banner are Phase-I historical record. ⚠️ The historical sections state "H1 FALSIFIED (compute)" — that verdict is **SUPERSEDED** per DR-003: the frozen-rule E2 re-measurement (300/300, 2026-07-27) returns **E2 INCONCLUSIVE**. **Corrected Phase-I verdict: E1 PASS (robust) · E2 INCONCLUSIVE** (ratio 0.727, CI [0.636, 0.826]; π\*≈0.489). See the 2026-07-27 block below.
+> **AUTHORITATIVE CURRENT STATE — updated 2026-07-27.** Sections below this banner are Phase-I historical record. ⚠️ The historical sections state "H1 FALSIFIED (compute)" — that verdict is **SUPERSEDED** per DR-003: the frozen-rule E2 re-measurement (300/300, 2026-07-27) returns **E2 INCONCLUSIVE**. **Corrected Phase-I verdict: E1 PASS (robust) · E2 INCONCLUSIVE** (ratio 0.727, CI [0.636, 0.826]; π\*≈0.489). See the 2026-07-27 block below. ⛔ **The BAH 2026 · PS7 hackathon track is DISCONTINUED (owner, 2026-07-27)** — the dated hackathon blocks below are historical only; the "Phase II FROZEN until after the hackathon" gating is void (Phase II gated by ROADMAP_TO_10 + DR-004).
 
 ## ▶ 2026-07-27: E2 re-measurement COMPLETE → verdict INCONCLUSIVE; Wave-0 V-1→V-4 done
 
