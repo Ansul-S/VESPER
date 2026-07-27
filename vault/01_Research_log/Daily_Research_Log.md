@@ -680,6 +680,8 @@ Worked On:
 Next Action:
 - Owner to decide the `hackathon/` directory disposition. VESPER research continues: push `phase1/wave1-robustness` + PR (owner call); RES-4/RES-6 compute window; Waves 2/3.
 
+**Session close (2026-07-27):** Wave-1 branch **pushed + merged via PR #19** (owner); merged local branch deleted; `main` @ `9b12181`, clean. `hackathon/` disposition = **leave in place, discontinued** (owner). Two PRs merged today (#18 verdict, #19 Wave-1+hackathon). **Next session:** RES-4/RES-6 compute batch (background, AC/no-LPM) + TLS-epoch re-run, then Waves 2/3. Handoff: `archive/session_handoffs/SESSION_HANDOFF_2026-07-27.md`.
+
 ---
 
 ## Template for future entries
