@@ -1,0 +1,51 @@
+{
+  "task": "RES-3 epoch-tolerance sensitivity (Wave 1)",
+  "scope": "COMBINED-side only (TLS per-injection epoch not stored); \u0394R\u0304 curve is an upper bound on the symmetric improvement. Symmetric sweep = compute task.",
+  "margin_pp": -2.0,
+  "sealed_tolerance_T14": 0.5,
+  "gains_total": 563,
+  "gains_at_P0.5": 561,
+  "loss_reclassification": {
+    "n_losses": 869,
+    "right_period": 693,
+    "wrong_period": 176,
+    "losses_recovered_at_0.5": 0,
+    "losses_recovered_at_0.625": 145,
+    "losses_recovered_at_0.75": 260,
+    "losses_recovered_at_0.875": 334,
+    "losses_recovered_at_1.0": 402
+  },
+  "delta_R_bar_curve": {
+    "0.5": {
+      "delta_R_bar_pp": -0.47950414050046025,
+      "cluster_lo95_pp": -0.8218377296476759,
+      "rec_comb_unweighted": 0.4882666666666667,
+      "n_recovered_combined": 7324
+    },
+    "0.625": {
+      "delta_R_bar_pp": -0.29994043347849864,
+      "cluster_lo95_pp": -0.5693960594441907,
+      "rec_comb_unweighted": 0.4992,
+      "n_recovered_combined": 7488
+    },
+    "0.75": {
+      "delta_R_bar_pp": -0.17263697309028989,
+      "cluster_lo95_pp": -0.4003680222486398,
+      "rec_comb_unweighted": 0.5078,
+      "n_recovered_combined": 7617
+    },
+    "0.875": {
+      "delta_R_bar_pp": -0.08494195066790275,
+      "cluster_lo95_pp": -0.30707903422228894,
+      "rec_comb_unweighted": 0.5134,
+      "n_recovered_combined": 7701
+    },
+    "1.0": {
+      "delta_R_bar_pp": -0.004771569501552338,
+      "cluster_lo95_pp": -0.22527624520656744,
+      "rec_comb_unweighted": 0.5184666666666666,
+      "n_recovered_combined": 7777
+    }
+  },
+  "conclusion": "E1's loss structure is dominated by the +/-0.5 T14 epoch predicate: all 869 losses are confirmed-cheap seeds, 693 right-period; loosening the combined epoch tolerance to 0.75/1.0 T14 recovers 260/402 of them, lifting the combined-side \u0394R\u0304 from -0.48 pp to -0.00 pp. The losses are a predicate/epoch-precision artifact, not a detection-power gap \u2014 motivating an epoch-refit confirmer (INN-4). A fair symmetric sweep (needs stored TLS epochs) would recover TLS's own wrong-epoch cases too (the P=0.5 d gains), so these are upper bounds."
+}
