@@ -626,6 +626,26 @@ Next Action:
 
 ---
 
+## 2026-07-27 — E2 re-measurement COMPLETE → verdict INCONCLUSIVE; Wave-0 V-1→V-4 executed
+
+Worked On:
+- **V-1 resume guard:** added `EP.pending_timing_tasks()` (pandas-only, in `endpoints.py` to dodge the frozen-path import footgun), wired into `e2_retiming.py` (skip ledger-present task ids; decide on the full on-disk ledger). 4 unit tests in `tests/test_fast_units.py` (15 pass). Verified against the paused ledger: 26 done → exactly 274 pending, zero overlap. Committed standalone `2941175`.
+- **V-2 campaign:** ran the frozen §6 rule to completion — **300/300 tasks × 5 warm-cache repeats, 39 hosts**, sealed config (frozen modules, flat τ_GP 0.005, u₂ 0.25, T_red 0, B=1000 FAP). Mid-run diagnosis: throughput fell ~8× because the laptop was on **battery + Low Power Mode** (clock-capped) — not caffeinate/thermal (evidence: workers at ~95% CPU, no thermal warning); fixed to AC + LPM off (recovered to ~3.2 min/task, confirmed by a 1-hour baseline test).
+- **V-3:** filled erratum §5 (result + §5.1 LPM disclosure + §5.2 π\*) and §7 (corrected conclusion); no PENDING markers remain.
+- **V-4:** propagated the verdict → paper (abstract, §3.3 header/body, §3.4, §4 ×2, §5, header → v0.3), `M4_TEST_RESULT.md` addendum (E2 result block), `CLAUDE.md` status bullet (interim → resolved), and this vault (Current_Mission, Dashboard, this log).
+
+Discoveries:
+- **E2 = INCONCLUSIVE.** Ratio **0.727** (27.3% reduction; target ≥30%), host-clustered bootstrap 95% CI **[0.636, 0.826]** straddles 0.70 (p(≤0.70)=0.27). ρ_d 11.6%, f_p 23.7%, **π\*≈0.489 ≫ π≈0.03**. Close to the withdrawn sealed 0.756 but now with a real interval → neither confirmed nor falsified. E1 PASS (robust) unchanged.
+- **Robust to the LPM window:** leave-out of the ~28 clock-capped tasks → 0.713, still INCONCLUSIVE. Ratio design (both arms timed back-to-back per task) cancels uniform clock scaling.
+
+Problems:
+- Timing measurement was briefly contaminated by battery/Low-Power-Mode; caught mid-run, disclosed in erratum §5.1, shown non-decisive by the leave-out check. Lesson for the timing harness (ENG-7): assert AC power + LPM off before measuring CPU-seconds.
+
+Next Action:
+- **V-5** (owner-gated): commit the V-3/V-4 doc changes, push `phase1/audit-remediation`, un-draft the PR — **ask before merging.** Then Wave 1: RES-2 (KM-period-weighted E1 sensitivity — the audit's #1 missing analysis) and PUB-6 (public reconciliation of the withdrawn verdict). Phase II hard-gated until DR-004.
+
+---
+
 ## Template for future entries
 
 Date:

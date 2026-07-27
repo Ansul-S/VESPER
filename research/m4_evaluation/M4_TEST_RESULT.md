@@ -102,3 +102,16 @@ cap 300, ≥5 warm-cache repeats — the run used 12 stars × 1 wall-clock repea
   authority **[`DR-003`](../../docs/decisions/DR-003_E2_REMEASUREMENT.md)**.
 
 No sealed document, threshold, weight, statistic, or tag was changed by this addendum.
+
+### E2 re-measurement result (2026-07-27)
+
+The frozen §6 campaign completed: **300 injections × 5 warm-cache repeats across 39
+hosts** (`data/manifests/m4/e2_retiming/`). **E2 = INCONCLUSIVE** — compute ratio
+**0.727** (27.3% reduction; target ≥ 30%), host-clustered bootstrap 95% CI
+**[0.636, 0.826]** straddling the 0.70 decision boundary; E1 recall non-inferior.
+$\rho_d = 11.6\%$, $f_p = 23.7\%$, $\pi^\star \approx 0.489$. Robust to a Low-Power-Mode
+timing window (leave-out check: 0.713, still INCONCLUSIVE; erratum §5.1).
+
+**Corrected verdict line (supersedes the "H1 FALSIFIED — compute" header above, which
+remains as the sealed run's original record): E1 PASS (robust) · E2 INCONCLUSIVE.**
+Full result and per-stage costs: [`M4_ERRATUM_2026-07-19.md`](./M4_ERRATUM_2026-07-19.md) §5/§7.

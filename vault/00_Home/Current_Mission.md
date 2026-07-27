@@ -1,8 +1,19 @@
 # Current Mission
 
-> **AUTHORITATIVE CURRENT STATE — updated 2026-07-20 (EOD).** The detailed fields below this block are **Phase-I historical record** (kept for provenance); read this block first.
+> **AUTHORITATIVE CURRENT STATE — updated 2026-07-27.** The detailed fields below this block are **Phase-I historical record** (kept for provenance); read this block first.
 
-## ▶ Latest event (2026-07-20): deep scientific review → PHASE II RE-SCOPED; everything pushed to GitHub
+## ▶ Latest event (2026-07-27): E2 RE-MEASUREMENT COMPLETE → verdict INCONCLUSIVE; Wave-0 V-1→V-4 done
+
+**The frozen-rule E2 re-timing campaign finished (300/300 tasks × 5 repeats, 39 hosts).** The corrected Phase-I verdict is now settled and propagated:
+
+- **CORRECTED VERDICT: E1 PASS (robust) · E2 INCONCLUSIVE.** Compute ratio **0.727** (27.3% reduction; target ≥30%), host-clustered bootstrap 95% CI **[0.636, 0.826]** straddles the 0.70 decision boundary → per VAL §5 the compute branch is *neither confirmed nor falsified*. ρ_d 11.6%, f_p 23.7%, **π\*≈0.489 ≫ π≈0.03** (routing is not a survey-scale compute-saver either way). This **supersedes** the sealed "H1 FALSIFIED — compute" AND the interim "E2 pending" lines. Results: `data/manifests/m4/e2_retiming/e2_retiming_summary.json`.
+- **Robust to a Low-Power-Mode timing episode** (~28 tasks ran clock-capped on battery mid-run; caught + fixed to AC). Leave-out sensitivity: 0.713, still INCONCLUSIVE (erratum §5.1). No re-timing needed; disclosed.
+- **Wave-0 progress:** V-1 resume guard + 4 unit tests ✅ (committed `2941175`); V-2 campaign ✅; V-3 erratum §5/§7 filled (no PENDING markers) ✅; V-4 verdict propagated to paper (abstract/§3.3/§3.4/§4/§5, v0.3), `M4_TEST_RESULT.md` addendum, `CLAUDE.md` status bullet, and this vault ✅. **V-5 pending:** commit the V-3/V-4 doc changes, push, un-draft the PR — **merge is the owner's call.**
+- Anti-tuning intact: this work touched no sealed doc/threshold/tag (only V-1 code + `m4/e2_retiming/` outputs); TEST not re-read (frozen §6 re-times already-read injections; DR-003).
+
+**Next action:** V-5 (commit + push + un-draft PR; ask before merge), then Wave 1 (RES-2 KM-period-weighted E1 sensitivity first; PUB-6 public reconciliation).
+
+## ▶ 2026-07-20: deep scientific review → PHASE II RE-SCOPED; everything pushed to GitHub
 
 **An idea-level panel review (persisted: `docs/reviews/DEEP_SCIENTIFIC_REVIEW_2026-07-19.md`) concluded the routing claim is structurally capped** (survey saving ≤ π·f_p ≈ 0.6% even at zero entry tax; the SES/FFA cheap coherent search attacks the premise itself) **and the project's real assets are the protocol, the unwritten impossibility bound, and the monotransit regime.** Owner accepted the pivot direction.
 

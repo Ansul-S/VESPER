@@ -1,0 +1,42 @@
+{
+  "protocol": "PHASE1_M4_PLAN \u00a76 frozen timing rule (audit remediation DR-003)",
+  "sealed_run_deviation": "sealed run timed 12 stars x1 repeat (wall-clock)",
+  "n_timed": 300,
+  "n_hosts": 39,
+  "repeats": 5,
+  "metric": "single-thread CPU-core-seconds (process_time)",
+  "sealed_config_fidelity": {
+    "tau_gp": 0.005,
+    "confirmer_u2": 0.25,
+    "modules": "frozen_rerun snapshot"
+  },
+  "E2": {
+    "n_eligible": 300,
+    "C_full_s": 43810.22683399998,
+    "C_comb_s": 31856.154689999996,
+    "compute_ratio": 0.7271396884272067,
+    "reduction": 0.27286031157279333,
+    "rho_d": 0.11564914281767508,
+    "ratio_ci95": [
+      0.635873125911904,
+      0.8257209089276649
+    ],
+    "ratio_ci_cluster": "host",
+    "bootstrap_B": 20000,
+    "p_ratio_le_0p70": 0.2698,
+    "reduction_target": 0.3,
+    "recall_non_inferior": true,
+    "decision": "INCONCLUSIVE",
+    "pass": false,
+    "search_cost_frac_legacy": 0.6114905456095316,
+    "per_stage_means_s": {
+      "detector": 16.88871726666668,
+      "period": 0.0,
+      "tls_comb": 89.2984650333333,
+      "full_tls": 146.0340894466666
+    },
+    "f_p_cheap_path": 0.23666666666666666,
+    "pi_star_breakeven": 0.4886706333611979,
+    "pi_star_note": "MATH \u00a78.3a definition (rho_d / f_p(1-rho)); the sealed run's 0.236 used a search-cost fraction for f_p and understated pi*."
+  }
+}
