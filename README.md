@@ -73,6 +73,8 @@ The original Kepler routing-scaling sketch is superseded and archived on its bra
 
 ## Read in this order
 
+> **Full document index with status labels and role-specific reading paths:** [`docs/INDEX.md`](./docs/INDEX.md). It marks every document `SEALED` / `APPEND-ONLY` / `LIVE` / `HISTORICAL` and gives separate paths for reviewers and contributors. **Sealed documents must be read with the erratum** — several of their statements were later corrected.
+
 1. [`docs/VESPER.md`](./docs/VESPER.md) — master charter.
 2. [`docs/SCIENTIFIC_HYPOTHESIS.md`](./docs/SCIENTIFIC_HYPOTHESIS.md) — the falsifiable claims (sealed).
 3. [`docs/VESPER_PHASE1_VALIDATION.md`](./docs/VESPER_PHASE1_VALIDATION.md) — the pre-registered protocol (sealed).

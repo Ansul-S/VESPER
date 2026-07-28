@@ -76,6 +76,9 @@ data/benchmark/
 # M4 incremental crash-recovery checkpoint (scratch; final result is recovery.csv)
 data/manifests/m4/**/recovery_partial.csv
 
+# RES-4 resume ledger (scratch; final result is res4_per_star.csv, same rows)
+data/manifests/m4/**/res4_ledger.csv
+
 *.nbconvert.ipynb
 
 *.fits

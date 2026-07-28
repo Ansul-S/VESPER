@@ -29,7 +29,20 @@ def _fold_score(epochs: np.ndarray, period: float) -> float:
 
 
 def best_period(epochs: np.ndarray, p_min: float, p_max: float, oversample: int = 3):
-    """Integer-comb best period over [p_min, p_max]. Returns (P_hat, score, R)."""
+    """Integer-comb best period over [p_min, p_max]. Returns (P_hat, score, R).
+
+    N=2 IDENTIFIABILITY (MATH-6; see docs/VESPER_MATH_ADDENDUM.md §A). With N_min = 2
+    sealed, two events with spacing D make score(P) = 0 for EVERY P = D/m (m integer,
+    D/m >= p_min) — an exact global tie, so P_hat is unidentifiable while R is (it
+    saturates at 1). The tie is resolved below by np.argmin, i.e. by IEEE-754 rounding at
+    the ~1e-16 level, NOT by a period preference: measured, m=1 (longest P) wins only
+    ~74% of in-range draws. recovery._period_match's m in {2,3} tolerance absorbs
+    ~98%; the ~1.5% leaking to m >= 4 is a recall cost, never a false positive. The FAP
+    stays valid because it compares R (tie-invariant) under an identically degenerate
+    null. FUTURE RUNS should pin the convention explicitly (round scores, then prefer the
+    longest P) instead of inheriting float noise — the selected harmonic is not portable
+    across numpy builds. Sealed runs are unaffected (frozen_rerun/ is verbatim).
+    """
     if epochs.size < 2:
         return np.nan, np.inf, 0.0
     span = float(epochs.max() - epochs.min())
