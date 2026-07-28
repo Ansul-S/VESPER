@@ -684,6 +684,31 @@ Next Action:
 
 ---
 
+## 2026-07-28 — RES-4 complete; Wave-2/4 closure (MATH-1/5/6/7, DOC-2/3, CODE-7); PR #21 merged
+
+Worked On:
+- **RES-4** (Wave 1) — per-star τ_GP FAP sensitivity on all **1163** cached calibration nulls, both arms × 3 T₁₄ strata, frozen (`frozen_rerun/`) detector + period_recovery, resume ledger, ~3.2 h on 6 workers (AC power, LPM off).
+- **MATH-6** — N=2 comb identifiability: tie set proven + measured. **MATH-7** — notation cross-reference (MATH ↔ code ↔ paper ↔ units). **MATH-1** — π⋆ derived. **MATH-5** — BCa host-cluster interval (+ **CODE-7** vectorization). **DOC-2** — `docs/INDEX.md`. **DOC-3** — seal-chain postmortem.
+- Each task committed as its own unit; PR #21 opened, then **merged to `main`** (owner instruction). `main` @ `77037d4`, clean, CI green, branch deleted.
+
+Discoveries:
+- **RES-4:** 0/1126 gate flips (arm B, as the driver applies it) and 1/1126 (arm C, complete coverage) at the sealed T₁₄ = 0.2 d. Erratum §2.4's masking argument **empirically upheld**, bounded <0.5%.
+- **Erratum §2.4's premise is itself imprecise** — only 22 of 968 overlapping stars had an M1 τ row, so M3 was overwhelmingly flat-τ too. The calibration/test gap is much smaller than the erratum states.
+- The one flip is **flat-OPEN → per-star-SHUT**: the sealed FAP gate was slightly *more permissive* on red-noise nulls (benign direction).
+- **The masking is a property of the T₁₄ = median convention**, not of τ: at a counterfactual T₁₄ = 0.05 d, arm C flips 24/1126. Duration-matching T₁₄ in future runs *requires* per-star τ.
+- **MATH-6:** the "argmin → longest-P" convention is only ~74% true — the N=2 tie is broken by float rounding, not by design. And at N=2 the FAP is a **rarity** test, not a coherence test.
+- **MATH-1:** the roadmap's "exact" π⋆ is wrong (implies a routed star isn't charged for its own detector); code and paper were already right.
+- **MATH-5:** the sealed percentile interval is mildly optimistic (BCa −1.04 pp vs −0.83 pp) but E1 non-inferiority is unchanged.
+
+Problems:
+- Two self-caught errors, both fixed before shipping: (1) the first RES-4 draft imported the **live** detector, which carries the 2026-07-19 gap-aware fix and does *not* reproduce sealed FAPs → switched to `frozen_rerun/`; (2) the sealed-fidelity check compared arm A everywhere and reported a spurious 967/968 → made arm-aware, giving **968/968 bitwise**, and the generated conclusion now degrades to an explicit failure statement if reproduction is ever incomplete.
+- RES-4 originally held all results in memory (the paused-E2-campaign failure mode) → stopped and relaunched with an append-only resume ledger.
+
+Next Action:
+- **RES-6** (η-paid injection sub-study; MAST needed, `data/raw` empty) + the small **TLS-epoch re-run**; then Waves 2 + 3 in parallel. Phase II hard-gated until DR-004.
+
+---
+
 ## Template for future entries
 
 Date:
