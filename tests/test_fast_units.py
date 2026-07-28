@@ -97,10 +97,30 @@ def test_e2_pass_requires_recall():
 
 def test_e2_pi_star_uses_cheap_path_fraction():
     out = EP.e2_compute(_ledger(0.50), True, B=500)
-    assert out["pi_star_breakeven"] == pytest.approx(
-        out["rho_d"] / (out["f_p_cheap_path"] * (1 - out["pi_star_rho"])) if
-        "pi_star_rho" in out else out["pi_star_breakeven"])
     assert out["f_p_cheap_path"] == pytest.approx(1 / 3, abs=0.05)
+
+
+def test_e2_pi_star_matches_derived_break_even():
+    """Pin pi* = rho_d / (f_p (1-rho)) — MATH-1, docs/VESPER_MATH_ADDENDUM.md §C.
+
+    Derivation: every star pays the detector (rho_d); confirmed-cheap stars additionally
+    pay the narrow confirm (rho), everyone else falls back to the full search. With
+    q = pi*f_p confirmed-cheap, C_comb/C_full = 1 + rho_d - q(1-rho), so saving = 0 at
+    pi* = rho_d / (f_p (1-rho)).
+
+    The two rejected forms are asserted NOT to match, so a regression to either is caught:
+      rho_d / f_p                  -- MATH §8.3a first-order (drops rho)
+      rho_d / (f_p (1-rho+rho_d))  -- the roadmap's "exact" form, which implies a routed
+                                      star is not charged for the detector that routed it
+    """
+    out = EP.e2_compute(_ledger(0.50), True, B=200)
+    rho_d, f_p, rho = out["rho_d"], out["f_p_cheap_path"], out["pi_star_rho"]
+    assert rho > 0, "fixture must have a non-negligible rho or the forms are indistinguishable"
+
+    assert out["pi_star_breakeven"] == pytest.approx(rho_d / (f_p * (1 - rho)), rel=1e-12)
+    assert out["pi_star_breakeven"] != pytest.approx(rho_d / f_p, rel=1e-6)
+    assert out["pi_star_breakeven"] != pytest.approx(
+        rho_d / (f_p * (1 - rho + rho_d)), rel=1e-6)
 
 
 # ---------------------------------------------------------------- E2 resume guard (V-1)

@@ -154,8 +154,14 @@ def e2_compute(ledger: pd.DataFrame, recall_pass: bool, B: int = 20000,
         rho = float(cheap["cost_tls"].sum() / C_full) if len(cheap) and C_full > 0 else 0.0
         out["f_p_cheap_path"] = f_p
         out["pi_star_breakeven"] = rho_d / (f_p * (1.0 - rho)) if f_p > 0 else float("inf")
-        out["pi_star_note"] = ("MATH §8.3a definition (rho_d / f_p(1-rho)); the sealed run's "
-                               "0.236 used a search-cost fraction for f_p and understated pi*.")
+        out["pi_star_rho"] = rho
+        out["pi_star_note"] = (
+            "pi* = rho_d / (f_p (1-rho)), derived in docs/VESPER_MATH_ADDENDUM.md §C "
+            "(MATH-1). NOT the sealed MATH §8.3a display: that section states the "
+            "first-order rho_d/f_p (exact here, since rho ~ 2.5e-5) and its (1-rho+rho_d) "
+            "bracket implies a routed star is not charged for the detector that routed "
+            "it, contradicting its own premise. The sealed run's 0.236 used a search-cost "
+            "fraction for f_p and understated pi*.")
     return out
 
 

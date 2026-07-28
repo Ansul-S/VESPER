@@ -163,17 +163,70 @@ Because the tie is broken by floating-point rounding, the selected harmonic is d
 | $\eta$ | transit-preservation factor (M2) | — | `eta` | M2 artifacts | $\eta\ge0.90$ |
 | $C_{\rm comb}/C_{\rm full}$ | compute ratio (E2 endpoint) | — | `ratio`, `reduction` | `endpoints` | $\ge30\%$ |
 
-### B.6 Known cross-reference discrepancy — $\pi^\star$ (open, tracked as MATH-1)
+### B.6 $\pi^\star$ — see §C
 
-The break-even prevalence appears in **three non-identical forms**:
+The break-even prevalence appears in three non-identical forms across MATH, the paper, and the roadmap. This is resolved in **§C (MATH-1)** below.
 
-| Source | Form |
-|---|---|
-| Sealed MATH §8.3a | $\pi^\star=\rho_d/f_p$ |
-| Paper draft | $\pi^\star=\rho_d/\big(f_p(1-\rho)\big)$ |
-| Roadmap MATH-1 (exact) | $\pi^\star=\rho_d/\big(f_p(1-\rho+\rho_d)\big)$ |
+---
 
-These agree to first order in $\rho,\rho_d$ but not exactly. **This addendum does not resolve the discrepancy** — reconciling the three, deriving the exact form, aligning `endpoints.py`, and pinning it with a unit test is roadmap task **MATH-1**, which is still open. It is recorded here so the inconsistency is not rediscovered as a surprise. Note the numerical impact is small at the reported operating point ($\rho_d\approx0.116$, $f_p\approx0.237$ → $\pi^\star\approx0.489$ under the sealed form) and does not affect the E2 verdict, which is decided on the measured compute ratio and its CI, not on $\pi^\star$.
+## C. MATH-1 — the break-even prevalence $\pi^\star$, derived
+
+**Addresses:** audit §3.7 ($\pi^\star$ formula inconsistency); roadmap MATH-1.
+**Outcome:** the code and the paper are correct; the roadmap's "exact form" is not.
+
+### C.1 The discrepancy
+
+| Source | Form | Value at the run's operating point |
+|---|---|---|
+| Sealed MATH §8.3a (stated) | $\pi^\star=\rho_d/f_p$ | 0.4887 |
+| Paper draft **and** `endpoints.py` | $\pi^\star=\rho_d/\big(f_p(1-\rho)\big)$ | 0.4887 |
+| Roadmap MATH-1 ("exact") | $\pi^\star=\rho_d/\big(f_p(1-\rho+\rho_d)\big)$ | 0.4380 |
+
+*(using the re-measured $\rho_d=0.11565$, $f_p=0.23667$, $\rho=2.5\times10^{-5}$)*
+
+### C.2 Derivation
+
+Work in units of the baseline per-star cost, $C_{\rm full}=1$. In the combined arm **every** star must run the detector to be routed at all, at cost $\rho_d$. Then:
+
+- a star that is routed **and** confirmed on the cheap path additionally pays the narrow confirm, $\rho$ → total $\rho_d+\rho$;
+- every other star falls back to the full search → total $\rho_d+1$.
+
+Let $q$ be the fraction of *all* stars that are confirmed-cheap. On a survey-representative population with planet prevalence $\pi$ and cheap-path fraction $f_p$ among planet hosts, $q=\pi f_p$ (planetless stars present no evidence and never confirm). Then
+
+$$\frac{C_{\rm comb}}{C_{\rm full}} = q(\rho_d+\rho)+(1-q)(\rho_d+1) = 1+\rho_d-q\,(1-\rho),$$
+
+$$\text{saving} = 1-\frac{C_{\rm comb}}{C_{\rm full}} = \pi f_p(1-\rho)-\rho_d.$$
+
+Setting the saving to zero:
+
+$$\boxed{\ \pi^\star = \frac{\rho_d}{f_p\,(1-\rho)}\ }$$
+
+which is exactly what `endpoints.py:156` computes and what the paper states.
+
+### C.3 Why the other two forms differ
+
+- **MATH §8.3a's stated $\rho_d/f_p$** is the **first-order** form: it drops $\rho$ from the bracket. Since the measured $\rho=2.5\times10^{-5}$, the two agree to four decimal places here. MATH is *self-consistent*: it writes "saving $\approx \pi f_p-\rho_d$" and solves that. **No correction needed** — it is an approximation, correctly labelled as one, and it happens to be numerically exact at this operating point.
+
+- **The roadmap's $\rho_d/\big(f_p(1-\rho+\rho_d)\big)$** derives from the bracket $(1-\rho+\rho_d)$ that appears in MATH §8.3a's displayed cost equation. That bracket implies fast-path stars pay $\rho$ **without** $\rho_d$ — i.e. that a routed star is not charged for the detector that routed it. That contradicts the same section's own premise ("the per-star detector overhead $\rho_d$, charged on **every** routed star") and double-counts the relief. **The roadmap's "exact form" is therefore wrong and should not be adopted.** The displayed bracket in the sealed section carries the same error; it is sealed and stays as written, and this note is the correction of record.
+
+### C.4 Approximation chain (state explicitly)
+
+$$\pi^\star=\frac{\rho_d}{f_p(1-\rho)} \;\xrightarrow[\ \rho\,\ll\,1\ ]{}\; \frac{\rho_d}{f_p}$$
+
+with relative error exactly $\rho$. At $\rho=2.5\times10^{-5}$ the approximation is exact to 4 decimals; it should still be written in the exact form wherever a number is reported, because $\rho$ is a measured quantity that could be non-negligible for a cheaper baseline or a wider confirmation grid.
+
+### C.5 Status of MATH-1's success criterion
+
+The roadmap asks for "one formula, three places (MATH, endpoints, paper), all agree; unit test pins it."
+
+- `endpoints.py` — already correct; only its `pi_star_note` was misattributed (it credited the formula to "MATH §8.3a definition", but §8.3a states the first-order form). **Attribution fixed.**
+- Paper — already correct.
+- Sealed MATH — cannot be edited (P-2). §C is the correction of record and is cross-referenced from the code.
+- Unit test — `tests/test_fast_units.py::test_e2_pi_star_matches_derived_break_even` now pins the exact form against an independent recomputation and asserts the two rejected forms do **not** match. (The previous test was tautological — it compared a value to itself.)
+
+### C.6 Does this change any conclusion?
+
+No. $\pi^\star$ is a **descriptive secondary endpoint** (H1b-survey); the E2 verdict is decided on the measured compute ratio and its host-clustered CI, not on $\pi^\star$. All three candidate forms give $\pi^\star\in[0.44,0.49]$, each an order of magnitude above TESS-realistic $\pi\approx0.03$, so the qualitative finding — **the routing architecture is not a survey-scale compute saver** — is unchanged and robust to the choice.
 
 ---
 
@@ -181,4 +234,5 @@ These agree to first order in $\rho,\rho_d$ but not exactly. **This addendum doe
 
 | Date | Change |
 |---|---|
-| 2026-07-28 | Created. §A MATH-6 (comb identifiability at $N=2$); §B MATH-7 (notation cross-reference); §B.6 records the open $\pi^\star$ discrepancy for MATH-1. |
+| 2026-07-28 | Created. §A MATH-6 (comb identifiability at $N=2$); §B MATH-7 (notation cross-reference). |
+| 2026-07-28 | §C MATH-1 — $\pi^\star$ derived. Code and paper confirmed correct ($\rho_d/(f_p(1-\rho))$); the roadmap's "exact form" rejected as inconsistent with its own cost premise; §B.6 now points here. |
