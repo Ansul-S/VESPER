@@ -1,0 +1,208 @@
+{
+  "task": "RES-4 per-star tau_GP FAP sensitivity (Wave 1)",
+  "roadmap_id": "RES-4",
+  "bounds": "M4_ERRATUM_2026-07-19 \u00a72.4 (tau_GP calibration/test inconsistency)",
+  "scope": "Calibration NULL stars only, from cached 2.5 d residuals. No TEST read, no network, no sealed artifact edited or re-derived.",
+  "mechanism": "tau enters the FAP only via L_b = 3*max(tau, T14). Both m3_calibrate and m4_driver.py:117 pass T14 = median(duration_grid) = 0.2 d, so the flat arm is pinned at L_b = 0.6 d and per-star tau can matter only when tau > T14.",
+  "sealed_constants": {
+    "tau_flat_days": 0.005,
+    "block_len_multiple": 3,
+    "B": 1000,
+    "alpha_fap": 0.01,
+    "z_extract": 2.0,
+    "duration_grid_days": [
+      0.05,
+      0.1,
+      0.2,
+      0.4,
+      0.8
+    ],
+    "T14_sealed_convention_days": 0.2,
+    "seed": 20260616
+  },
+  "arms": {
+    "A": "flat tau = 0.005 d (sealed run behavior)",
+    "B": "as-implemented per-star (post-audit m4_driver._tau_for: lookup, fallback 0.005); derived exactly from A and C",
+    "C": "per-star tau with complete coverage (recorded M1 tau, else frozen ACF estimator recomputed from the cached residual)"
+  },
+  "sample": {
+    "n_stars": 1163,
+    "n_with_recorded_m1_tau": 185,
+    "n_without_recorded_m1_tau": 978,
+    "tau_c_median_days": 0.0055555736223595,
+    "tau_c_p95_days": 0.11666717689463439,
+    "tau_c_max_days": 0.566669418634774,
+    "frac_tau_c_gt_0.2d": 0.03869303525365434
+  },
+  "recompute_validation": {
+    "n_overlap": 185,
+    "median_rel_err": 0.0,
+    "max_rel_err": 0.0,
+    "frac_within_1pct": 1.0
+  },
+  "sealed_reproduction_check": {
+    "available": true,
+    "source": "data/manifests/m3/m3_per_star.csv",
+    "n_overlap": 968,
+    "tolerance": 1e-12,
+    "fap_quantum_1_over_B_plus_1": 0.000999000999000999,
+    "n_m3_used_per_star_tau": 22,
+    "n_m3_used_flat_tau": 946,
+    "n_reproduced": 968,
+    "frac_reproduced": 1.0,
+    "n_bitwise_identical": 968,
+    "max_abs_delta": 0.0,
+    "n_events_exact_match": 968,
+    "flat_arm_only": {
+      "n_differing": 1,
+      "max_abs_delta": 0.058941058941058944,
+      "note": "Arm A vs M3's record, ignoring which tau M3 actually used. Differences here are NOT fidelity failures: they are exactly the stars where M3's per-star tau exceeded T14 = 0.2 d, i.e. the effect RES-4 measures."
+    },
+    "note": "Arm-aware: expected = arm C where M3 had an M1 tau row, else arm A. Both arms run the frozen (sealed) detector + period_recovery, so this must reproduce the sealed M3 FAPs exactly. Any mismatch means the frozen snapshot and the sealed run have diverged."
+  },
+  "strata": {
+    "0.05": {
+      "t14_days": 0.05,
+      "n_evaluable": 1126,
+      "n_no_period": 37,
+      "n_Lb_differs_C": 62,
+      "n_tau_c_exceeds_t14": 62,
+      "gate_open_rate_A": 0.06216696269982238,
+      "arm_B": {
+        "n_fap_differs": 9,
+        "n_gate_flips": 3,
+        "flip_rate": 0.0026642984014209592,
+        "flip_rate_wilson95": [
+          0.0009065065756273939,
+          0.00780397111630798
+        ],
+        "flips_open_to_shut": 3,
+        "flips_shut_to_open": 0,
+        "gate_open_rate": 0.05950266429840142,
+        "max_abs_fap_delta": 0.25574425574425574,
+        "mean_abs_fap_delta": 0.0006556498563603363,
+        "max_abs_fap_delta_among_differing": 0.25574425574425574
+      },
+      "arm_C": {
+        "n_fap_differs": 50,
+        "n_gate_flips": 24,
+        "flip_rate": 0.021314387211367674,
+        "flip_rate_wilson95": [
+          0.014364441012898254,
+          0.03151939376558954
+        ],
+        "flips_open_to_shut": 24,
+        "flips_shut_to_open": 0,
+        "gate_open_rate": 0.04085257548845471,
+        "max_abs_fap_delta": 0.6393606393606395,
+        "mean_abs_fap_delta": 0.007569694958682527,
+        "max_abs_fap_delta_among_differing": 0.6393606393606395
+      }
+    },
+    "0.1": {
+      "t14_days": 0.1,
+      "n_evaluable": 1126,
+      "n_no_period": 37,
+      "n_Lb_differs_C": 45,
+      "n_tau_c_exceeds_t14": 45,
+      "gate_open_rate_A": 0.03108348134991119,
+      "arm_B": {
+        "n_fap_differs": 7,
+        "n_gate_flips": 3,
+        "flip_rate": 0.0026642984014209592,
+        "flip_rate_wilson95": [
+          0.0009065065756273939,
+          0.00780397111630798
+        ],
+        "flips_open_to_shut": 3,
+        "flips_shut_to_open": 0,
+        "gate_open_rate": 0.028419182948490232,
+        "max_abs_fap_delta": 0.091908091908092,
+        "mean_abs_fap_delta": 0.00028124628479868287,
+        "max_abs_fap_delta_among_differing": 0.091908091908092
+      },
+      "arm_C": {
+        "n_fap_differs": 40,
+        "n_gate_flips": 7,
+        "flip_rate": 0.006216696269982238,
+        "flip_rate_wilson95": [
+          0.003014581885006087,
+          0.012776535251986888
+        ],
+        "flips_open_to_shut": 7,
+        "flips_shut_to_open": 0,
+        "gate_open_rate": 0.02486678507992895,
+        "max_abs_fap_delta": 0.3556443556443556,
+        "mean_abs_fap_delta": 0.003974710901886747,
+        "max_abs_fap_delta_among_differing": 0.3556443556443556
+      }
+    },
+    "0.2": {
+      "t14_days": 0.2,
+      "n_evaluable": 1126,
+      "n_no_period": 37,
+      "n_Lb_differs_C": 31,
+      "n_tau_c_exceeds_t14": 31,
+      "gate_open_rate_A": 0.023978685612788632,
+      "arm_B": {
+        "n_fap_differs": 4,
+        "n_gate_flips": 0,
+        "flip_rate": 0.0,
+        "flip_rate_wilson95": [
+          0.0,
+          0.0033999981081421706
+        ],
+        "flips_open_to_shut": 0,
+        "flips_shut_to_open": 0,
+        "gate_open_rate": 0.023978685612788632,
+        "max_abs_fap_delta": 0.07892107892107901,
+        "mean_abs_fap_delta": 0.00017389360195754525,
+        "max_abs_fap_delta_among_differing": 0.07892107892107901
+      },
+      "arm_C": {
+        "n_fap_differs": 31,
+        "n_gate_flips": 1,
+        "flip_rate": 0.0008880994671403197,
+        "flip_rate_wilson95": [
+          0.00015678856912620335,
+          0.005013369400280369
+        ],
+        "flips_open_to_shut": 1,
+        "flips_shut_to_open": 0,
+        "gate_open_rate": 0.023090586145648313,
+        "max_abs_fap_delta": 0.2007992007992008,
+        "mean_abs_fap_delta": 0.001696349831340951,
+        "max_abs_fap_delta_among_differing": 0.2007992007992008
+      }
+    }
+  },
+  "primary_stratum_t14_days": 0.2,
+  "headline": {
+    "n_evaluable": 1126,
+    "arm_B_flip_rate": 0.0,
+    "arm_B_flip_rate_wilson95": [
+      0.0,
+      0.0033999981081421706
+    ],
+    "arm_B_n_gate_flips": 0,
+    "arm_C_flip_rate": 0.0008880994671403197,
+    "arm_C_flip_rate_wilson95": [
+      0.00015678856912620335,
+      0.005013369400280369
+    ],
+    "arm_C_n_gate_flips": 1
+  },
+  "machine": {
+    "platform": "macOS-26.5.2-arm64-arm-64bit",
+    "python": "3.11.9",
+    "workers": 1
+  },
+  "ran_at_utc": "2026-07-28T18:02:46.381552+00:00",
+  "findings": {
+    "F1_masking_confirmed": "At the sealed T14 = 0.2 d convention the flat-tau choice changes no gate decision as the driver applies it (arm B: 0/1126, Wilson upper bound 0.0034) and one with complete per-star coverage (arm C: 1/1126, upper bound 0.0050). Erratum \u00a72.4's masking argument is empirically upheld.",
+    "F2_erratum_2_4_premise_is_imprecise": "Erratum \u00a72.4 states that 'M3 calibrated the period-FAP with per-star tau_GP' while M4 hardcoded 0.005. In fact m3_calibrate.py:151 falls back to 0.005 for any star without an M1 noise-summary row, and only 22 of the 968 overlapping stars had one \u2014 M3 was itself overwhelmingly flat-tau. The calibration/test inconsistency is therefore much smaller than that section implies, which strengthens rather than weakens its conclusion.",
+    "F3_flat_tau_is_mildly_anti_conservative": "The single arm-C flip (TIC 80427281, tau = 0.2889 d) runs flat-open -> per-star-shut: the flat block length is shorter, the surrogate null is easier to beat, and the gate opens on a red-noise null that per-star tau would reject. So the sealed run's FAP gate was very slightly MORE permissive on high-tau stars. Given the prime directive's asymmetry (a false positive is acceptable, a missed planet is not), this is the benign direction.",
+    "F4_masking_is_a_property_of_the_T14_convention": "Under the counterfactual duration-matched strata the effect reappears: arm C flips 24/1126 at T14 = 0.05 d and 7/1126 at 0.1 d. The masking is bought by passing T14 = median(duration grid), not by the tau distribution being harmless. Any future run that duration-matches T14 must use per-star tau."
+  },
+  "conclusion": "Sealed fidelity: 968/968 of M3's recorded per-star FAPs are reproduced (max |delta| 0.00e+00), comparing arm C on the 22 stars where M3 had an M1 tau row and arm A on the other 946. The frozen snapshot still is the sealed pipeline. At the sealed T14 convention (median duration grid = 0.2 d), per-star tau_GP changes the period-FAP gate decision on 0/1126 null calibration stars as the post-audit driver would actually apply it (arm B, flip rate 0.0000, Wilson 95% [0.0000, 0.0034]), and on 1/1126 with complete per-star coverage (arm C, 0.0009, [0.0002, 0.0050]). The FAP itself differs on 31/1126 stars, because tau enters only through L_b = 3*max(tau, T14) and only 31 stars have tau > 0.2 d. Erratum \u00a72.4's masking argument is therefore MEASURED, not asserted: the calibration/test tau inconsistency is bounded above by these flip rates and does not change the sealed conclusions."
+}
