@@ -1,0 +1,367 @@
+{
+  "task": "MATH-6 comb-statistic identifiability at N=2 (Wave 2)",
+  "roadmap_id": "MATH-6",
+  "code_path": "research/m4_evaluation/frozen_rerun/period_recovery.py (sealed snapshot)",
+  "sealed_grid": {
+    "p_min_days": 0.5,
+    "p_max_frac_baseline": 0.5,
+    "oversampling": 3,
+    "N_min": 2,
+    "seed": 20260616
+  },
+  "tie_set": {
+    "spacing_days": 7.0,
+    "score_on_comb_m_1_to_10": [
+      1.1102230246251565e-16,
+      0.0,
+      0.0,
+      1.1102230246251565e-16,
+      1.1102230246251565e-16,
+      0.0,
+      0.0,
+      1.1102230246251565e-16,
+      1.1102230246251565e-16,
+      0.0
+    ],
+    "max_score_on_comb": 1.1102230246251565e-16,
+    "score_off_comb": [
+      0.7324716614707797,
+      0.39377458903336127,
+      0.3451392660547149,
+      0.060307379214091794
+    ],
+    "min_score_off_comb": 0.060307379214091794,
+    "tie_set_confirmed": true
+  },
+  "harmonic_selection": {
+    "24.9": {
+      "baseline_days": 24.9,
+      "p_max_days": 12.45,
+      "in_range_D_le_pmax": {
+        "n_trials": 4000,
+        "n_unresolvable": 0,
+        "selected_m_distribution": {
+          "1": {
+            "n": 3010,
+            "frac": 0.7525
+          },
+          "2": {
+            "n": 749,
+            "frac": 0.18725
+          },
+          "3": {
+            "n": 186,
+            "frac": 0.0465
+          },
+          "4": {
+            "n": 38,
+            "frac": 0.0095
+          },
+          "5": {
+            "n": 14,
+            "frac": 0.0035
+          },
+          "6": {
+            "n": 3,
+            "frac": 0.00075
+          }
+        },
+        "frac_m_eq_1_longest_P": 0.7525,
+        "frac_m_in_1_2_3_absorbed_by_sealed_tolerance": 0.98625,
+        "frac_m_ge_4_harmonic_miss": 0.01375,
+        "frac_non_integer_not_a_harmonic_of_D": 0.0,
+        "frac_period_predicate_miss": 0.01375,
+        "min_R": 0.9999999999999999,
+        "R_saturated_at_1": true
+      },
+      "out_of_range_D_gt_pmax": {
+        "n_trials": 4000,
+        "n_unresolvable": 0,
+        "selected_m_distribution": {
+          "1": {
+            "n": 4,
+            "frac": 0.001
+          },
+          "2": {
+            "n": 4,
+            "frac": 0.001
+          },
+          "20": {
+            "n": 1,
+            "frac": 0.00025
+          },
+          "3": {
+            "n": 1,
+            "frac": 0.00025
+          },
+          "31": {
+            "n": 2,
+            "frac": 0.0005
+          },
+          "5": {
+            "n": 1,
+            "frac": 0.00025
+          },
+          "6": {
+            "n": 4,
+            "frac": 0.001
+          },
+          "7": {
+            "n": 2,
+            "frac": 0.0005
+          },
+          "8": {
+            "n": 2,
+            "frac": 0.0005
+          },
+          "non_integer": {
+            "n": 3979,
+            "frac": 0.99475
+          }
+        },
+        "frac_m_eq_1_longest_P": 0.001,
+        "frac_m_in_1_2_3_absorbed_by_sealed_tolerance": 0.00225,
+        "frac_m_ge_4_harmonic_miss": 0.003,
+        "frac_non_integer_not_a_harmonic_of_D": 0.99475,
+        "frac_period_predicate_miss": 0.99775,
+        "min_R": 0.8661186769124255,
+        "R_saturated_at_1": false
+      }
+    },
+    "49.6": {
+      "baseline_days": 49.6,
+      "p_max_days": 24.8,
+      "in_range_D_le_pmax": {
+        "n_trials": 4000,
+        "n_unresolvable": 0,
+        "selected_m_distribution": {
+          "1": {
+            "n": 2967,
+            "frac": 0.74175
+          },
+          "2": {
+            "n": 782,
+            "frac": 0.1955
+          },
+          "22": {
+            "n": 1,
+            "frac": 0.00025
+          },
+          "3": {
+            "n": 175,
+            "frac": 0.04375
+          },
+          "30": {
+            "n": 1,
+            "frac": 0.00025
+          },
+          "4": {
+            "n": 60,
+            "frac": 0.015
+          },
+          "5": {
+            "n": 10,
+            "frac": 0.0025
+          },
+          "6": {
+            "n": 2,
+            "frac": 0.0005
+          },
+          "8": {
+            "n": 2,
+            "frac": 0.0005
+          }
+        },
+        "frac_m_eq_1_longest_P": 0.74175,
+        "frac_m_in_1_2_3_absorbed_by_sealed_tolerance": 0.981,
+        "frac_m_ge_4_harmonic_miss": 0.019,
+        "frac_non_integer_not_a_harmonic_of_D": 0.0,
+        "frac_period_predicate_miss": 0.019,
+        "min_R": 0.9999999999999999,
+        "R_saturated_at_1": true
+      },
+      "out_of_range_D_gt_pmax": {
+        "n_trials": 4000,
+        "n_unresolvable": 0,
+        "selected_m_distribution": {
+          "1": {
+            "n": 1,
+            "frac": 0.00025
+          },
+          "12": {
+            "n": 1,
+            "frac": 0.00025
+          },
+          "15": {
+            "n": 1,
+            "frac": 0.00025
+          },
+          "16": {
+            "n": 1,
+            "frac": 0.00025
+          },
+          "2": {
+            "n": 5,
+            "frac": 0.00125
+          },
+          "20": {
+            "n": 1,
+            "frac": 0.00025
+          },
+          "24": {
+            "n": 1,
+            "frac": 0.00025
+          },
+          "3": {
+            "n": 4,
+            "frac": 0.001
+          },
+          "31": {
+            "n": 1,
+            "frac": 0.00025
+          },
+          "33": {
+            "n": 1,
+            "frac": 0.00025
+          },
+          "4": {
+            "n": 1,
+            "frac": 0.00025
+          },
+          "5": {
+            "n": 2,
+            "frac": 0.0005
+          },
+          "50": {
+            "n": 1,
+            "frac": 0.00025
+          },
+          "52": {
+            "n": 1,
+            "frac": 0.00025
+          },
+          "6": {
+            "n": 1,
+            "frac": 0.00025
+          },
+          "72": {
+            "n": 1,
+            "frac": 0.00025
+          },
+          "8": {
+            "n": 3,
+            "frac": 0.00075
+          },
+          "9": {
+            "n": 2,
+            "frac": 0.0005
+          },
+          "non_integer": {
+            "n": 3971,
+            "frac": 0.99275
+          }
+        },
+        "frac_m_eq_1_longest_P": 0.00025,
+        "frac_m_in_1_2_3_absorbed_by_sealed_tolerance": 0.0025,
+        "frac_m_ge_4_harmonic_miss": 0.00475,
+        "frac_non_integer_not_a_harmonic_of_D": 0.99275,
+        "frac_period_predicate_miss": 0.9975,
+        "min_R": 0.8662137460079359,
+        "R_saturated_at_1": false
+      }
+    }
+  },
+  "multiplicity_curve": {
+    "24.9": {
+      "baseline_days": 24.9,
+      "curve": {
+        "2": {
+          "p_R_ge_0.999": 0.7353333333333333,
+          "median_R": 1.0
+        },
+        "3": {
+          "p_R_ge_0.999": 0.16333333333333333,
+          "median_R": 0.9917181448853889
+        },
+        "4": {
+          "p_R_ge_0.999": 0.006666666666666667,
+          "median_R": 0.95248705766244
+        },
+        "5": {
+          "p_R_ge_0.999": 0.0,
+          "median_R": 0.9012009856736931
+        },
+        "6": {
+          "p_R_ge_0.999": 0.0,
+          "median_R": 0.8431036205134914
+        },
+        "8": {
+          "p_R_ge_0.999": 0.0,
+          "median_R": 0.74851023158804
+        },
+        "10": {
+          "p_R_ge_0.999": 0.0,
+          "median_R": 0.6774308878335802
+        },
+        "15": {
+          "p_R_ge_0.999": 0.0,
+          "median_R": 0.5617794392925561
+        }
+      },
+      "note": "With obs_R = 1 (the N=2 case) the FAP is the surrogate probability of reaching R >= 1, i.e. essentially the probability the surrogate yields only 2-3 events. The N=2 FAP is therefore a test of event RARITY under the null, not of period coherence."
+    },
+    "49.6": {
+      "baseline_days": 49.6,
+      "curve": {
+        "2": {
+          "p_R_ge_0.999": 0.7493333333333333,
+          "median_R": 1.0
+        },
+        "3": {
+          "p_R_ge_0.999": 0.3233333333333333,
+          "median_R": 0.9968599026376466
+        },
+        "4": {
+          "p_R_ge_0.999": 0.012666666666666666,
+          "median_R": 0.9704163894420044
+        },
+        "5": {
+          "p_R_ge_0.999": 0.0013333333333333333,
+          "median_R": 0.930686377862684
+        },
+        "6": {
+          "p_R_ge_0.999": 0.0,
+          "median_R": 0.885305433190057
+        },
+        "8": {
+          "p_R_ge_0.999": 0.0,
+          "median_R": 0.7871265226690334
+        },
+        "10": {
+          "p_R_ge_0.999": 0.0,
+          "median_R": 0.7178913202537598
+        },
+        "15": {
+          "p_R_ge_0.999": 0.0,
+          "median_R": 0.5981343414458791
+        }
+      },
+      "note": "With obs_R = 1 (the N=2 case) the FAP is the surrogate probability of reaching R >= 1, i.e. essentially the probability the surrogate yields only 2-3 events. The N=2 FAP is therefore a test of event RARITY under the null, not of period coherence."
+    }
+  },
+  "findings": {
+    "F1_degeneracy_exact": "For N=2 with spacing D, s(P)=0 for every P=D/m (m>=1, D/m>=p_min): an exact global tie. P_hat is unidentifiable; R is identified and saturates at 1.",
+    "F2_realized_convention_is_not_strictly_longest_P": "argmin resolves the tie by floating-point rounding of 1-R at the ~1e-16 level, not by a period preference. Even IN RANGE (D <= p_max, where P=D is a grid point and m=1 is reachable), m=1 is selected in only 74.2%-75.2% of draws; the rest land on sub-harmonics purely through float tie-breaking. The roadmap's 'argmin -> longest-P is the realized convention' is therefore approximately, not exactly, true, and is corrected here. The two strata are reported separately because their aggregate depends on the data-dependent spacing distribution.",
+    "F3_in_range_degeneracy_is_absorbed_by_the_sealed_tolerance": "recovery._period_match accepts m in {2,3} (flagged harmonic), which covers 98.1%-98.6% of in-range N=2 seeds; only 1.4%-1.9% leak to m>=4 and miss the sealed period predicate. Every such leak is a RECALL cost, never a false positive.",
+    "F3b_out_of_range_is_a_different_failure_entirely": "When D > p_max the true spacing lies outside the sealed search range, so no harmonic of D need fall on the grid: 99.3%-99.5% of these draws return a period that is not a harmonic of D at all, and R does NOT saturate (R_saturated_at_1 = [False, False]). This is a grid-RANGE limitation, not the tie-breaking degeneracy, and it presents to the FAP as an ordinary weak fold rather than as a perfect one.",
+    "F4_fap_validity": "The FAP compares R, which is invariant on the tie set, and the surrogates are scored by the identical degenerate procedure. The degeneracy therefore cannot inflate the false-alarm rate; it costs period accuracy only.",
+    "F5_what_the_N2_fap_actually_tests": "With obs_R saturated at 1, the N=2 FAP reduces to the null probability of a surrogate producing only 2-3 events -- a rarity test, not a coherence test.",
+    "F6_reproducibility_caveat": "Because the tie is broken by IEEE-754 rounding, the selected harmonic is deterministic for a given input and numpy build but is NOT guaranteed stable across architectures or numpy versions. Any future re-run should pin the convention explicitly (e.g. argmin over scores rounded to 1e-12, then longest P) rather than inherit float noise. Sealed Phase-I results are unaffected: they were produced once, on one build, and are preserved verbatim."
+  },
+  "machine": {
+    "platform": "macOS-26.5.2-arm64-arm-64bit",
+    "python": "3.11.9",
+    "numpy": "2.4.6"
+  },
+  "ran_at_utc": "2026-07-28T14:20:03.727522+00:00"
+}
