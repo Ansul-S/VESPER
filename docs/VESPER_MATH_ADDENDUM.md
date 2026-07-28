@@ -82,8 +82,103 @@ Because the tie is broken by floating-point rounding, the selected harmonic is d
 
 ---
 
+## B. MATH-7 — Notation cross-reference (MATH ↔ code ↔ paper)
+
+**Addresses:** roadmap MATH-7. Units are given in the unit column; "—" denotes dimensionless.
+
+### B.1 Signal and noise
+
+| MATH symbol | Meaning | Units | Code identifier | Module | Paper |
+|---|---|---|---|---|---|
+| $f(t)$ | observed flux series | normalized flux | `flux`, `1.0 + r` | `arms.arm_a_full` | — |
+| $r(t)$ | conditioned residual (transit = negative) | normalized flux | `r`, `resid` | `m1_pipeline`, cache `*.npz` | — |
+| $t$ | time stamps | d (BTJD) | `t`, `time` | all | — |
+| $\Delta t$ | cadence | d | `cad` | `detector`, `period_recovery` | — |
+| $N$ | number of cadences | count | `t.size`, `n_cadences` | — | — |
+| $\sigma$ | robust per-cadence noise scale ($1.4826\,$MAD) | normalized flux | `sigma`, `sigma_ppm` (×10⁶) | `m1_pipeline._noise_model` | — |
+| $\Sigma$ | noise covariance | flux² | `K`, `diag`, `sig_red` | `confirmer.estimate_kernel` | — |
+| $\tau_{\rm GP}$ | residual correlation timescale (ACF e-folding) | d | `tau_gp_days`, `tau` | `m1_pipeline._tau_gp` | — |
+| $\mathrm{CDPP}(T_{14})$ | precision on the duration timescale | ppm | `cdpp_{1.0,2.0,4.0}h_ppm` | `m1_pipeline._noise_model` | — |
+| — | residual lag-1 autocorrelation | — | `acf_lag1` | `m1_pipeline` | — |
+
+### B.2 Transit geometry
+
+| MATH symbol | Meaning | Units | Code identifier | Module | Paper |
+|---|---|---|---|---|---|
+| $\delta$ | fractional transit depth $(R_p/R_\star)^2$ | — | `depth`, `delta`, `delta_hat` | `injection`, `confirmer` | — |
+| $R_p$ | planet radius | R⊕ | `radius_rearth` | `recovery.csv` | $R_p$ |
+| $P$ | orbital period | d | `period`, `period_days`, `P` | everywhere | $P$ |
+| $\hat P$ | recovered/seeded period | d | `p_hat` | `period_recovery.best_period` | — |
+| $t_0$ | transit epoch | d (BTJD) | `t0` | `confirmer`, `arms` | — |
+| $T_{14}$ | first-to-fourth-contact duration | d | `t14`, `duration` | `injection`, `confirmer` | $T_{14}$ |
+| $n_{\rm in}$ | in-transit cadence count | count | `nin` | `confirmer.transit_lr_gp` | — |
+| $N_{\rm tr}$ | transits in baseline | count | `n_transits` | `recovery.csv`, `confirmer.n_transits` | $\lfloor T_{\rm base}/P\rfloor+1$ |
+| $T_{\rm base}$ | observing baseline | d | `baseline`, `baseline_days` | `m4_driver`, `arms._pmax` | $T_{\rm base}$ |
+| $u_1,u_2$ | quadratic limb-darkening coefficients | — | `u1`, `u2`, `STELLAR` | `injection.constant_ld` | — |
+
+### B.3 Detection and period recovery
+
+| MATH symbol | Meaning | Units | Code identifier | Module | Paper |
+|---|---|---|---|---|---|
+| $d(t_0)$ | box-averaged depth series | normalized flux | `depth` | `detector._box_depth_series` | — |
+| — | duration-timescale robust scatter | normalized flux | `scatter` | `detector.detect_events` | — |
+| $\mathrm{SNR}_1$ | single-event significance $d/\mathrm{scatter}$ | $\sigma$ | `snr`, `max_event_snr` | `detector` | — |
+| $z_\star$ | local-detection threshold | $\sigma$ | `z_star` | `FrozenThresholds` | $z_\star$ |
+| $z_{\rm mono}$ | monotransit routing threshold | $\sigma$ | `z_mono` | `FrozenThresholds` | — |
+| $k$ | number of detected events | count | `n_events`, `n_events_ge2` | `detector`, RES-4 | — |
+| $N_{\min}$ | minimum events to seed a period | count | `n_min` | `FrozenThresholds` | $N_{\min}$ |
+| $R$ | comb resultant length (fold quality) | — | `obs_R`, `R` | `period_recovery.best_period` | — |
+| $s(P)$ | fold score $1-R$ | — | (return of) `_fold_score` | `period_recovery` | — |
+| $N_P,N_d$ | period-, duration-grid sizes | count | `duration_grid_days`, grid len | `detector`, config | — |
+| $\varepsilon$ | period-recovery tolerance | — (fractional) | `epsilon` | `FrozenThresholds` | — |
+
+### B.4 FAP and confirmation
+
+| MATH symbol | Meaning | Units | Code identifier | Module | Paper |
+|---|---|---|---|---|---|
+| $\widehat{\mathrm{FAP}}$ | block-bootstrap period FAP | probability | `fap`, `period_fap` | `period_recovery.period_fap` | — |
+| $\alpha_{\rm FAP}$ | FAP gate ($\text{route iff }\mathrm{FAP}\le\alpha$) | probability | `alpha_fap` | `FrozenThresholds` | $\alpha_{\rm FAP}=0.01$ |
+| $B$ | bootstrap surrogate count | count | `B`, `n_surrogates` | `FrozenThresholds` | — |
+| $L_b$ | bootstrap block length $=3\max(\tau_{\rm GP},T_{14})$ | d | `L_b_days`, `block_len` | `period_recovery.period_fap` | — |
+| — | block-length multiple (sealed = 3) | — | `block_len_multiple` | `FrozenThresholds` | — |
+| $\Lambda$ | folded transit likelihood ratio | — ($\chi^2_1$ scale) | `lam`, `Lambda` | `confirmer.transit_lr_gp` | $\Lambda$ |
+| $T_{\rm red}$ | confirmer threshold (sealed $=0.0$) | — | `T_red` | v3 manifest | $T_{\rm red}$ |
+| $T$ | full-TLS SDE threshold | SDE | `T_sde` | `FrozenThresholds` | $\mathrm{SDE}\ge T$ |
+| — | TLS signal-detection efficiency | SDE | `sde` | `arms._run_tls` | SDE |
+| $k_\sigma$ | odd/even + secondary veto width | $\sigma$ | `k_sigma` (=3.0) | `confirmer` | — |
+
+### B.5 Endpoints and economics
+
+| MATH symbol | Meaning | Units | Code identifier | Module | Paper |
+|---|---|---|---|---|---|
+| $f$ | fraction routed to the fast path | — | `routed` (per-row) | `recovery.csv` | — |
+| $f_p$ | fast-path fraction among planet hosts | — | `f_p` | `endpoints` | $f_p$ |
+| $\rho$ | per-star fast-path cost ratio | — | `ratio` (context-dependent) | `endpoints` | $\rho$ |
+| $\rho_d$ | per-star detector overhead $C_{\rm det}/C_{\rm full}$ | — | `rho_d` | `endpoints` | $\rho_d$ |
+| $\pi$ | planet prevalence | — | `pi_hat` (=0.0317) | `FrozenThresholds` | $\pi\approx0.03$ |
+| $\pi^\star$ | break-even prevalence | — | `pi_star_breakeven` | `endpoints` | $\pi^\star$ |
+| $\overline{\Delta R}$ | occurrence-weighted recall difference | pp | `delta_R_bar` | `endpoints` | $\overline{\Delta R}$ |
+| $\delta_{\rm NI}$ | non-inferiority margin ($-2$ pp) | pp | `MARGIN` (=-0.02) | `res3_*`, `endpoints` | $-2$ |
+| $w_c$ | occurrence weight of cell $c$ | — | `w_c` | Seal #2 A.5 | — |
+| $\eta$ | transit-preservation factor (M2) | — | `eta` | M2 artifacts | $\eta\ge0.90$ |
+| $C_{\rm comb}/C_{\rm full}$ | compute ratio (E2 endpoint) | — | `ratio`, `reduction` | `endpoints` | $\ge30\%$ |
+
+### B.6 Known cross-reference discrepancy — $\pi^\star$ (open, tracked as MATH-1)
+
+The break-even prevalence appears in **three non-identical forms**:
+
+| Source | Form |
+|---|---|
+| Sealed MATH §8.3a | $\pi^\star=\rho_d/f_p$ |
+| Paper draft | $\pi^\star=\rho_d/\big(f_p(1-\rho)\big)$ |
+| Roadmap MATH-1 (exact) | $\pi^\star=\rho_d/\big(f_p(1-\rho+\rho_d)\big)$ |
+
+These agree to first order in $\rho,\rho_d$ but not exactly. **This addendum does not resolve the discrepancy** — reconciling the three, deriving the exact form, aligning `endpoints.py`, and pinning it with a unit test is roadmap task **MATH-1**, which is still open. It is recorded here so the inconsistency is not rediscovered as a surprise. Note the numerical impact is small at the reported operating point ($\rho_d\approx0.116$, $f_p\approx0.237$ → $\pi^\star\approx0.489$ under the sealed form) and does not affect the E2 verdict, which is decided on the measured compute ratio and its CI, not on $\pi^\star$.
+
+---
+
 ## Change log
 
 | Date | Change |
 |---|---|
-| 2026-07-28 | Created. §A MATH-6 (comb identifiability at $N=2$). |
+| 2026-07-28 | Created. §A MATH-6 (comb identifiability at $N=2$); §B MATH-7 (notation cross-reference); §B.6 records the open $\pi^\star$ discrepancy for MATH-1. |
