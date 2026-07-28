@@ -10,7 +10,8 @@
 - **Wave-2 checklist (2026-07-28, PR #21):** MATH-1 ☑ (π⋆ = ρ_d/(f_p(1−ρ)) derived; roadmap's "exact form" rejected) · MATH-5 ☑ (BCa lo95 −1.04 pp vs percentile −0.83 pp; E1 unchanged) · MATH-6 ☑ (N=2 comb degeneracy proven+measured) · MATH-7 ☑ (notation cross-reference). **Open:** MATH-2, MATH-3, MATH-4, MATH-8.
 - **Wave-3 / Wave-4 partial:** CODE-7 ☑ (cluster bootstrap vectorized, bit-exact) · DOC-2 ☑ (`docs/INDEX.md`) · DOC-3 ☑ (`docs/SEAL_CHAIN_POSTMORTEM.md`).
 - **Hackathon track DISCONTINUED** (owner 2026-07-27); `hackathon/` kept in place as history.
-- Next: **RES-6** (η-paid injection; needs MAST) + the small **TLS-epoch re-run**, then the rest of Waves 2 (math) + 3 (engineering) in parallel. Phase II hard-gated until DR-004.
+- **⚠️ OPEN DECISION (2026-07-28, not decided):** project scope + paper framing — finish in ~2 weeks and cut Waves 3/6, reframing around the methodology (INN-1) rather than the routing result? Settle first. See `Current_Mission.md` and `SESSION_HANDOFF_2026-07-28.md` §6. **The roadmap stands as written until ruled on.**
+- Next: settle the scope decision, then **RES-6** (η-paid injection; needs MAST) + the small **TLS-epoch re-run**. PR #22 (doc-only sync) open. Phase II hard-gated until DR-004.
 
 ## ▶ 2026-07-20: Phase II re-scoped (bound · benchmark · monotransit); repo pushed + draft PR open
 

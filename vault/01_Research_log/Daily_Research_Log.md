@@ -704,8 +704,15 @@ Problems:
 - Two self-caught errors, both fixed before shipping: (1) the first RES-4 draft imported the **live** detector, which carries the 2026-07-19 gap-aware fix and does *not* reproduce sealed FAPs → switched to `frozen_rerun/`; (2) the sealed-fidelity check compared arm A everywhere and reported a spurious 967/968 → made arm-aware, giving **968/968 bitwise**, and the generated conclusion now degrades to an explicit failure statement if reproduction is ever incomplete.
 - RES-4 originally held all results in memory (the paused-E2-campaign failure mode) → stopped and relaunched with an append-only resume ledger.
 
+Questions:
+- **⚠️ OPEN, STRATEGIC (raised at session end, NOT decided).** Owner reported feeling overwhelmed and asked directly whether the project is worth continuing. Assistant's recommendation: finish Phase I in ~2 weeks (RES-6 → paper → submit), **cut ROADMAP_TO_10 Waves 3 and 6** as engineering polish that changes no number in the paper, don't start Phase II on momentum, and **reframe the paper around the methodology** (sealed single-shot validation with pre-committed verdicts — demonstrated by the protocol forcing withdrawal of the project's own headline verdict) with the routing result as the case study rather than the point. That is roadmap INN-1, currently last in Wave 6.
+- Honest framing recorded alongside it: the original hypothesis is effectively dead on arithmetic (π⋆ ≈ 0.49 vs π ≈ 0.03), and E1's pass is partly structural (erratum §2.8). Neither is new information — both were already in the repo — but they had not been stated together as a scope judgement.
+- **Nothing was decided.** The roadmap stands as written until the owner rules. If accepted → DR-005 + roadmap amendment.
+
 Next Action:
-- **RES-6** (η-paid injection sub-study; MAST needed, `data/raw` empty) + the small **TLS-epoch re-run**; then Waves 2 + 3 in parallel. Phase II hard-gated until DR-004.
+- **Settle the scope decision above first** — it determines everything else. Then **RES-6** (η-paid injection; MAST needed, `data/raw` empty) + the small **TLS-epoch re-run**. PR #22 (doc-only sync) open and unmerged. Phase II hard-gated until DR-004.
+
+**Session close (2026-07-28):** PR #21 merged (RES-4 + MATH-1/5/6/7 + CODE-7 + DOC-2/3); `main` @ `77037d4`, clean, CI green. PR #22 open. No compute running; seals re-verified post-merge (0 non-branding diff lines vs `phase1-prereg-v3`). Handoff: `archive/session_handoffs/SESSION_HANDOFF_2026-07-28.md`. **One significant open decision carried forward (scope + paper framing).**
 
 ---
 

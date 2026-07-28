@@ -19,7 +19,18 @@
 - **Wave 4 — DOC-2** (`docs/INDEX.md`: every doc labeled SEALED/APPEND-ONLY/LIVE/HISTORICAL + reviewer and contributor reading paths) and **DOC-3** (`docs/SEAL_CHAIN_POSTMORTEM.md`: the 19-day rebrand break, for an external audience).
 - Anti-tuning intact: **no sealed doc, threshold, manifest, or tag touched; `frozen_rerun/` untouched; TEST not read.** `verify_seal()` re-checked post-merge → z⋆=3.4 · z_mono=5.3 · N_min=2 · T=10.741 · α=0.01 · B=1000.
 
-**Next action:** the two remaining Wave-1 compute tasks — **RES-6** (η-paid injection sub-study; needs MAST, `data/raw` is empty) and the small **TLS-epoch re-run** (unlocks RES-3's symmetric sweep + the S-edge T₀ histogram) — then the rest of Waves 2 + 3 in parallel. Phase II hard-gated until DR-004.
+### ⚠️ OPEN DECISION carried into 2026-07-29 — project scope and the shape of the paper
+
+**Status: DISCUSSED, NOT DECIDED.** The owner asked directly whether the project is worth continuing. The assistant's recommendation — *offered, not accepted or rejected*:
+
+1. **Finish Phase I in ~2 weeks**, not 9–10. RES-6 is the last real scientific gap (absolute recall is optimistic: neither arm paid the conditioning cost η). Then fix the paper and submit. The work is ~90% done; abandoning now converts it to zero output.
+2. **Cut `ROADMAP_TO_10.md` Waves 3 and 6** — package, CLI, container, API docs, seal library. None of it changes a number in the paper; it optimizes an invented ten-category scorecard rather than a deliverable.
+3. **Do not start Phase II on momentum** — decide it separately, after submission.
+4. **Reframe the paper.** The routing result is thin alone (π⋆ ≈ 0.49 vs π ≈ 0.03 is near a-priori derivable, and a referee may say so). The stronger contribution is the **methodology**: sealed single-shot validation with pre-committed verdicts, demonstrated by a case where the protocol *forced the authors to withdraw their own headline verdict* (E2 FAIL → INCONCLUSIVE), plus the 40-vs-80 host bug and the 19-day seal-chain break — all self-found and published. This is roadmap **INN-1**, currently scheduled last in Wave 6; the recommendation is to promote it to the **primary deliverable**.
+
+**Settle this first tomorrow.** If accepted → record as **DR-005** (DR-004 stays reserved for the Phase-II gate) + amend `ROADMAP_TO_10.md`. Until then **the roadmap stands as written**. Full text: `archive/session_handoffs/SESSION_HANDOFF_2026-07-28.md` §6.
+
+**Next action:** settle the scope decision above; then **RES-6** (η-paid injection; needs MAST, `data/raw` is empty) + the small **TLS-epoch re-run** (unlocks RES-3's symmetric sweep + the S-edge T₀ histogram). PR #22 (doc-only sync) is open and unmerged. Phase II hard-gated until DR-004.
 
 ## ▶ Latest event (2026-07-27): E2 RE-MEASUREMENT COMPLETE → verdict INCONCLUSIVE; Wave-0 V-1→V-4 done
 
