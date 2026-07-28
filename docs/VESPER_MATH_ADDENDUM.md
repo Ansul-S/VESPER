@@ -230,9 +230,38 @@ No. $\pi^\star$ is a **descriptive secondary endpoint** (H1b-survey); the E2 ver
 
 ---
 
+## D. MATH-5 — BCa host-cluster interval for E1
+
+**Artifact:** [`data/manifests/m4/wave2/math5_bca_cluster_ci.json`](../data/manifests/m4/wave2/math5_bca_cluster_ci.json) · [`.md`](../data/manifests/m4/wave2/math5_bca_cluster_ci.md)
+**Script:** [`research/m4_evaluation/math5_bca_cluster_ci.py`](../research/m4_evaluation/math5_bca_cluster_ci.py)
+**Addresses:** audit §3.5 (40-cluster percentile CI roughness); roadmap MATH-5.
+
+E1's sealed endpoint is a one-sided 95% lower bound on $\overline{\Delta R}$, taken as the 5th percentile of a host-clustered bootstrap. The percentile interval is only first-order accurate: it assumes the bootstrap distribution is median-unbiased and free of skewness drift. With ~40 clusters and a weighted ratio of correlated proportions, neither is guaranteed. BCa corrects both — median bias via $z_0$, skewness via an acceleration $a$ from a leave-one-**host**-out jackknife.
+
+| Quantity | Value |
+|---|---|
+| Point estimate $\overline{\Delta R}$ | **−0.48 pp** (bit-exact against `endpoints.e1_recall`) |
+| One-sided 95% lower bound — percentile (**sealed endpoint**) | **−0.83 pp** |
+| One-sided 95% lower bound — **BCa** | **−1.04 pp** |
+| Difference (BCa − percentile) | −0.21 pp |
+| Sealed margin | −2 pp |
+| $z_0$ / $a$ | −0.127 / −0.133 |
+| Effective lower-tail probability | 0.0072 (vs 0.05 nominal) |
+
+*(15,000 eligible injections, 40 hosts, 30 cells, $B=20{,}000$, seed 20260616)*
+
+**Reading.** The negative acceleration is not negligible: BCa places the bound at the 0.72nd percentile rather than the 5th, i.e. **the sealed percentile interval is somewhat optimistic**. But the correction is 0.21 pp against a 2 pp margin, so **both bounds clear it comfortably and the E1 non-inferiority conclusion is unchanged** under second-order-accurate inference. The pre-registered decision rule is not re-decided here; BCa is reported alongside, per MATH-5.
+
+**Small-cluster caveat.** $a$ is a third-moment estimate from 40 jackknife values and is itself noisy; a cluster bootstrap with $\lesssim50$ units tends to under-cover regardless of interval method. The honest statement is that *both* bounds sit well inside the margin — not that either is exact to the last decimal.
+
+**Side effect (roadmap CODE-7).** The bootstrap is vectorized: each (host, cell) is reduced once to counts and success sums, so a replicate is two matrix products instead of a `pd.concat`. This is exact rather than approximate — verified bit-exact against `endpoints.e1_recall` — and makes $B=20{,}000$ cheaper than the sealed $B=1{,}000$ loop.
+
+---
+
 ## Change log
 
 | Date | Change |
 |---|---|
 | 2026-07-28 | Created. §A MATH-6 (comb identifiability at $N=2$); §B MATH-7 (notation cross-reference). |
 | 2026-07-28 | §C MATH-1 — $\pi^\star$ derived. Code and paper confirmed correct ($\rho_d/(f_p(1-\rho))$); the roadmap's "exact form" rejected as inconsistent with its own cost premise; §B.6 now points here. |
+| 2026-07-28 | §D MATH-5 — BCa host-cluster interval for E1: −1.04 pp vs the sealed percentile −0.83 pp; both inside the −2 pp margin, conclusion unchanged. Bootstrap vectorized (CODE-7), bit-exact against `endpoints.e1_recall`. |

@@ -1,0 +1,46 @@
+{
+  "task": "MATH-5 BCa host-cluster interval for E1 (Wave 2)",
+  "roadmap_id": "MATH-5",
+  "scope": "Robustness check reported ALONGSIDE the sealed percentile bound. The pre-registered E1 decision rule is unchanged and is not re-decided here.",
+  "inputs": {
+    "recovery": "data/manifests/m4/test_run/recovery.csv",
+    "w_c": "Seal #2 A.5",
+    "margin_pp": -2.0,
+    "alpha_one_sided": 0.05,
+    "B": 20000,
+    "seed": 20260616
+  },
+  "sample": {
+    "n_injections_eligible": 15000,
+    "n_hosts": 40,
+    "n_cells": 30,
+    "injections_per_host_median": 375.0
+  },
+  "point_estimate_pp": -0.47950414050046025,
+  "percentile": {
+    "lo95_one_sided_pp": -0.8332910948105945,
+    "pass": true
+  },
+  "bca": {
+    "z0": -0.1273037403805909,
+    "acceleration_a": -0.13307856814777722,
+    "effective_alpha": 0.007214858452997766,
+    "lo95_one_sided_pp": -1.0431768908283856,
+    "pass": true
+  },
+  "difference_pp": -0.2098857960177912,
+  "bootstrap_distribution": {
+    "mean_pp": -0.48078699758851784,
+    "median_pp": -0.45893260476671094,
+    "sd_pp": 0.18745854918806157,
+    "skew_proxy_z0": -0.1273037403805909
+  },
+  "small_cluster_caveat": "The acceleration is estimated from a leave-one-out jackknife over only 40 host clusters. With that few units the third-moment estimate is itself noisy, so BCa's correction is indicative rather than definitive; it is reported as a robustness check, not as a replacement for the sealed percentile endpoint. A cluster bootstrap with <~50 units is known to under-cover somewhat regardless of the interval method \u2014 the honest reading is that both bounds sit well inside the -2 pp margin, not that either is exact to the last decimal.",
+  "machine": {
+    "platform": "macOS-26.5.2-arm64-arm-64bit",
+    "python": "3.11.9",
+    "numpy": "2.4.6"
+  },
+  "ran_at_utc": "2026-07-28T14:43:27.315393+00:00",
+  "conclusion": "E1 point estimate -0.48 pp. One-sided 95% lower bound: -0.83 pp (percentile) vs -1.04 pp (BCa), a difference of -0.21 pp. Both are above the sealed -2 pp margin, so the E1 non-inferiority conclusion is unchanged under second-order-accurate inference."
+}
