@@ -60,7 +60,7 @@ Addresses audit §3.5, §3.6, §4-missing, §9-risks 1–2. All analyses run on 
 | RES-6 | **η-paid injection sub-study** (calibration only): raw-mode injection + recondition for ~200 injections across 4 cells; measure absolute-recall optimism of `cached_residual` directly | V-5 | 1–2 d (network+compute) | Measured Δ(absolute recall) with CI; cited wherever absolute figures appear |
 | RES-7 | Monotransit campaign **design** (pre-registered protocol doc; execution = Phase II) | — | 0.5 d | Design doc with grid, endpoints, power analysis; no data touched |
 | RES-8 | Endpoint-disclosure section: precision was not an endpoint; FP control = calibrated FAR; M6 EB-leakage quantified as the precision proxy | — | 2 h | Paper §2 states it; no reviewer can claim it was hidden |
-| PUB-6 | **Public reconciliation**: v1.0.1 release notes correcting the verdict line; README badge/status; hackathon-status note in repo (deck itself is submitted history — annotate, don't rewrite) | V-5 | 0.5 d | No public VESPER surface states the withdrawn verdict as current |
+| PUB-6 | **Public reconciliation**: v1.0.1 release notes correcting the verdict line; README badge/status | V-5 | 0.5 d | No public VESPER surface states the withdrawn verdict as current |
 
 **Exit gate:** every decision-bearing number has a sensitivity row; repo truth == public truth.
 
@@ -96,7 +96,6 @@ Addresses audit §2-weaknesses, §5-debt 1–6, §9-risk 3.
 | ARCH-1 | **`vesper_core` package**: pyproject.toml, `pip install -e .`; live modules move to `src/vesper_core/{conditioning,detect,period,confirm,inject,endpoints,seals}`; research scripts become thin callers | ENG-1 | 3 d | All entry points import from the package; no `sys.path.insert` outside frozen loading; editable install in CI |
 | ARCH-2 | **Frozen-code-as-data**: load `frozen_rerun` modules via `importlib` with recorded SHA-256 per file, verified at load (extends the seal pattern to code) | ARCH-1 | 1 d | `load_frozen_module("detector")` verifies digest; path shadowing eliminated |
 | ARCH-3 | Typed stage interfaces: dataclasses for `LightCurve`, `EventSet`, `Seed`, `GateResult`, `ArmResult` with units in docstrings | ARCH-1 | 1 d | mypy clean on the package; interfaces documented |
-| ARCH-4 | `hackathon/README.md`: provenance note (no shared code with sealed pipeline; deck predates DR-003 — see PUB-6 note) | — | 0.5 h | Present |
 | ARCH-5 | Config/paths: single `vesper_core.config` (repo-root discovery, env override); kill all hardcoded `data/...` literals (6 files); centralize orphan constants (stride_frac 0.5, dedup 0.3 d, Λ_sec 25, k_σ 3.0) with provenance comments | ARCH-1 | 1 d | `grep -rn "data/processed\|data/manifests" src/ research/*.py` → only config module; constants have one home |
 | CODE-1 | **Confirmer tests**: GLS δ̂/Λ vs analytic OLS on white noise (K=σ²I limit); sign-veto; odd/even both error models; secondary threshold; batman-absent trapezoid path | ARCH-1 | 1 d | ≥12 cases; branch coverage of `confirmer.py` ≥90% |
 | CODE-2 | **Period/FAP tests**: comb statistic exact on synthetic combs (R̄=1); degeneracy convention pinned; FAP uniformity on white noise (distributional test, B small, seeded); block-bootstrap length logic | ARCH-1 | 1 d | FAP p-values ~U(0,1) at n=200 (KS α=0.01); deterministic under seed |

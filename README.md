@@ -93,7 +93,6 @@ The original Kepler routing-scaling sketch is superseded and archived on its bra
 | `data/manifests/` | Sealed manifests, thresholds, and the single-test artifacts (tracked); light-curve caches are gitignored |
 | `papers/` | Manuscript draft |
 | `tests/` | Fast unit tests (run in CI) |
-| `hackathon/` | BAH 2026 PS7 track — **DISCONTINUED 2026-07-27** (round-1 submission history; not pursued further) |
 | `archive/` | Prior-project audit (historical; do not modify) |
 | `vault/` | Obsidian research memory (mirrors the repo; repo is authoritative) |
 
