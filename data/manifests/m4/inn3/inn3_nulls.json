@@ -1,0 +1,32 @@
+{
+  "task": "INN-3 exact accelerated period-FAP \u2014 calibration nulls",
+  "reference": "data/manifests/m4/wave1/res4_per_star.csv arm A, T14=0.2 d (L_b=0.6 d)",
+  "identity_metric": "exceedance count ge = FAP*(B+1)-1 (CSV-roundtrip-safe)",
+  "n_stars": 1126,
+  "ge_identical_to_sealed_record": 1126,
+  "ge_max_abs_diff": 0,
+  "gate_identical_full_B": 1126,
+  "gate_identical_curtailed": 1126,
+  "n_gate_open": 27,
+  "n_curtailed": 1099,
+  "surrogates_used_mean": 66.25044404973357,
+  "surrogates_used_median": 23.0,
+  "cpu_mean_s": {
+    "leverA_full_B": 2.4845140630550637,
+    "leverAB_curtailed": 0.16889897246891622
+  },
+  "sealed_reference_subset": {
+    "n": 60,
+    "ge_identical_live_rerun": 60,
+    "cpu_mean_s_sealed": 14.272370833333333,
+    "speedup_leverA": 6.311329844277854,
+    "speedup_leverA_plus_B": 73.24828437852742
+  },
+  "machine": {
+    "platform": "macOS-26.6-arm64-arm-64bit",
+    "python": "3.11.9",
+    "numpy": "2.4.6",
+    "workers": 6,
+    "ran_at_utc": "2026-08-17T07:37:35.070626+00:00"
+  }
+}

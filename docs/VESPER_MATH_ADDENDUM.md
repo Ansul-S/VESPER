@@ -258,6 +258,61 @@ E1's sealed endpoint is a one-sided 95% lower bound on $\overline{\Delta R}$, ta
 
 ---
 
+## E. INN-3 — The period-FAP is exactly curtailable, and its cost is an implementation artifact
+
+**Artifacts:** [`data/manifests/m4/inn3/`](../data/manifests/m4/inn3/)
+**Scripts:** [`research/m4_evaluation/fast_period_fap.py`](../research/m4_evaluation/fast_period_fap.py) · [`inn3_fap_acceleration.py`](../research/m4_evaluation/inn3_fap_acceleration.py)
+**Result record:** [`research/m4_evaluation/INN3_FAP_ACCELERATION.md`](../research/m4_evaluation/INN3_FAP_ACCELERATION.md)
+**Addresses:** roadmap INN-3; DR-002 §2.3a (Lever-1b, dropped); MATH §9.1a (equivalence-gated estimator substitution).
+
+MATH §9.1a admits a cheaper estimator of $\widehat{\rm FAP}$ **provided it is numerically equivalent to the $B\ge1000$ block-bootstrap reference**. Both pre-registered candidates (E-EVT, E-LUT) failed that gate on all three criteria, and the project recorded the $B=1000$ entry tax as un-removable. This section shows the tax is removable *without any substitution at all*: at full $B$ the accelerated estimator returns the identical float, and the only genuine statistical statement needed is the curtailment proposition below.
+
+### E.1 The gate is a Bernoulli test with an integer boundary
+
+The sealed statistic is the Laplace-smoothed exceedance proportion
+
+$$\widehat{\rm FAP} = \frac{g_e+1}{B+1},\qquad g_e=\sum_{b=1}^{B}\mathbb{1}\!\left[\hat R^{(b)}\ge \hat R_{\rm obs}\right],$$
+
+and the routing gate is $\widehat{\rm FAP}\le\alpha_{\rm FAP}$. Because $g_e\in\mathbb{Z}_{\ge0}$, the gate is *exactly* the integer inequality
+
+$$\boxed{\ g_e \;\le\; g^\star-1,\qquad g^\star \;=\; \big\lfloor \alpha_{\rm FAP}\,(B+1)-1 \big\rfloor + 1\ }$$
+
+For the Seal #2 values $\alpha_{\rm FAP}=0.01$, $B=1000$: $g^\star=10$, i.e. **the gate opens iff at most 9 of the 1000 surrogates reach $\hat R_{\rm obs}$.**
+
+### E.2 Curtailment proposition
+
+> **Proposition (exact curtailment).** Let $g_e(b)$ be the exceedance count after $b$ surrogates. If $g_e(b)=g^\star$ for some $b\le B$, then $\widehat{\rm FAP}>\alpha_{\rm FAP}$ for the full run, whatever the remaining $B-b$ surrogates produce.
+>
+> *Proof.* $g_e$ is non-decreasing in $b$, so $g_e(B)\ge g_e(b)=g^\star$, hence $\widehat{\rm FAP}=(g_e(B)+1)/(B+1)\ge(g^\star+1)/(B+1)>\alpha_{\rm FAP}$ by E.1. $\square$
+
+Three consequences.
+
+1. **Decision-identity with probability one.** Stopping at the $g^\star$-th exceedance is curtailed sampling, not sequential testing: there is no error probability to bound, no stopping boundary to calibrate, no Gandy-style resampling risk. The gate decision equals the full-$B$ decision on every realisation.
+2. **One-sidedness $\Rightarrow$ recall safety by construction.** Curtailment can only terminate a run whose gate is *already* shut; it can never open a gate that the full run would close. Under the prime directive's asymmetry (a false positive is acceptable; a missed planet is not) the error it cannot make is the one that matters. Lever-1b criterion (iii) — "0 recoveries clipped" — is therefore a theorem here, not a measurement (it is measured anyway).
+3. **The reported FAP becomes a certified bound.** A curtailed run knows $\widehat{\rm FAP}\ge(g^\star+1)/(B+1)$ but not its exact value. Runs must record `curtailed=True`; any analysis that uses the FAP *value* (rather than the gate) must re-run uncurtailed. Nothing in the sealed pipeline does — `m4_driver.py:171,309` compare only against $\alpha_{\rm FAP}$.
+
+**Cost.** With per-surrogate exceedance probability $p$, the stopping time is negative-binomial and
+
+$$\mathbb{E}\big[\min(B,T_{g^\star})\big]=\sum_{n=0}^{B-1}F_{\rm Bin}\!\left(g^\star-1;\,n,\,p\right)\ \le\ \min\!\left(B,\ \tfrac{g^\star}{p}\right).$$
+
+On the 1126 cached calibration nulls the sealed FAPs give median $g_e=423$, i.e. $p\approx0.42$ and $\mathbb{E}[\cdot]\approx24$; the **measured** mean is 66.3 surrogates of 1000 against a predicted 67.9 — the negative-binomial model is accurate to 2%. Curtailment is worth $\sim$15× on nulls and $\sim$2.7× on fast-path-eligible injections, and the asymmetry is structural: a null's own comb is easy for its own surrogates to beat, a planet's is not.
+
+### E.3 The rest is not statistics
+
+At full $B$ the accelerated estimator is bit-identical to the sealed one, so no statistical claim is required for lever A at all. What it removes is arithmetic that never depended on the resampled series: the sealed `detect_events` recomputes $\mathrm{median}(\mathrm{diff}(\mathrm{sort}(t)))$ twice per duration per surrogate — **10,000 sorts of an $N$-vector per star, 49% of the entire FAP cost** — although the block bootstrap resamples the flux residual and leaves $t$ untouched. Measured: 14.26 → 2.40 CPU-s per star (6.31×), and 1126/1126 exceedance counts identical to the sealed record.
+
+Two float64 details are load-bearing and are preserved rather than simplified:
+* $\hat R = 1-\min_P(1-R(P))$ is **not** replaced by $\max_P R(P)$; for $R\to1$, $1-(1-x)\ne x$;
+* the $(n_f\times k)$ comb reduction is bit-identical to the per-frequency 1-D reduction only because numpy applies the same pairwise summation along the contiguous axis — asserted in the test suite rather than assumed.
+
+### E.4 What it implies for the compute endpoints
+
+Re-running the E2 arithmetic on the recorded ledger (counterfactual; TEST unread) moves the point estimate from a 27.3% to a **38.0%** compute reduction, $\rho_d$ from 11.6% to **0.85%**, and $\pi^\star$ from **0.489 to 0.036** — from $\sim16\times$ the TESS transiting-planet prevalence to $\sim1.2\times$. The frozen-rule *decision* nevertheless stays INCONCLUSIVE, and setting the routing cost to exactly zero shows why: the host-clustered CI is then [0.522, 0.703], still straddling 0.70.
+
+> **E2's INCONCLUSIVE is a variance result, not a cost result.** The binding constraint at the decision boundary is between-host variance at $n=39$ clusters, not the estimator, not $B$, and not the period-FAP. The entry tax is what made $\pi^\star$ hopeless and held the point estimate under target; it is not what made the interval wide.
+
+---
+
 ## Change log
 
 | Date | Change |
@@ -265,3 +320,4 @@ E1's sealed endpoint is a one-sided 95% lower bound on $\overline{\Delta R}$, ta
 | 2026-07-28 | Created. §A MATH-6 (comb identifiability at $N=2$); §B MATH-7 (notation cross-reference). |
 | 2026-07-28 | §C MATH-1 — $\pi^\star$ derived. Code and paper confirmed correct ($\rho_d/(f_p(1-\rho))$); the roadmap's "exact form" rejected as inconsistent with its own cost premise; §B.6 now points here. |
 | 2026-07-28 | §D MATH-5 — BCa host-cluster interval for E1: −1.04 pp vs the sealed percentile −0.83 pp; both inside the −2 pp margin, conclusion unchanged. Bootstrap vectorized (CODE-7), bit-exact against `endpoints.e1_recall`. |
+| 2026-08-17 | §E INN-3 — the period-FAP gate is exactly curtailable ($g_e\le9$ at Seal #2), and 49% of its cost was a loop invariant. Bit-identical on 1126/1126 calibration nulls; 73× on nulls, 6.31× at full $B$. Counterfactual E2: reduction 27.3% → 38.0%, $\pi^\star$ 0.489 → 0.036, decision still INCONCLUSIVE because the binding constraint is host-cluster variance, not cost. Sealed verdict unchanged. |
