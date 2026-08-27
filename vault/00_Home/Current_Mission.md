@@ -1,6 +1,51 @@
 # Current Mission
 
-> **AUTHORITATIVE CURRENT STATE — updated 2026-07-28.** The detailed fields below this block are **Phase-I historical record** (kept for provenance); read this block first.
+> **AUTHORITATIVE CURRENT STATE — updated 2026-08-27.** The detailed fields below this block are **Phase-I historical record** (kept for provenance); read this block first.
+
+## ▶ Latest event (2026-08-27): MATHEMATICAL AUDIT — the routing ceiling
+
+**Local, uncommitted. Calibration only (TEST not read, P-5 intact). Nothing sealed touched; all three sealed docs verified 0 differing lines vs `phase1-prereg-v3` (branding-normalised); Seal #2 hash matches DR-001 §5a; `frozen_rerun/` clean.**
+
+Report: [`research/math_audit/MATHEMATICAL_AUDIT_2026-08-27.md`](../../research/math_audit/MATHEMATICAL_AUDIT_2026-08-27.md) · artifacts `data/manifests/math_audit/` · code `research/math_audit/` (5 scripts).
+
+**The headline is a closed-form negative result.** Evidence-first period recovery gated on coherence significance obeys
+
+$$W \equiv k\hat R^2 \ge \ln(N_{\rm eff}/\alpha),\qquad W \le \frac{N_{\rm tr}}{1+\rho_{\rm FP}} \;\Longrightarrow\; P \lesssim \frac{T_{\rm base}}{\ln(N_{\rm eff}/\alpha)}$$
+
+Every tunable enters **logarithmically**; only the transit count enters linearly. Validated three ways and it survives a deliberate falsification attempt:
+
+- Zero-free-parameter prediction of the sealed gate on 1,233 calibration nulls at **precision 87.5% / recall 75.7%** (TP 28 / FP 4 / FN 9 / TN 1192).
+- **Out-of-sample scaling:** predicted $P_{\max}$ 2.94 d (1-sector) / 5.80 d (2-sector); measured $P_{50}$ **2.51 / 5.00 d**; predicted ratio 1.97, measured **1.99**. At $P=4$ d: 8.3% routing on 1-sector hosts vs 63.6% on 2-sector — identical planets, identical pipeline.
+- **Mechanism:** at $P\ge8$ d, $\Pr(\text{gate open}\mid\text{seed correct}) = 0.20$ and $0.00$. Not a seeding failure — the significance budget.
+- **Falsification failed:** sweeping $T_\beta = \hat R k^\beta$ at matched null FAR gains at most **+1.49 pp**; the *exactly pivotal* statistic **loses 10.31 pp**. The multiplicity dependence is the evidence, not a defect.
+
+**Two corollaries settle what Phase I tested.** (1) **Subset region** — fast-path eligibility implies $\mathrm{SNR}_{\rm tot}\gtrsim10.2$ vs the sealed TLS $T=10.74$; measured, excluding the known $P=0.5$ d edge artifact, **17/17** fast-path recoveries were also found by full TLS and **0** were fast-path-only. E1's PASS was structurally guaranteed, and this is *why*. (2) The paradigm works only where transits are frequent — i.e. where a periodic search is already easy. The one regime it could add coverage in is monotransit ($N_{\rm tr}=1$), where no coherence test exists.
+
+**Six further measured findings** — period-FAP is **82%** a multiplicity statistic; $\Lambda$'s null exceeds $\chi^2_1$ by up to 21 orders of magnitude in tail probability (**roadmap MATH-4 closed**); residuals are **red on transit timescales** ($\kappa$ to 9.0) while certified white from $\mathrm{acf}_1$; **79% of fast-path routings exist only because the bootstrap null is contaminated by the signal it tests** (**roadmap MATH-3 closed, its assumed direction reversed**); MATH §4b's fragility is linear not quadratic; MATH §9's "identical grid" premise is false in code and that deviation is what keeps $N_{\min}=2$ survivable (implementing the spec as written takes null FAR 2.99% → 4.37%).
+
+**Sealed verdict UNCHANGED:** E1 PASS · E2 INCONCLUSIVE. FAR control intact (1.06% at nominal 1% on the cleaned pool).
+
+**Owner decisions now open:** (1) does the ceiling become the paper's central result (it is the strongest defensible novel content and generalises beyond VESPER); (2) should $f_p$ be re-measured against a signal-free null before the paper quotes it; (3) do §C-1/§C-2/§C-3 go into `VESPER_MATH_ADDENDUM.md` as corrections of record. **The 2026-07-28 scope decision remains open and still first in line — this audit strengthens the methodology-reframing case.**
+
+## ▶ Latest event (2026-08-17): INN-3 — the period-FAP entry tax is removable, **exactly**
+
+**Branch `phase1/inn3-fap-acceleration` (local, not pushed). Nothing sealed touched; TEST not re-read.**
+
+The blocker on the compute branch was the $B=1000$ period-FAP "entry tax" ($\rho_d = 11.6\%$), which DR-002/Lever-1b recorded as **not a removable artifact** after E-EVT and E-LUT both failed the equivalence gate 3/3. That verdict is right about the *estimator* and wrong about its *cost*. Both candidates tried to approximate the null distribution; the tax was never in the distribution.
+
+- **Lever A — 49% of the FAP's cost was a loop invariant.** `detector.py:26,55` recompute `np.median(np.diff(np.sort(t)))` twice per duration per surrogate — **10,000 full sorts of an N-vector per star** — while the block bootstrap resamples the *flux*, not the epochs. Hoisting it + vectorising the local-max scan, the dedup (bucketed, identical greedy semantics) and the comb scan (one $(n_f\times k)$ matrix) gives **6.31×** with **bit-identical** output.
+- **Lever B — the gate is exactly curtailable.** $(g_e+1)/1001 \le 0.01 \iff g_e \le 9$, so the **tenth exceedance decides the gate** and the run can stop. Curtailed sampling: the routing decision is identical *with probability one* (no error to bound), and one-sided, so it can never clip a planet. Total **73.2× on nulls**, 12.7× on injections.
+- **Measured equivalence.** 1126/1126 calibration nulls reproduce the sealed recorded exceedance count (max |Δ| = 0); 149/149 calibration injections reproduce the sealed FAP bitwise. All three sealed Lever-1b criteria met with **exact zeros** (p95 |ΔFAP| 0.000; 0 discordant; 0 clipped; 0 FPs admitted) — the criteria E-EVT and E-LUT each failed 3/3.
+- **E2 counterfactual** (arithmetic on the recorded ledger + `recovery.csv`; **no TEST re-read**): reduction **27.3% → 38.0%** (target ≥30%), $\rho_d$ **11.6% → 0.85%**, $\pi^\star$ **0.489 → 0.036** (≈16× → ≈1.2× the TESS $\pi\approx0.03$), $P(\text{ratio}\le0.70)$ **0.27 → 0.96**.
+- **⚠️ But the frozen-rule decision stays INCONCLUSIVE — and *that* is the second finding.** With the routing cost set to **exactly zero** the host-clustered CI is still [0.522, **0.703**]. **E2's INCONCLUSIVE is a variance result, not a cost result:** between-host variance at $H=39$ clusters. The two causes are separable and both were necessary — the entry tax put the point estimate out of reach at *any* host count (sealed numbers stay INCONCLUSIVE even at $H=100$), and the erratum §2.1 parity bug (40 of 80 hosts drawn, 39 in the E2 subset) made the interval too wide at *any* cost. **Fix both and E2 PASSES at $H=79$ — the host count `m4_driver` was written to use.** Hosts needed: 49 (lever A+B), 65 (lever A), 41 (free detector), **never** (as recorded).
+- **Side finding — RES-4 measured the wrong stratum for the M4 arm.** `m4_driver.py:117` sets `t14 = median(duration_grid)` but **line 120 overwrites it** with the seeded event's own duration before the FAP call on line 126 (`e2_retiming.py:67` replicates this; `m3_calibrate` genuinely uses 0.2 d). So M4 **duration-matched** $T_{14}$ — RES-4's "counterfactual" strata are the realised ones for M4 and its primary stratum is not. Seeded $T_{14}$ on 1126 nulls: 0.05 d 61.5%, 0.1 d 17.9%, 0.2 d 9.9%, 0.4 d 6.0%, 0.8 d 4.6%. Folding RES-4's own per-stratum flip counts through that mixture gives an M4-realised exposure of **≈1.4%** vs the 0.09% reported (~16×). **RES-4's conclusion survives; its stated mechanism and stratum labelling do not.**
+- **Implementation-parity bound.** Arm A's TLS is numba-JIT-compiled; Arm B was interpreted numpy. A numba port of the surrogate loop reproduces $g_e$ exactly and is only **1.4–1.7×** faster than the vectorised numpy — so ≲2× of the routing cost is language, and the 6.31× is removal of unnecessary work, not a compilation trick.
+
+**Deliverables:** `research/m4_evaluation/INN3_FAP_ACCELERATION.md` (result record) · `fast_period_fap.py` · `inn3_fap_acceleration.py` · `nb_period_fap.py` · `tests/test_inn3_fap_acceleration.py` (9 equivalence tests, green) · `docs/VESPER_MATH_ADDENDUM.md` §E (curtailment proposition + proof) · artifacts `data/manifests/m4/inn3/`.
+
+**Sealed verdict UNCHANGED:** E1 PASS (robust) · E2 INCONCLUSIVE · P-2 holds (v3 final, no v4, TEST read exactly once). Roadmap **INN-3** (Wave 6) is delivered ~5 waves early with its proof obligations discharged rather than stated.
+
+**Owner decisions now open:** (1) adopt `fast_period_fap` as the estimator of record for future runs → needs a decision record (DR-006+; DR-004 reserved for the Phase-II gate, DR-005 for the scope decision); (2) does the §6 counterfactual + §6.1a two-cause diagnosis go in the paper (it is the strongest answer to "was your compute result an implementation artifact?"); (3) does §7.1 warrant a RES-4 addendum. **The 2026-07-28 scope decision is still open and still first in line.**
 
 ## ▶ Latest event (2026-07-28): RES-4 DONE + Wave-2/4 closure — PR #21 MERGED
 
@@ -41,9 +86,7 @@
 - **Wave-0 progress:** V-1 resume guard + 4 unit tests ✅ (committed `2941175`); V-2 campaign ✅; V-3 erratum §5/§7 filled (no PENDING markers) ✅; V-4 verdict propagated to paper (abstract/§3.3/§3.4/§4/§5, v0.3), `M4_TEST_RESULT.md` addendum, `CLAUDE.md` status bullet, and this vault ✅. **V-5 pending:** commit the V-3/V-4 doc changes, push, un-draft the PR — **merge is the owner's call.**
 - Anti-tuning intact: this work touched no sealed doc/threshold/tag (only V-1 code + `m4/e2_retiming/` outputs); TEST not re-read (frozen §6 re-times already-read injections; DR-003).
 
-**Update (2026-07-27, cont.):** V-5 merged (PR #18 → `main`). **Wave 1 no-compute cluster COMPLETE** on branch `phase1/wave1-robustness`: RES-2 (KM-period E1 sensitivity → PASS robust, ΔR̄ −0.16 pp), RES-3 (epoch-tolerance → losses are epoch-predicate), RES-5 (edge-control supplement S-edge + fig S1), RES-8 (endpoint disclosure), RES-7 (monotransit design doc), PUB-6 (README/CHANGELOG/hackathon note reconciled). Each committed. **MERGED to `main` via PR #19** (owner, 2026-07-27); branch deleted. `hackathon/` disposition: **leave in place, marked discontinued** (owner). **Queued for a compute window:** RES-4 (per-star τ_GP FAP, ≥100 cal nulls) + RES-6 (η-paid injection, MAST) + a small TLS-epoch re-run (unlocks RES-3 symmetric sweep + S-edge T₀ histogram). **Next action:** run the RES-4/RES-6 compute batch (background, AC power / no Low Power Mode), then Waves 2 (math) + 3 (engineering) in parallel. Phase II hard-gated until DR-004. Resume point: `archive/session_handoffs/SESSION_HANDOFF_2026-07-27.md`.
-
-**⛔ HACKATHON TRACK DISCONTINUED (owner decision 2026-07-27).** The BAH 2026 · PS7 track is stopped and not pursued further. `hackathon/` materials are kept as round-1 submission history (banners added to `hackathon/README.md` + `hackathon/CLAUDE.md`; not deleted). The old "Phase II FROZEN until after the hackathon" gating is **void** — Phase II is gated solely by the ROADMAP_TO_10 gate + DR-004. The dated hackathon blocks lower in this file are **historical record only**.
+**Update (2026-07-27, cont.):** V-5 merged (PR #18 → `main`). **Wave 1 no-compute cluster COMPLETE** on branch `phase1/wave1-robustness`: RES-2 (KM-period E1 sensitivity → PASS robust, ΔR̄ −0.16 pp), RES-3 (epoch-tolerance → losses are epoch-predicate), RES-5 (edge-control supplement S-edge + fig S1), RES-8 (endpoint disclosure), RES-7 (monotransit design doc), PUB-6 (README/CHANGELOG reconciled). Each committed. **MERGED to `main` via PR #19** (owner, 2026-07-27); branch deleted. **Queued for a compute window:** RES-4 (per-star τ_GP FAP, ≥100 cal nulls) + RES-6 (η-paid injection, MAST) + a small TLS-epoch re-run (unlocks RES-3 symmetric sweep + S-edge T₀ histogram). **Next action:** run the RES-4/RES-6 compute batch (background, AC power / no Low Power Mode), then Waves 2 (math) + 3 (engineering) in parallel. Phase II hard-gated until DR-004. Resume point: `archive/session_handoffs/SESSION_HANDOFF_2026-07-27.md`.
 
 **Prior next action (done):** V-5 (commit + push + un-draft PR; ask before merge), then Wave 1 (RES-2 first; PUB-6).
 
@@ -67,18 +110,9 @@
 - **Second-pass audit report:** `docs/audits/PROJECT_AUDIT_2026-07-19.md` (scores: Docs 8.5, Repro 8, Research 7.5 … Pub 5, Prod 2). Key NEW findings: **w_c period dimension is log-uniform, NOT occurrence** (KM-period sensitivity = top missing analysis); π* formula inconsistency (MATH vs endpoints); seal integrity independently re-verified (0 non-branding diff lines vs `phase1-prereg-v3`).
 - **Roadmap adopted:** `docs/ROADMAP_TO_10.md` — 6 waves (Verdict → Robustness → Math → Engineering → Repro/Docs → Publication → Tool/Phase-II-prep), ~50 working days. **Phase II (Kepler) is HARD-GATED until all waves complete + DR-004 sign-off.**
 - **Uncommitted working tree** (intentional): erratum (§5/§7 pending E2), paper v0.2 edits, T1.csv (40 hosts), edge-control artifacts, audit report, roadmap. Commit = Wave-0 V-5.
-- ⚠️ **Public surfaces (v1.0.0 release notes, submitted hackathon deck) still state the withdrawn verdict** — reconciliation is PUB-6 (Wave 1).
+- ⚠️ **Public surfaces (v1.0.0 release notes) still state the withdrawn verdict** — reconciliation is PUB-6 (Wave 1).
 
 **Next action:** Wave 0 — V-1 resume-guard patch → V-2 finish E2 (~19 h) → V-3 erratum §5/§7 → V-4 propagate verdict (paper/CLAUDE.md/vault) → V-5 commit+merge. See `archive/session_handoffs/SESSION_HANDOFF_2026-07-19.md`.
-
-## ▶ 2026-07-01: hackathon deck rebuilt into the OFFICIAL ISRO template + verified
-
-**BAH 2026 · PS7 idea-submission deck was rebuilt inside the organizers' mandatory PowerPoint template and verified end-to-end.** No Phase-I science touched (sealed/final).
-
-- **Deck (14 slides) now populates the official template** — `hackathon/deck/BAH2026_PS7_idea_deck.pptx` + `.pdf` (1.66 MB, ≤5 MB). Three defects fixed: Features text-overlap, Architecture flowchart connectors, Proof-of-Concept graph clipping. Built by `deck/build_pptx.py` (fills the template; `build_deck.py` demoted to legacy).
-- **Classifier evidence upgraded + verified (SYNTHETIC labels, leakage-safe).** Regenerated the injected set from scratch (reproducible: max feature diff **0.0**) with host tracking → **StratifiedGroupKFold** (no injection host shared train/test): **accuracy 0.83, macro-F1 0.83 (95% CI 0.80–0.86)**; eclipse/other near-perfect, transit↔blend the only residual (F1≈0.66). **Ablation** (group CV): no single feature family > 0.72; full physics set 0.83 → depth alone does not discriminate. New scripts: `ablation.py`, `failure_analysis.py`, `make_poc_fig.py`, `_deckstyle.py`; `train_classifier.py` / `make_labeled_set.py` upgraded.
-- **All hackathon docs aligned + claims made defensible:** "benchmarked vs full TLS" → **recall non-inferior to full TLS**; "calibrated confidence by construction" → "(conformal)"; honest blend scope (pixel-level = Round-2); removed the "0.58 / cleanly separable" contradiction; synthetic results explicitly labelled. Added a **Kepler/K2 scalability cost** line (≈ 5,000–10,000 CPU-core-hours) framed as feasibility — **not** a compute-savings claim (the sealed Phase-I result falsified compute savings).
-- **Nothing committed** (owner's call). (The extra `hackathon/deck/` files — `ISRO BAH 2026_Idea Submission.pdf` + figure-titled PNGs — are the owner's intentional **compressed** submission exports; no action needed. Gitignore if not committing.)
 
 ## ▶ 2026-06-30: identity rebrand + first public release (v1.0.0)
 
@@ -87,22 +121,12 @@
 - **First public release `v1.0.0` cut** — annotated tag on `main` HEAD `0118548` + GitHub Release "VESPER v1.0.0 — Initial Public Release". `main` == `origin/main`; tree clean.
 - **Sealed-artifact hash note:** rebranding the sealed docs/manifests **changed their recorded SHA-256 digests by design** (owner-authorized). See **`docs/decisions/F1_DECISION_RECORD.md` §5a** — any mismatch is from the naming change only; original sealed bytes are intact at tags `phase1-prereg-v2/v3`. ⚠️ `shasum` against the *old* recorded hashes will mismatch — read §5a first.
 - **Repo reorganized (2026-06-30, structure-only, history preserved):** Phase-I plans → `research/phase1/`; handoffs → `archive/session_handoffs/`; `NEXT_SESSION_PROMPT.md` untracked+gitignored. Root holds only `README.md · CLAUDE.md · VESPER.md · references.bib · .gitignore`. No code/research content changed.
-- **Phase I unchanged:** still COMPLETE / SEALED / FINAL. **Active substantive task is unchanged:** the hackathon block below. See `archive/session_handoffs/SESSION_HANDOFF_2026-06-30.md`.
+- **Phase I unchanged:** still COMPLETE / SEALED / FINAL. See `archive/session_handoffs/SESSION_HANDOFF_2026-06-30.md`.
 
 ## ▶ Where the project is now (2026-06-29)
 
-**Active track: BAH 2026 — Problem Statement 7 (ISRO Bharatiya Antariksh Hackathon).** A new *applied* track, an **extension/attachment to VESPER** (not a fork). Lives under `hackathon/`, **merged to `main` via PR #14** (merge commit `9d72920`, 2026-06-27).
-
 - **Phase I (TESS) — COMPLETE & SEALED & FINAL.** M0–M7 done and merged (PRs #1–#13). H1 **falsified on the compute branch** (E1 recall non-inferiority PASS; E2 scoped compute FAIL 24.4% < 30%); recall principle **supported**. v3 is terminal — **no v4** (P-2). Seals intact: #2 `6292c018…`, #2b `54f06a94…`.
-- **Phase II (Kepler scaling) — FROZEN until after the hackathon** (owner decision 2026-06-26). The compute-path decision (HPC vs AWS) is likewise deferred. Sketch: `docs/PHASE2_KEPLER_SCALING_PREREG.md` (on the unmerged `phase2/kepler-scaling-prereg` branch).
-
-### Hackathon status (BAH 2026 · PS7)
-- **Round-1 submission package is COMPLETE + verified** (deadline **2026-07-01**): proposal web-form text + **14-slide deck in the official ISRO template** (`hackathon/deck/BAH2026_PS7_idea_deck.pptx` + `.pdf`) + report skeleton. Team **VESPER** (Ansul Suryawanshi lead / IGNOU; Riddhi Jain / IGNOU; Samiksha Choudhary / Priyadarshini CoE Nagpur — 3 members, 4th optional).
-- **Working prototype validated on real MAST data** covering all 5 PS7 steps (detrend→identify→characterize→classify→significance). Trapezoid shape-fit reproduces the committee's slide-5/6 output; pipeline validated on 12 known objects (planets U vs EBs V).
-- **Owner actions left for round 1:** paste proposal fields + upload PDF before 2026-07-01.
-- **Round 2 (if shortlisted, ~Aug):** plug organizer's curated labels into the classifier; add robust period recovery + phase-curve handling + pixel-level centroid (blends) + optional CNN.
-
-**Next action:** owner submits round 1 before 2026-07-01 — paste Part-A web-form fields from `hackathon/BAH2026_PS7_PROPOSAL_DRAFT.md`, upload `hackathon/deck/BAH2026_PS7_idea_deck.pdf`, select PS7. See `archive/session_handoffs/SESSION_HANDOFF_2026-07-01.md`.
+- **Phase II (Kepler scaling) — FROZEN** (owner decision 2026-06-26). The compute-path decision (HPC vs AWS) is likewise deferred. Sketch: `docs/PHASE2_KEPLER_SCALING_PREREG.md` (on the unmerged `phase2/kepler-scaling-prereg` branch).
 
 ---
 

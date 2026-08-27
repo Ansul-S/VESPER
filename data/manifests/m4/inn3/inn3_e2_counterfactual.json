@@ -1,0 +1,261 @@
+{
+  "task": "INN-3 \u2014 counterfactual E2 re-analysis (arithmetic on recorded artifacts)",
+  "disclaimer": "NOT a re-measurement. TEST light curves are not re-read (P-5). Inputs: e2_retiming/timing_ledger_full.csv and test_run/recovery.csv, both already-recorded. The sealed E2 outcome is unchanged.",
+  "s_vec_used": 6.347,
+  "n_tasks": 300,
+  "n_hosts": 39,
+  "n_matched_to_recorded_fap": 291,
+  "E_surrogates_mean": 398.5517693857868,
+  "E_surrogates_median": 86.96309739866909,
+  "f_p": 0.23666666666666666,
+  "rho_cheap_path": 6.469477689881012e-05,
+  "C_full_s": 43810.22683399998,
+  "sealed": {
+    "compute_ratio": 0.7271396884272067,
+    "reduction": 0.27286031157279333,
+    "rho_d": 0.11564914281767508,
+    "pi_star_eligible_population": 0.488689965622137,
+    "ratio_ci95_host_cluster": [
+      0.6361290910797341,
+      0.8273671424413511
+    ],
+    "p_ratio_le_0.70": 0.2749,
+    "meets_30pct_target": false,
+    "frozen_rule_decision": "INCONCLUSIVE"
+  },
+  "leverA": {
+    "compute_ratio": 0.6297116174257718,
+    "reduction": 0.37028838257422825,
+    "rho_d": 0.018221071816239966,
+    "pi_star_eligible_population": 0.07699542549584638,
+    "ratio_ci95_host_cluster": [
+      0.5400265856477714,
+      0.7218097128882432
+    ],
+    "p_ratio_le_0.70": 0.9308,
+    "meets_30pct_target": true,
+    "frozen_rule_decision": "INCONCLUSIVE"
+  },
+  "leverA_plus_B": {
+    "compute_ratio": 0.6200459608929302,
+    "reduction": 0.3799540391070698,
+    "rho_d": 0.008555415283398534,
+    "pi_star_eligible_population": 0.03615198088686695,
+    "ratio_ci95_host_cluster": [
+      0.5318525528117389,
+      0.7100162293070297
+    ],
+    "p_ratio_le_0.70": 0.9583,
+    "meets_30pct_target": true,
+    "frozen_rule_decision": "INCONCLUSIVE"
+  },
+  "free_detector_limit": {
+    "compute_ratio": 0.6114905456095316,
+    "reduction": 0.38850945439046836,
+    "rho_d": 0.0,
+    "pi_star_eligible_population": 0.0,
+    "ratio_ci95_host_cluster": [
+      0.5216019350828912,
+      0.7027085743338055
+    ],
+    "p_ratio_le_0.70": 0.9716,
+    "meets_30pct_target": true,
+    "frozen_rule_decision": "INCONCLUSIVE"
+  },
+  "recorded_sealed_for_check": {
+    "compute_ratio": 0.7271396884272067,
+    "ratio_ci95": [
+      0.635873125911904,
+      0.8257209089276649
+    ],
+    "p_ratio_le_0.70": 0.2698,
+    "rho_d": 0.11564914281767508
+  },
+  "host_power": {
+    "caveat": "resamples H hosts from the 39 observed; design calculation, not a measurement; does not re-decide the sealed run (P-2)",
+    "note": "m4_driver draws 80 hosts; the erratum \u00a72.1 parity bug used 40, of which the E2 timing subset occupied 39. H=79 is therefore the counterfactual for the INTENDED design.",
+    "sealed": {
+      "ratio": 0.7271396884272066,
+      "cluster_robust_se_at_H": 0.04830302962662161,
+      "H_observed": 39,
+      "se_needed_for_hi_le_0.70": -0.013847034249053612,
+      "hosts_needed": null,
+      "by_H": {
+        "39": {
+          "ci95": [
+            0.6357972052391215,
+            0.8287231490373909
+          ],
+          "decision": "INCONCLUSIVE"
+        },
+        "49": {
+          "ci95": [
+            0.6464184995075953,
+            0.8149416478655073
+          ],
+          "decision": "INCONCLUSIVE"
+        },
+        "60": {
+          "ci95": [
+            0.652932258407101,
+            0.8058240620020672
+          ],
+          "decision": "INCONCLUSIVE"
+        },
+        "79": {
+          "ci95": [
+            0.662433032774794,
+            0.7953790908495755
+          ],
+          "decision": "INCONCLUSIVE"
+        },
+        "100": {
+          "ci95": [
+            0.6699413993402458,
+            0.7879338610833461
+          ],
+          "decision": "INCONCLUSIVE"
+        }
+      }
+    },
+    "leverA": {
+      "ratio": 0.6297116174257718,
+      "cluster_robust_se_at_H": 0.04619288679267174,
+      "H_observed": 39,
+      "se_needed_for_hi_le_0.70": 0.0358620786464238,
+      "hosts_needed": 65,
+      "by_H": {
+        "39": {
+          "ci95": [
+            0.5399267790383718,
+            0.7209909430870566
+          ],
+          "decision": "INCONCLUSIVE"
+        },
+        "49": {
+          "ci95": [
+            0.5512329958758506,
+            0.7121157315017058
+          ],
+          "decision": "INCONCLUSIVE"
+        },
+        "60": {
+          "ci95": [
+            0.5573527663892011,
+            0.7041157074269421
+          ],
+          "decision": "INCONCLUSIVE"
+        },
+        "79": {
+          "ci95": [
+            0.5668405816712527,
+            0.6933177558088162
+          ],
+          "decision": "PASS"
+        },
+        "100": {
+          "ci95": [
+            0.572651023838031,
+            0.6867241766386686
+          ],
+          "decision": "PASS"
+        }
+      }
+    },
+    "leverA_plus_B": {
+      "ratio": 0.6200459608929302,
+      "cluster_robust_se_at_H": 0.04530878851146493,
+      "H_observed": 39,
+      "se_needed_for_hi_le_0.70": 0.04079362667833398,
+      "hosts_needed": 49,
+      "by_H": {
+        "39": {
+          "ci95": [
+            0.5318848059846358,
+            0.7105988291322555
+          ],
+          "decision": "INCONCLUSIVE"
+        },
+        "49": {
+          "ci95": [
+            0.5421546403600949,
+            0.6987792851690259
+          ],
+          "decision": "PASS"
+        },
+        "60": {
+          "ci95": [
+            0.5491558099187135,
+            0.6923730291255324
+          ],
+          "decision": "PASS"
+        },
+        "79": {
+          "ci95": [
+            0.5584862402590404,
+            0.6822288719370394
+          ],
+          "decision": "PASS"
+        },
+        "100": {
+          "ci95": [
+            0.565716648530689,
+            0.6754531824249349
+          ],
+          "decision": "PASS"
+        }
+      }
+    },
+    "free_detector_limit": {
+      "ratio": 0.6114905456095315,
+      "cluster_robust_se_at_H": 0.045949583035279074,
+      "H_observed": 39,
+      "se_needed_for_hi_le_0.70": 0.04515871468447846,
+      "hosts_needed": 41,
+      "by_H": {
+        "39": {
+          "ci95": [
+            0.5226843617684211,
+            0.7025147641060195
+          ],
+          "decision": "INCONCLUSIVE"
+        },
+        "49": {
+          "ci95": [
+            0.5315690265089065,
+            0.6915103264293581
+          ],
+          "decision": "PASS"
+        },
+        "60": {
+          "ci95": [
+            0.5396271442950371,
+            0.6844255163769734
+          ],
+          "decision": "PASS"
+        },
+        "79": {
+          "ci95": [
+            0.5484381642934083,
+            0.6743826891931697
+          ],
+          "decision": "PASS"
+        },
+        "100": {
+          "ci95": [
+            0.5561162391609046,
+            0.6668989893977555
+          ],
+          "decision": "PASS"
+        }
+      }
+    }
+  },
+  "machine": {
+    "platform": "macOS-26.6-arm64-arm-64bit",
+    "python": "3.11.9",
+    "numpy": "2.4.6",
+    "workers": 1,
+    "ran_at_utc": "2026-08-17T07:20:54.026624+00:00"
+  }
+}

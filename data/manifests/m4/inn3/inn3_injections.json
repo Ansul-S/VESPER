@@ -1,0 +1,42 @@
+{
+  "task": "INN-3 exact accelerated period-FAP \u2014 calibration injections",
+  "n_routed_injections": 149,
+  "lever1b_criteria": {
+    "i_fap_agreement_p95_abs_dFAP": 0.0,
+    "i_threshold": 0.005,
+    "i_pass": true,
+    "ii_gate_discordant_full_B": 0,
+    "ii_gate_discordant_curtailed": 0,
+    "ii_threshold_discordant": 8,
+    "ii_fp_admitted_full_B": 0,
+    "ii_fp_admitted_curtailed": 0,
+    "iii_recoveries_clipped_full_B": 0,
+    "iii_recoveries_clipped_curtailed": 0
+  },
+  "n_bitexact_fap": 149,
+  "max_abs_dFAP": 0.0,
+  "n_gate_open_sealed": 65,
+  "surrogates_used_mean": 509.89261744966444,
+  "surrogates_used_median": 378.0,
+  "cpu_mean_s": {
+    "sealed": 18.152784422818797,
+    "leverA": 2.5592810201342284,
+    "leverAB": 1.419783140939597
+  },
+  "speedup_leverA": 7.092923473431896,
+  "speedup_leverA_plus_B": 12.785603589295675,
+  "t14_seeded_distribution": {
+    "0.05": 76,
+    "0.1": 48,
+    "0.2": 17,
+    "0.4": 5,
+    "0.8": 3
+  },
+  "machine": {
+    "platform": "macOS-26.6-arm64-arm-64bit",
+    "python": "3.11.9",
+    "numpy": "2.4.6",
+    "workers": 6,
+    "ran_at_utc": "2026-08-17T08:09:00.739872+00:00"
+  }
+}

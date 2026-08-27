@@ -2,6 +2,39 @@
 
 ---
 
+## 2026-08-17 — INN-3: the period-FAP entry tax is removable exactly; E2's INCONCLUSIVE re-diagnosed as a variance result
+
+Worked On:
+- Attacked the single mathematical obstacle behind the failed Phase-I compute branch: the $B{=}1000$ block-bootstrap period-FAP "entry tax" ($\rho_d = 11.6\%$), which DR-002/Lever-1b recorded as **"not a removable artifact"** after both pre-registered cheap estimators (E-EVT, E-LUT) failed the equivalence gate 3/3.
+- **Diagnosed it by profiling instead of theorising.** The sealed `period_fap` costs 18.4 CPU-s per star; 82% is `detect_events` on the surrogate, 16% the comb scan — and inside `detect_events`, **49% of the entire FAP cost is `np.median(np.diff(np.sort(t)))`** (`detector.py:26` and `:55`), a loop invariant evaluated twice per duration per surrogate: **10,000 full sorts of an N-vector per star**, all returning the same constant, because the block bootstrap resamples the *flux residual* and never touches the epochs.
+- **Lever A — exact vectorisation.** Hoisted every t-dependent invariant to construction; vectorised the local-maximum scan, the greedy de-duplication (bucketed, identical semantics) and the comb scan (one $(n_f\times k)$ matrix). Preserved two load-bearing float64 details deliberately: the sealed $1-\min(1-R)$ round-trip (not $\max R$; they differ near $R=1$) and the pairwise-summation axis. **6.31×, bit-identical.**
+- **Lever B — exact curtailment.** $(g_e{+}1)/1001 \le 0.01 \iff g_e \le 9$; $g_e$ is monotone, so the **tenth exceedance decides the gate** and the run can stop. Curtailed sampling — no error probability to bound — and one-sided, so it can shut a gate early but never open one, hence it cannot clip a planet. **73.2× on nulls; 12.7× on injections.**
+- Built the repo tooling (`fast_period_fap.py`, `inn3_fap_acceleration.py` with `nulls|injections|survey|project` subcommands, `nb_period_fap.py` parity probe) plus 9 float64-equality unit tests, and ran the campaigns.
+
+Discoveries:
+- **Equivalence is exact, not approximate.** 1126/1126 cached calibration nulls reproduce the sealed recorded exceedance count (max |Δ| = **0**); 149/149 calibration injections reproduce the sealed FAP **bitwise**; the live sealed implementation re-run on the 60-star timing subset agrees 60/60. All three Lever-1b criteria are met with **exact zeros** — p95 |ΔFAP| 0.000, 0 discordant, 0 recoveries clipped, 0 nulls admitted. The gate that E-EVT and E-LUT each failed 3/3 is passed by an identity map.
+- **The counterfactual E2** (arithmetic on `timing_ledger_full.csv` + the sealed `recovery.csv`; **no TEST light curve re-read**): reduction **27.3% → 38.0%** (target ≥30%), $\rho_d$ **11.6% → 0.85%**, $\pi^\star$ **0.489 → 0.036** — from ≈16× the TESS $\pi\approx0.03$ down to ≈1.2×. $P(\text{ratio}\le0.70)$: **0.27 → 0.96**.
+- **⚠️ The frozen-rule decision still does not move — and the reason is the bigger finding.** Set the routing cost to **exactly zero** and the host-clustered CI is still [0.522, **0.703**]. **E2's INCONCLUSIVE is a variance result, not a cost result:** it is between-host variance at $H=39$ clusters.
+- **Two independent causes, both necessary.** Hosts needed for the upper limit to clear 0.70: **never** (as recorded — the point estimate is above 0.70 at any $H$, INCONCLUSIVE even at $H{=}100$) · **65** (lever A) · **49** (lever A+B) · **41** (free detector). `m4_driver` draws **80** hosts; the erratum §2.1 parity bug used 40, of which the E2 subset occupied 39. So the entry tax alone put the estimate out of reach, the parity bug alone made the interval too wide, and **removing both makes E2 PASS at $H=79$ — the design that was actually written.** This promotes §2.1 from an E1 diversity concern to a **causal contributor to the undecided compute verdict**.
+- **Side finding — RES-4 measured the wrong stratum for the M4 arm.** `m4_driver.py:117` sets `t14 = median(duration_grid)` but **line 120 overwrites it** with the seeded event's own duration before the FAP call on line 126 (`e2_retiming.py:67` faithfully replicates it; `m3_calibrate.py` genuinely uses 0.2 d). M4 therefore **duration-matched** $T_{14}$, so RES-4's "counterfactual" 0.05/0.1 d strata are the realised ones for M4 and its primary 0.2 d stratum is not. Measured seeded $T_{14}$ over the same 1126 nulls: 0.05 d **61.5%**, 0.1 d 17.9%, 0.2 d 9.9%, 0.4 d 6.0%, 0.8 d 4.6%. Folding RES-4's own per-stratum arm-C flip counts through that mixture: M4-realised exposure ≈**1.4%** vs the **0.09%** reported — about **16× larger**; τ affects $L_b$ on 4.7% of stars, not 2.8%. RES-4's *conclusion* survives (still no sealed conclusion changes, still the benign direction); its *stated mechanism* does not.
+- **Implementation-parity bound.** Arm A's baseline (`transitleastsquares`) is numba-JIT-compiled while Arm B was interpreted numpy — so the sealed CPU-seconds ratio was partly comparing implementations. A numba port of the whole surrogate loop reproduces $g_e$ exactly and is only **1.4–1.7×** faster than the vectorised numpy: ≲2× of the routing cost is language, and the 6.31× is removal of work that was never needed.
+
+Questions:
+- Does the §6 counterfactual belong in the paper? It is the strongest available answer to "was your compute result an artifact of your implementation?" — *partly yes, and here is exactly how much* — and §6.1a converts "INCONCLUSIVE" into a design parameter (49 hosts).
+- Should `fast_period_fap` become the estimator of record for future runs (MATH §9.1a substitution, equivalence relation = identity)? That needs a decision record: **DR-006 or later** — DR-004 is reserved for the Phase-II gate and DR-005 for the open scope decision.
+- Does §7.1 warrant a formal RES-4 addendum, or is a cross-reference enough?
+
+Problems:
+- None blocking. The E2 re-analysis is **arithmetic on already-recorded artifacts** and is labelled a counterfactual everywhere; it does **not** amend the sealed outcome and P-2 is intact (v3 final, no v4, TEST read exactly once).
+- Caveat on §6.1a: resampling $H>39$ draws from the 39 observed hosts, so it assumes they represent the pool. It is a design calculation, not a measurement, and it cannot re-decide the sealed run.
+- Work is on local branch `phase1/inn3-fap-acceleration`, **not pushed**. PR #22 (doc-only sync) is still open from 2026-07-28.
+
+Next Action:
+- Settle the **2026-07-28 scope decision** (still first in line) — INN-3 strengthens the case for the methodology framing, since the protocol has now forced a *second* self-correction, this time of a "not removable" claim.
+- Then decide (a) estimator of record, (b) paper placement of §6/§6.1a, (c) RES-4 addendum. **RES-6** (η-paid injection; needs MAST) and the small **TLS-epoch re-run** remain the last queued compute.
+
+---
+
 ## 2026-07-01 — Hackathon PS7 deck rebuilt into the official ISRO template + leakage-safe classifier verified (BAH track; Phase I untouched)
 
 Worked On:
@@ -713,6 +746,46 @@ Next Action:
 - **Settle the scope decision above first** — it determines everything else. Then **RES-6** (η-paid injection; MAST needed, `data/raw` empty) + the small **TLS-epoch re-run**. PR #22 (doc-only sync) open and unmerged. Phase II hard-gated until DR-004.
 
 **Session close (2026-07-28):** PR #21 merged (RES-4 + MATH-1/5/6/7 + CODE-7 + DOC-2/3); `main` @ `77037d4`, clean, CI green. PR #22 open. No compute running; seals re-verified post-merge (0 non-branding diff lines vs `phase1-prereg-v3`). Handoff: `archive/session_handoffs/SESSION_HANDOFF_2026-07-28.md`. **One significant open decision carried forward (scope + paper framing).**
+
+---
+
+Date: 2026-08-27
+
+Worked On:
+- **Full mathematical audit of the project** (owner request: "the biggest bottleneck is the mathematics — fix that"). New workspace `research/math_audit/` (5 scripts) + `data/manifests/math_audit/` (10 artifacts + `findings.json`). Report: `research/math_audit/MATHEMATICAL_AUDIT_2026-08-27.md`.
+- Calibration only. **No TEST TIC read (P-5 intact).** Nothing sealed edited; all three sealed docs verified 0 differing lines vs `phase1-prereg-v3` after branding normalisation; Seal #2 SHA-256 matches DR-001 §5a; `frozen_rerun/` clean.
+- Method: recorded the FULL block-bootstrap surrogate table — per-surrogate `(k_b, R_b, span, n_freq)` for 1,236 calibration nulls x 1,000 surrogates (1.24 M realisations) and 669 routed calibration injections — so any candidate statistic's FAP is recomputable offline. Sealed exceedance counts reproduced **bit-identically on 1,126/1,126** overlapping nulls.
+
+Discoveries:
+- **THE ROUTING CEILING (headline, new).** Routing requires an evidence budget W = k*R_hat^2 >= ln(N_eff/alpha), and W <= N_tr/(1+rho_FP), hence **P <= T_base / ln(N_eff/alpha)**. Every tunable (alpha, p_min, p_max, detector, noise model, confirmer) enters logarithmically; only the transit count enters linearly.
+  - Zero-free-parameter prediction of the sealed gate on 1,233 nulls: **precision 87.5% / recall 75.7%** (TP 28 / FP 4 / FN 9 / TN 1192; accuracy 98.95%, but weak on a 1196:37 split).
+  - **Out-of-sample scaling confirmed:** predicted P_max 2.94 d (1-sector) / 5.80 d (2-sector), measured P50 **2.51 / 5.00 d**; predicted ratio 1.97, measured **1.99**. Controlled comparison at P=4 d: 8.3% routing (1-sector) vs 63.6% (2-sector), same planets, same pipeline.
+  - Mechanism verified: at P>=8 d, Pr(gate open | seed CORRECT) = 0.20 and 0.00. It is the significance budget, not seeding.
+- **FALSIFICATION ATTEMPT FAILED (i.e. the ceiling holds).** Swept the family T_beta = R*k^beta at matched null FAR (1.0626%): best member **+1.49 pp** recall; the Rayleigh Z (beta=0.5) **+0.15 pp** (McNemar p=1.0); the **exactly pivotal** conditional-rank statistic **-10.31 pp**. Every member leaves P>=8 d at <=0.9%. **The multiplicity dependence is the evidence, not a defect.**
+- **Subset-region property.** Fast-path eligibility implies SNR_tot >= z*sqrt(W*) ~ 10.2 vs the sealed TLS T = 10.74. Measured on the dress rehearsal, excluding the known P=0.5 d edge artifact: **17/17** fast-path recoveries also found by full TLS, **0** fast-path-only. Explains *why* E1's PASS was structural (erratum §2.8).
+- **The period-FAP is 82% a multiplicity statistic.** 81.7% of Var(log R_b) is between-k; 64.7% of exceedances come from surrogates with FEWER events (68.1% at k>=13); surrogate law R_b ~ 1.61 k_b^-0.406 (theory -0.5). Generalises addendum §A.6 from N=2 to all k.
+- **Seal #2's N_min = 2 is inoperative.** q99(R|k) = 1.0000 exactly at k<=3. Measured: **0 of 128** candidates with k<=2 ever routed; 1 of 233 with k<=3, and that one for a reason unrelated to coherence. Effective floor k ~ 4-5.
+- **MATH-4 EXECUTED (was open).** Lambda's null is not chi^2_1: q99 = 120.4 vs 6.63 (**18x**); Pr(Lambda>=25) = 1.81% vs nominal 2.9e-7 (**6.3e4 x**); Pr(Lambda>=100) = 0.54% vs 7.6e-24. Over-dispersion scales with seeded duration (q99: 14.5 -> 109.4 for T14 0.05 -> 0.8 d). A binding photometric gate would need **T_red ~ 4,340**, not the chi^2-nominal ~25. `no_secondary`'s hard-coded "~5 sigma" Lambda>=25 is really **~2.1 sigma**.
+- **The confirmation gate is algebraically a sign test**, and a circular one: Pr(delta_hat>0) = **0.859** at the sealed seed vs **0.444** at a random ephemeris (the seed IS the deepest detected event). Pr(confirm | null) = **66.8%**. Same defect MATH §10.3 diagnoses in v3, relocated to the confirmer.
+- **The residuals are RED on transit timescales.** kappa(T14) median 1.17 -> 1.48 over T14 0.05 -> 0.8 d, p90 up to **9.0**, 32-49% of stars above 1.5 — while the sealed detector docstring certifies "near-white" from acf_1 ~ 0.01 (median 0.018 but p90 **0.649**; corr(acf_1, kappa) = 0.593, only 35% of the variance). **Lag-1 ACF is not a whiteness test on transit timescales.** The detector survives (self-calibrated MAD normalisation absorbs kappa); the confirmer does not (parametric Matern from lag-1).
+- **MATH-3 EXECUTED, and the roadmap's stated direction is REVERSED.** The bootstrap null is built from the series containing the signal. 128 paired runs on identical RNG streams: median FAP **0.0569** (sealed) vs **0.1578** (signal-free null), Wilcoxon p = 1.5e-4; gate open **53 vs 24**. **42 of 53 fast-path routings (79%) exist only because the null is contaminated by the signal being tested.** Anti-conservative, not conservative. FAR control is unaffected (nulls carry no signal) but f_p — hence E2 — is inflated.
+- **MATH §4b is wrong for the implemented estimator** — contamination degrades it **linearly** (E[R] = 1/(1+rho_FP), verified to 3 dp), not quadratically. Favourable direction; the quadratic law belongs to the pairwise-difference formulation, which is not what the code implements.
+- **MATH §9's "identical grid" premise is FALSE in code, and the deviation is load-bearing.** 96.9% of surrogates use a different trial-frequency count than their observation. Re-running all 1,236 stars with MATH §9 as written: null FAR **2.99% -> 4.37%**, 23 gate flips, **18 of them k=2 stars with R = 1.000000 exactly**. The unstated deviation is what protects the pipeline from routing k=2 candidates. Look-elsewhere absorption needs the same *map*, not the same *grid* — the code satisfies the correct condition, the doc states the wrong one.
+- **Confirmation: M3's null cleaning was load-bearing.** FAP tail at alpha=0.01: cleaned pool **1.06x** nominal (p=0.47) vs excluded EB/variable pool **6.45x** (p=7.9e-10). But the FAP is not a uniform p-value even when cleaned (KS p=2.5e-9) — **the calibration does not extrapolate to any other alpha.**
+
+Questions:
+- Does the routing ceiling become the paper's central result? It is the strongest defensible novel content: derived, zero-parameter-validated, confirmed out of sample in its scaling, and survives a deliberate falsification attempt. It also generalises beyond VESPER to any detect-then-test-periodicity pipeline.
+- MATH-3's 79% figure means the measured f_p is inflated by self-contamination. A first-order rescale (24/53) takes f_p 0.237 -> ~0.11 and roughly doubles pi*. Should this be measured properly before the paper quotes f_p?
+- Does §C-2 (grid non-identity) warrant its own decision record, given that the *specification* is unsafe and only an unstated implementation deviation makes N_min=2 survivable?
+
+Problems:
+- None blocking. Two process notes: a `pgrep`-based chained background job matched its own wrapper shell and hung (killed, relaunched directly); the mission-design table was published with an arithmetic slip on the P=365 d baseline (11.5 yr) and corrected to 13.8 yr before shipping.
+
+Next Action:
+- **The 2026-07-28 scope decision is STILL open and still first in line** — and this audit is directly relevant to it: the ceiling result strengthens the case for reframing the paper around methodology + a closed-form negative result, rather than around routing performance.
+- Owner review of the audit report; decide which findings are paper content vs addendum content.
+- If adopted: fold §N-1 (ceiling) and §N-2 (subset region) into `docs/VESPER_MATH_ADDENDUM.md` as §F/§G, and record §C-1 / §C-2 / §C-3 as corrections of record.
+- Still queued for a compute window: RES-6 (needs MAST) + the TLS-epoch re-run. PR #22 still open.
 
 ---
 

@@ -1,6 +1,35 @@
 # VESPER Dashboard
 
-> **AUTHORITATIVE CURRENT STATE — updated 2026-07-27.** Sections below this banner are Phase-I historical record. ⚠️ The historical sections state "H1 FALSIFIED (compute)" — that verdict is **SUPERSEDED** per DR-003: the frozen-rule E2 re-measurement (300/300, 2026-07-27) returns **E2 INCONCLUSIVE**. **Corrected Phase-I verdict: E1 PASS (robust) · E2 INCONCLUSIVE** (ratio 0.727, CI [0.636, 0.826]; π\*≈0.489). See the 2026-07-27 block below. ⛔ **The BAH 2026 · PS7 hackathon track is DISCONTINUED (owner, 2026-07-27)** — the dated hackathon blocks below are historical only; the "Phase II FROZEN until after the hackathon" gating is void (Phase II gated by ROADMAP_TO_10 + DR-004).
+> **AUTHORITATIVE CURRENT STATE — updated 2026-08-27.** Sections below this banner are Phase-I historical record. ⚠️ The historical sections state "H1 FALSIFIED (compute)" — that verdict is **SUPERSEDED** per DR-003: the frozen-rule E2 re-measurement (300/300, 2026-07-27) returns **E2 INCONCLUSIVE**. **Corrected Phase-I verdict: E1 PASS (robust) · E2 INCONCLUSIVE** (ratio 0.727, CI [0.636, 0.826]; π\*≈0.489). See the 2026-07-27 block below.
+
+## ▶ 2026-08-27: MATHEMATICAL AUDIT — the routing ceiling (new closed-form result); MATH-3 + MATH-4 closed
+
+- **Phase:** Phase I (COMPLETE / SEALED / FINAL). Post-seal analysis, **calibration only** (TEST not read, P-5 intact). Sealed verdict **E1 PASS · E2 INCONCLUSIVE — unchanged**.
+- **Milestone ladder:** W2 advances — **MATH-3 ☑** and **MATH-4 ☑** (both were open and unexecuted). Remaining W2: MATH-2, MATH-8.
+- **Headline — the routing ceiling.** $W \equiv k\hat R^2 \ge \ln(N_{\rm eff}/\alpha)$ and $W \le N_{\rm tr}/(1+\rho_{\rm FP})$, hence $P \lesssim T_{\rm base}/\ln(N_{\rm eff}/\alpha)$. Every tunable enters logarithmically; only the transit count enters linearly. zero-free-parameter prediction of the sealed gate on 1,233 nulls at **precision 87.5% / recall 75.7%**; **out-of-sample scaling confirmed** (predicted 2.94 / 5.80 d, measured 2.51 / 5.00 d; ratio 1.97 vs 1.99); mechanism verified (at $P\ge8$ d, gate opens for 20% / 0% of *correct* seeds).
+- **Falsification attempt failed.** Sweeping $T_\beta=\hat R k^\beta$ at matched null FAR gains ≤ **+1.49 pp**; the exactly-pivotal statistic **loses 10.31 pp**. Multiplicity dependence is the evidence, not a defect. The ceiling is a property of the null geometry.
+- **Subset region.** Fast-path eligibility ⇒ $\mathrm{SNR}_{\rm tot}\gtrsim10.2$ vs sealed $T=10.74$. Measured (excl. the known $P{=}0.5$ d edge artifact): **17/17** fast-path recoveries also found by full TLS, **0** fast-path-only. E1's PASS was structurally guaranteed — this is the reason.
+- **MATH-4 ☑** — $\Lambda$'s null is not $\chi^2_1$: $q_{99}$ = 120.4 vs 6.63 (18×); $\Pr(\Lambda\ge25)$ = 1.81% vs 2.9e-7 (6.3e4×). Binding $T_{\rm red}$ would be ≈ **4,340**. `no_secondary`'s "~5σ" is ≈ **2.1σ**. At $T_{\rm red}=0$ the gate is a **circular sign test**: $\Pr(\hat\delta>0)$ = 0.859 at the seed vs 0.444 at random; $\Pr(\text{confirm}\mid\text{null})$ = **66.8%**.
+- **MATH-3 ☑, direction REVERSED** — the bootstrap null contains the signal. 128 paired runs: median FAP **0.0569** vs **0.1578** signal-free; gate open **53 vs 24**. **79% of fast-path routings exist only because the null is contaminated.** Anti-conservative, not conservative as the roadmap assumed. FAR control unaffected; $f_p$ (hence E2) inflated.
+- **Red noise on transit timescales.** $\kappa(T_{14})$ median 1.17→1.48, $p_{90}$ to **9.0**, 32–49% of stars > 1.5 — while the sealed detector docstring certifies "near-white" from $\mathrm{acf}_1\approx0.01$. **Lag-1 ACF is not a whiteness test on transit timescales.** Detector survives (self-calibrated MAD); confirmer does not (parametric Matérn from lag-1).
+- **Corrections of record:** MATH §4b fragility is **linear** not quadratic (verified to 3 dp) · MATH §9's "identical grid" premise is **false in code**, and that deviation is what keeps $N_{\min}=2$ survivable (implementing the spec as written: null FAR 2.99% → **4.37%**, 23 gate flips, 18 of them $k{=}2$) · Seal #2's $N_{\min}=2$ is **inoperative** (0 of 128 $k\le2$ candidates ever routed).
+- **Confirmation:** M3's null cleaning was load-bearing — FAP tail 1.06× nominal on the cleaned pool vs **6.45×** on the excluded EB/variable pool. But the FAP is not a uniform $p$-value (KS $p$=2.5e-9): **the calibration does not extrapolate to any other $\alpha$.**
+- **Documents:** `research/math_audit/MATHEMATICAL_AUDIT_2026-08-27.md` · artifacts `data/manifests/math_audit/` (incl. `findings.json`) · code `research/math_audit/` (5 scripts).
+- **Anti-tuning intact:** sealed docs verified **0 differing lines** vs `phase1-prereg-v3` (branding-normalised); Seal #2 SHA-256 matches DR-001 §5a; `frozen_rerun/` clean; sealed exceedance counts reproduced **bit-identically 1,126/1,126**.
+- **Open:** does the ceiling become the paper's central result · re-measure $f_p$ against a signal-free null · fold §N-1/§N-2 into `VESPER_MATH_ADDENDUM.md` as §F/§G. **The 2026-07-28 scope decision is still first in line.**
+
+## ▶ 2026-08-17: INN-3 — the period-FAP entry tax is removable, exactly (Wave 6 item, delivered early)
+
+- **Phase:** Phase I (COMPLETE / SEALED / FINAL). This is **post-seal analysis**, calibration-only; the sealed verdict (**E1 PASS · E2 INCONCLUSIVE**) is **unchanged**.
+- **Milestone ladder:** unchanged (W0 ☑ · W1 all-but-RES-6 ☑ · W2 partial · W3/W4 partial · W5 ☐ · W6 ☐) — with **INN-3 (Wave 6) now ☑**, delivered ~5 waves early with its proof obligations discharged rather than stated.
+- **Result.** The $B{=}1000$ period-FAP entry tax ($\rho_d = 11.6\%$), recorded by DR-002/Lever-1b as "not a removable artifact", **is removable exactly**. Two levers, neither statistical: **(A)** 49% of the FAP's cost was a loop invariant (`np.median(np.diff(np.sort(t)))` recomputed 10,000× per star while the bootstrap resamples the flux, not the epochs) → **6.31×, bit-identical**; **(B)** the gate $(g_e{+}1)/1001\le0.01$ is exactly $g_e\le9$, so the 10th exceedance decides it → **curtailed sampling, decision identical with probability 1**, one-sided so it cannot clip a planet. Combined **73.2× on nulls**, 12.7× on injections.
+- **Equivalence measured:** 1126/1126 calibration nulls reproduce the sealed exceedance count (max |Δ| 0); 149/149 calibration injections bitwise. All three Lever-1b criteria met with **exact zeros** (E-EVT and E-LUT failed 3/3 each).
+- **E2 counterfactual** (arithmetic on recorded artifacts; **no TEST re-read**): reduction **27.3% → 38.0%**, ρ_d **11.6% → 0.85%**, **π⋆ 0.489 → 0.036** (≈16× → ≈1.2× of π≈0.03), P(ratio≤0.70) **0.27 → 0.96**. **Decision still INCONCLUSIVE.**
+- **⚠️ Second finding — the two-cause diagnosis.** With the routing cost set to **zero**, the CI is still [0.522, **0.703**]. E2's INCONCLUSIVE is a **variance** result (between-host variance at H=39), not a cost result. Both causes were necessary: the entry tax put the point estimate out of reach at any H (sealed numbers stay INCONCLUSIVE even at H=100); the erratum §2.1 parity bug (40 of 80 hosts) made the interval too wide at any cost. **Fix both → E2 PASSES at H=79, the count `m4_driver` was written to use.** Hosts needed: 49 / 65 / 41 / never.
+- **Side finding:** `m4_driver.py:120` overwrites `t14` with the seeded event duration before the FAP call, so **M4 duration-matched T₁₄** — RES-4's "counterfactual" strata are the realised ones for M4. M4-realised flip exposure ≈**1.4%** vs the 0.09% reported (~16×). RES-4's *conclusion* survives; its stated mechanism and stratum labelling do not.
+- **Documents:** `research/m4_evaluation/INN3_FAP_ACCELERATION.md` · `docs/VESPER_MATH_ADDENDUM.md` §E · artifacts `data/manifests/m4/inn3/` · code `fast_period_fap.py` / `inn3_fap_acceleration.py` / `nb_period_fap.py` · `tests/test_inn3_fap_acceleration.py` (9 tests green).
+- **Anti-tuning intact:** no sealed doc, threshold, weight, manifest or tag touched; `frozen_rerun/` untouched; TEST light curves not re-read (P-5).
+- **Open:** the 2026-07-28 scope decision (still first in line) · adopt the estimator of record (DR-006+) · paper placement of §6/§6.1a · RES-4 addendum · RES-6 + TLS-epoch re-run.
 
 ## ▶ 2026-07-27: E2 re-measurement COMPLETE → verdict INCONCLUSIVE; Wave-0 V-1→V-4 done
 
@@ -9,7 +38,6 @@
 - **Wave-1 checklist (PR #19 + PR #21 merged):** RES-2 ☑ (E1 robust to KM period weighting, ΔR̄ −0.16 pp) · RES-3 ☑ (losses epoch-predicate) · RES-5 ☑ (supplement S-edge + fig S1) · RES-8 ☑ (endpoint disclosure) · RES-7 ☑ (monotransit design doc) · PUB-6 ☑ (public reconciliation) · **RES-4 ☑** (per-star τ_GP FAP on 1163 nulls: 0/1126 arm-B flips, 1/1126 arm-C, at the sealed T₁₄=0.2 d; sealed FAPs reproduced bitwise 968/968). **Still queued (compute):** RES-6 (η-paid injection; needs MAST) · TLS-epoch re-run.
 - **Wave-2 checklist (2026-07-28, PR #21):** MATH-1 ☑ (π⋆ = ρ_d/(f_p(1−ρ)) derived; roadmap's "exact form" rejected) · MATH-5 ☑ (BCa lo95 −1.04 pp vs percentile −0.83 pp; E1 unchanged) · MATH-6 ☑ (N=2 comb degeneracy proven+measured) · MATH-7 ☑ (notation cross-reference). **Open:** MATH-2, MATH-3, MATH-4, MATH-8.
 - **Wave-3 / Wave-4 partial:** CODE-7 ☑ (cluster bootstrap vectorized, bit-exact) · DOC-2 ☑ (`docs/INDEX.md`) · DOC-3 ☑ (`docs/SEAL_CHAIN_POSTMORTEM.md`).
-- **Hackathon track DISCONTINUED** (owner 2026-07-27); `hackathon/` kept in place as history.
 - **⚠️ OPEN DECISION (2026-07-28, not decided):** project scope + paper framing — finish in ~2 weeks and cut Waves 3/6, reframing around the methodology (INN-1) rather than the routing result? Settle first. See `Current_Mission.md` and `SESSION_HANDOFF_2026-07-28.md` §6. **The roadmap stands as written until ruled on.**
 - Next: settle the scope decision, then **RES-6** (η-paid injection; needs MAST) + the small **TLS-epoch re-run**. PR #22 (doc-only sync) open. Phase II hard-gated until DR-004.
 
@@ -17,7 +45,7 @@
 
 - **Deep scientific review persisted** (`docs/reviews/DEEP_SCIENTIFIC_REVIEW_2026-07-19.md`): routing claim structurally capped (saving ≤ π·f_p ≈ 0.6% at zero tax; SES/FFA attacks the premise); assets = protocol, bound, monotransit regime.
 - **`docs/VESPER_PHASE2_PROGRAM.md` DRAFT v0.1 (pending DR-004):** G0 (SES/FFA gating, sealed decision rules) → Track A (impossibility bound) · Track B (VESPER-Bench + Kepler DR25) · Track C (monotransit flagship; Λ_mono binding by NN-P2-10; raw+recondition injections; 892-monotransit free pre-study). Kepler routing-scaling sketch **superseded**.
-- **Public reconciliation advanced:** README now states the withdrawn verdict + re-scoped future on the repo front page; CLAUDE.md carries an interim supersession bullet (full rewrite at V-4). Remaining PUB-6 items: v1.0.0 release notes annotation + hackathon status note.
+- **Public reconciliation advanced:** README now states the withdrawn verdict + re-scoped future on the repo front page; CLAUDE.md carries an interim supersession bullet (full rewrite at V-4). Remaining PUB-6 item: v1.0.0 release notes annotation.
 - **Pushed:** branch `phase1/audit-remediation` → origin (3 commits: remediation analysis · strategy docs · sync/publish); **draft PR → `main`** open; merge = owner decision at V-5 (after E2 verdict).
 - **Wave-0 checklist:** V-1 resume guard ☐ · V-2 E2 campaign 26/300 (~19 h) ☐ · V-3 erratum §5/§7 ☐ · V-4 verdict propagation ☐ · V-5 finalize PR/merge ☐.
 
@@ -27,15 +55,7 @@
 - **Milestone ladder addition:** ~~M4 verdict final~~ → **W0 Verdict** (E2 re-timing 26/300, PAUSED; erratum §5/§7 pending) → **W1 Robustness** (KM-period E1 sensitivity, epoch tolerance, PUB-6 public reconciliation) → W2 Math → W3 Engineering → W4 Repro/Docs → W5 Publication → W6 Tool/Phase-II-prep. Full plan: **`docs/ROADMAP_TO_10.md`**. **Phase II hard-gated until DR-004.**
 - **Today's science:** edge control ruled out the grid-edge artifact and identified the P=0.5 d gain/loss mechanism as **TLS T₀ epoch-predicate failure** (36/38 epoch-only); erratum §6 + paper corrected. Second-pass audit: `docs/audits/PROJECT_AUDIT_2026-07-19.md` (new findings: log-uniform w_P not occurrence-based; π* formula inconsistency; detector epoch quantization).
 - **Completion checklist (Wave 0):** V-1 resume guard ☐ · V-2 E2 campaign (~19 h) ☐ · V-3 erratum §5/§7 ☐ · V-4 verdict propagation ☐ · V-5 commit+merge ☐.
-- **Hackathon:** round-1 submitted (2026-07-01); ⚠️ deck + v1.0.0 notes predate the verdict withdrawal → PUB-6.
 - **Key documents added:** `docs/decisions/DR-003_E2_REMEASUREMENT.md` · `research/m4_evaluation/M4_ERRATUM_2026-07-19.md` · `docs/audits/PROJECT_AUDIT_2026-07-19.md` · `docs/ROADMAP_TO_10.md` · M4_TEST_RESULT addendum · seal-loader dual-digest fix (rebrand had silently broken seal verification 2026-06-30 → 07-19).
-
-## ▶ 2026-07-01: hackathon deck rebuilt into the official ISRO template + verified
-
-- **BAH 2026 · PS7 deck (14 slides) rebuilt inside the organizers' mandatory template** → `hackathon/deck/BAH2026_PS7_idea_deck.pptx` + `.pdf` (≤5 MB). Fixed: Features overlap, Architecture connectors, PoC graph clipping. `build_pptx.py` fills the template; `build_deck.py` = legacy.
-- **Classifier proof-of-path verified (SYNTHETIC, leakage-safe group CV):** accuracy 0.83, macro-F1 0.83 (95% CI 0.80–0.86); eclipse/other near-perfect; transit↔blend residual (F1≈0.66). Ablation: no single feature family > 0.72, full set 0.83. Reproducible (feature-set diff 0.0). New scripts: `ablation.py`, `failure_analysis.py`, `make_poc_fig.py`, `_deckstyle.py`.
-- **Hackathon docs aligned + claims defensible** (recall non-inferior; honest blend/CNN scope; synthetic labelled; removed the 0.58/"cleanly separable" contradiction). **Kepler/K2 cost** line added (~5,000–10,000 CPU-core-hours; feasibility, not compute-savings).
-- **No Phase-I science changed** (sealed/final). Not committed (owner's call).
 
 ## ▶ 2026-06-30: identity rebrand + first public release v1.0.0
 
@@ -43,21 +63,8 @@
 - **`v1.0.0` released** on `main` (HEAD `0118548`) — GitHub Release "VESPER v1.0.0 — Initial Public Release". Tree clean; `main` == `origin/main`.
 - **Sealed-doc/manifest SHA-256 digests changed by design** (owner-authorized) — provenance in `docs/decisions/F1_DECISION_RECORD.md` §5a; original bytes intact at tags `phase1-prereg-v2/v3`. ⚠️ old `shasum` values will mismatch.
 - **Repo reorganized (structure-only, history preserved):** Phase-I plans → `research/phase1/`; handoffs → `archive/session_handoffs/`; `NEXT_SESSION_PROMPT.md` untracked+gitignored; root limited to the 5 canonical files. No code/research changed.
-- Phase I unchanged (COMPLETE/SEALED/FINAL). Active task unchanged → hackathon round-1 submission (below). Handoff: `archive/session_handoffs/SESSION_HANDOFF_2026-06-30.md`.
+- Phase I unchanged (COMPLETE/SEALED/FINAL). Handoff: `archive/session_handoffs/SESSION_HANDOFF_2026-06-30.md`.
 
-## ▶ Active track (2026-06-29): BAH 2026 · PS7 hackathon
-
-**ISRO Bharatiya Antariksh Hackathon 2026, Problem Statement 7** — AI-enabled exoplanet detection/classification from noisy TESS light curves. An **extension/attachment to VESPER**, **merged to `main` via PR #14** (2026-06-27).
-
-- **Phase I (TESS): ✅ COMPLETE / SEALED / FINAL** — M0–M7 merged; H1 falsified (compute branch), recall supported; no v4 (P-2).
-- **Phase II (Kepler scaling): ⏸ FROZEN** until after the hackathon (compute-path decision deferred).
-- **Hackathon round-1 package: ✅ COMPLETE + verified** (deadline 2026-07-01) — proposal + **14-slide deck in the official ISRO template** + report skeleton; prototype validated on real MAST data (all 5 PS7 steps; trapezoid shape-fit; 12 known-object validation) + **leakage-safe synthetic classifier** (macro-F1 0.83, CI 0.80–0.86). Team **VESPER** (3 members).
-- **GSD tooling:** updated 1.5.0 → **1.6.0** (global; not used in this repo — no local `.planning/`).
-
-**Hackathon artifacts:** `hackathon/` — `BAH2026_PS7_{CHALLENGE,PROPOSAL_DRAFT,CLASSIFIER_DESIGN,REPORT_SKELETON}.md`, `CLAUDE.md` (track-scoped), `deck/`, `prototype/`.
-**Next action:** owner submits round 1 before 2026-07-01 (paste Part-A fields + upload the PDF, select PS7). Handoff: `archive/session_handoffs/SESSION_HANDOFF_2026-07-01.md`.
-
----
 
 ## Current Phase (Phase-I historical record)
 

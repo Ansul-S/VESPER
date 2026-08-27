@@ -81,7 +81,6 @@ This is the map. It labels every document with its **status class**, so a reader
 | Path | Role |
 |---|---|
 | [`../archive/`](../archive/) | Revival-era audit and review; `session_handoffs/` (all dated handoffs) |
-| [`../hackathon/`](../hackathon/) | BAH 2026 PS7 track — **DISCONTINUED 2026-07-27.** Submitted history, annotated not rewritten. Do not build on it. |
 | `research/m4_evaluation/superseded_v2/` | Dead v2 targeted-TLS path (Findings A+B) |
 | `data/manifests/m1/superseded_0.5d/` | Superseded 0.5 d detrend-window noise model |
 

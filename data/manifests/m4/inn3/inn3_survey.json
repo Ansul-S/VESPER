@@ -1,0 +1,25 @@
+{
+  "task": "INN-3 \u2014 survey-representative rho_d and pi*",
+  "n_nulls": 24,
+  "n_routed": 3,
+  "routed_fraction": 0.125,
+  "c_full_mean_s": 95.57847733333331,
+  "c_full_median_s": 44.78273299999998,
+  "fap_bitexact": 3,
+  "gate_identical_curtailed": 3,
+  "surrogates_used_mean": 37.0,
+  "speedup_leverA": 6.673931703800731,
+  "speedup_leverA_plus_B": 201.7233402747712,
+  "rho_d_null_population": {
+    "sealed": 0.022779826875389438,
+    "leverA": 0.0034132544182938784,
+    "leverA_plus_B": 0.00013391344727633835
+  },
+  "machine": {
+    "platform": "macOS-26.6-arm64-arm-64bit",
+    "python": "3.11.9",
+    "numpy": "2.4.6",
+    "workers": 6,
+    "ran_at_utc": "2026-08-17T09:46:52.247701+00:00"
+  }
+}
