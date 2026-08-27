@@ -6,9 +6,12 @@
 
 - **Corrected verdict: E1 PASS (robust) · E2 INCONCLUSIVE.** Frozen §6 rule, 300 inj × 5 repeats / 39 hosts → ratio **0.727** (27.3% reduction), host-clustered CI **[0.636, 0.826]** straddles 0.70; ρ_d 11.6%, f_p 23.7%, **π\*≈0.489 ≫ π≈0.03**. Neither confirmed nor falsified on compute; recall principle validated. Robust to a Low-Power-Mode window (leave-out 0.713; erratum §5.1). Results `data/manifests/m4/e2_retiming/e2_retiming_summary.json`.
 - **Wave-0 checklist:** V-1 ☑ (`2941175`) · V-2 E2 300/300 ☑ · V-3 erratum ☑ · V-4 propagation ☑ · **V-5 PR/merge ☑ (PR #18 merged)**. **WAVE 0 COMPLETE.**
-- **Wave-1 checklist (no-compute cluster COMPLETE, PR #19 merged):** RES-2 ☑ (E1 robust to KM period weighting, ΔR̄ −0.16 pp) · RES-3 ☑ (losses epoch-predicate) · RES-5 ☑ (supplement S-edge + fig S1) · RES-8 ☑ (endpoint disclosure) · RES-7 ☑ (monotransit design doc) · PUB-6 ☑ (public reconciliation). **Queued (compute):** RES-4 (per-star τ_GP FAP) · RES-6 (η-paid injection) · TLS-epoch re-run.
+- **Wave-1 checklist (PR #19 + PR #21 merged):** RES-2 ☑ (E1 robust to KM period weighting, ΔR̄ −0.16 pp) · RES-3 ☑ (losses epoch-predicate) · RES-5 ☑ (supplement S-edge + fig S1) · RES-8 ☑ (endpoint disclosure) · RES-7 ☑ (monotransit design doc) · PUB-6 ☑ (public reconciliation) · **RES-4 ☑** (per-star τ_GP FAP on 1163 nulls: 0/1126 arm-B flips, 1/1126 arm-C, at the sealed T₁₄=0.2 d; sealed FAPs reproduced bitwise 968/968). **Still queued (compute):** RES-6 (η-paid injection; needs MAST) · TLS-epoch re-run.
+- **Wave-2 checklist (2026-07-28, PR #21):** MATH-1 ☑ (π⋆ = ρ_d/(f_p(1−ρ)) derived; roadmap's "exact form" rejected) · MATH-5 ☑ (BCa lo95 −1.04 pp vs percentile −0.83 pp; E1 unchanged) · MATH-6 ☑ (N=2 comb degeneracy proven+measured) · MATH-7 ☑ (notation cross-reference). **Open:** MATH-2, MATH-3, MATH-4, MATH-8.
+- **Wave-3 / Wave-4 partial:** CODE-7 ☑ (cluster bootstrap vectorized, bit-exact) · DOC-2 ☑ (`docs/INDEX.md`) · DOC-3 ☑ (`docs/SEAL_CHAIN_POSTMORTEM.md`).
 - **Hackathon track DISCONTINUED** (owner 2026-07-27); `hackathon/` kept in place as history.
-- Next: RES-4/RES-6 compute batch, then Waves 2 (math) + 3 (engineering). Phase II hard-gated until DR-004.
+- **⚠️ OPEN DECISION (2026-07-28, not decided):** project scope + paper framing — finish in ~2 weeks and cut Waves 3/6, reframing around the methodology (INN-1) rather than the routing result? Settle first. See `Current_Mission.md` and `SESSION_HANDOFF_2026-07-28.md` §6. **The roadmap stands as written until ruled on.**
+- Next: settle the scope decision, then **RES-6** (η-paid injection; needs MAST) + the small **TLS-epoch re-run**. PR #22 (doc-only sync) open. Phase II hard-gated until DR-004.
 
 ## ▶ 2026-07-20: Phase II re-scoped (bound · benchmark · monotransit); repo pushed + draft PR open
 

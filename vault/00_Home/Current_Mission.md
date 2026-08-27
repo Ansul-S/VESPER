@@ -1,6 +1,36 @@
 # Current Mission
 
-> **AUTHORITATIVE CURRENT STATE — updated 2026-07-27.** The detailed fields below this block are **Phase-I historical record** (kept for provenance); read this block first.
+> **AUTHORITATIVE CURRENT STATE — updated 2026-07-28.** The detailed fields below this block are **Phase-I historical record** (kept for provenance); read this block first.
+
+## ▶ Latest event (2026-07-28): RES-4 DONE + Wave-2/4 closure — PR #21 MERGED
+
+**`main` @ `77037d4`, clean, == `origin/main`. Seven commits merged; branch deleted; CI (`fast-units`) green.**
+
+- **RES-4 COMPLETE (Wave 1)** — per-star τ_GP FAP sensitivity on **all 1163 cached calibration nulls** (1126 with ≥2 events). Erratum §2.4's masking *argument* is now a *measurement*. Gate flips at the sealed T₁₄ = 0.2 d convention: **arm B (as the post-audit driver applies it) 0/1126**, Wilson 95% [0, 0.0034]; **arm C (complete per-star coverage) 1/1126**, [0.0002, 0.0050]. Artifacts: `data/manifests/m4/wave1/res4_tau_fap_sensitivity.{json,md}` + `res4_per_star.csv`.
+  - **Sealed fidelity BITWISE: 968/968** of M3's recorded FAPs reproduced (max |Δ| = 0.00e+00), comparing arm C on the 22 stars where M3 had an M1 τ row and arm A on the other 946.
+  - **F2 (new) — erratum §2.4's own premise is imprecise.** `m3_calibrate.py:151` falls back to 0.005 for any star lacking an M1 noise-summary row, and only **22 of 968** overlapping stars had one: M3 was itself overwhelmingly flat-τ, so the calibration/test gap is far smaller than §2.4 implies.
+  - **F3 (new)** — the single flip runs flat-OPEN → per-star-SHUT (TIC 80427281, τ = 0.289 d): the sealed gate was very slightly *more permissive* on red-noise nulls — the benign direction.
+  - **F4 (new)** — the masking is bought by the **T₁₄ = median(duration grid) convention**, not by τ being harmless (arm C flips 24/1126 at a counterfactual T₁₄ = 0.05 d). Any future run that duration-matches T₁₄ **must** use per-star τ.
+- **Wave 2 (math closure) — MATH-1, MATH-5, MATH-6, MATH-7 done.** Post-seal math lives in a new companion doc `docs/VESPER_MATH_ADDENDUM.md` (never inlined into the sealed MATH file, so `git diff phase1-prereg-v3` stays empty modulo branding — re-verified 0 differing lines on all three sealed docs after the merge).
+  - **MATH-6** corrects the roadmap's own premise: "argmin → longest-P" is only ~74% true; the N=2 tie is broken by IEEE-754 rounding at ~1e-16. Sealed m∈{2,3} tolerance absorbs 98.1–98.6%; the 1.4–1.9% leaking to m≥4 are recall costs, never FPs. **New:** at N=2 the period-FAP tests event *rarity*, not coherence (reads with erratum §2.9).
+  - **MATH-1** rejects the roadmap's "exact" π⋆. Derivation gives **π⋆ = ρ_d/(f_p(1−ρ))** — what `endpoints.py` and the paper already use; the roadmap's ρ_d/(f_p(1−ρ+ρ_d)) implies a routed star isn't charged for the detector that routed it. A **tautological unit test** (asserted `x == x`) was replaced with one that pins the derived form.
+  - **MATH-5** — BCa host-cluster lo95 **−1.04 pp** vs sealed percentile **−0.83 pp** (a = −0.133 moves the effective tail 0.05 → 0.0072). The sealed interval is mildly optimistic, but **both clear the −2 pp margin: E1 non-inferiority UNCHANGED.**
+- **Wave 3 — CODE-7** delivered as a side effect of MATH-5 (cluster bootstrap vectorized; verified **bit-exact** against `endpoints.e1_recall`).
+- **Wave 4 — DOC-2** (`docs/INDEX.md`: every doc labeled SEALED/APPEND-ONLY/LIVE/HISTORICAL + reviewer and contributor reading paths) and **DOC-3** (`docs/SEAL_CHAIN_POSTMORTEM.md`: the 19-day rebrand break, for an external audience).
+- Anti-tuning intact: **no sealed doc, threshold, manifest, or tag touched; `frozen_rerun/` untouched; TEST not read.** `verify_seal()` re-checked post-merge → z⋆=3.4 · z_mono=5.3 · N_min=2 · T=10.741 · α=0.01 · B=1000.
+
+### ⚠️ OPEN DECISION carried into 2026-07-29 — project scope and the shape of the paper
+
+**Status: DISCUSSED, NOT DECIDED.** The owner asked directly whether the project is worth continuing. The assistant's recommendation — *offered, not accepted or rejected*:
+
+1. **Finish Phase I in ~2 weeks**, not 9–10. RES-6 is the last real scientific gap (absolute recall is optimistic: neither arm paid the conditioning cost η). Then fix the paper and submit. The work is ~90% done; abandoning now converts it to zero output.
+2. **Cut `ROADMAP_TO_10.md` Waves 3 and 6** — package, CLI, container, API docs, seal library. None of it changes a number in the paper; it optimizes an invented ten-category scorecard rather than a deliverable.
+3. **Do not start Phase II on momentum** — decide it separately, after submission.
+4. **Reframe the paper.** The routing result is thin alone (π⋆ ≈ 0.49 vs π ≈ 0.03 is near a-priori derivable, and a referee may say so). The stronger contribution is the **methodology**: sealed single-shot validation with pre-committed verdicts, demonstrated by a case where the protocol *forced the authors to withdraw their own headline verdict* (E2 FAIL → INCONCLUSIVE), plus the 40-vs-80 host bug and the 19-day seal-chain break — all self-found and published. This is roadmap **INN-1**, currently scheduled last in Wave 6; the recommendation is to promote it to the **primary deliverable**.
+
+**Settle this first tomorrow.** If accepted → record as **DR-005** (DR-004 stays reserved for the Phase-II gate) + amend `ROADMAP_TO_10.md`. Until then **the roadmap stands as written**. Full text: `archive/session_handoffs/SESSION_HANDOFF_2026-07-28.md` §6.
+
+**Next action:** settle the scope decision above; then **RES-6** (η-paid injection; needs MAST, `data/raw` is empty) + the small **TLS-epoch re-run** (unlocks RES-3's symmetric sweep + the S-edge T₀ histogram). PR #22 (doc-only sync) is open and unmerged. Phase II hard-gated until DR-004.
 
 ## ▶ Latest event (2026-07-27): E2 RE-MEASUREMENT COMPLETE → verdict INCONCLUSIVE; Wave-0 V-1→V-4 done
 
